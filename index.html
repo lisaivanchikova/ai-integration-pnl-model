@@ -8,160 +8,110 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --slate:#31435B;--teal:#2E7780;--steel:#A9C5D6;--mist:#DCE5EC;
-  --near-black:#151A1F;--cool-gray:#C9D2DC;--off-white:#FAF9F6;
-  --bg:#FAF9F6;--border:#C9D2DC;--light-border:#E4E9EE;
-  --muted:#7A8896;--pos:#2E7780;--neg:#A14545;--warn:#C4A04A;
-}
+:root{--slate:#31435B;--teal:#2E7780;--steel:#A9C5D6;--mist:#DCE5EC;--near-black:#151A1F;--off-white:#FAF9F6;--bg:#FAF9F6;--border:#C9D2DC;--light-border:#E4E9EE;--muted:#7A8896;--pos:#2E7780;--neg:#A14545;--warn:#C4A04A}
 body{background:var(--bg);color:var(--near-black);font-family:'Inter',sans-serif;font-size:13px;line-height:1.55}
-
-/* HEADER */
 .header{background:#fff;border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:14px}
-.brand{font-family:'DM Sans',sans-serif;font-weight:700;font-size:18px;letter-spacing:0.04em;color:var(--slate)}
-.subtitle{font-family:'DM Sans',sans-serif;font-size:9px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;font-weight:500;margin-top:2px}
+.brand{font-family:'DM Sans',sans-serif;font-weight:700;font-size:18px;letter-spacing:.04em;color:var(--slate)}
+.subtitle{font-family:'DM Sans',sans-serif;font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:500;margin-top:2px}
 .header-kpis{display:flex;gap:18px}
-.hkpi{font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;letter-spacing:0.04em;text-transform:uppercase}
+.hkpi{font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;letter-spacing:.04em;text-transform:uppercase}
 .hkpi span{display:block;font-size:14px;color:var(--slate);font-weight:700;letter-spacing:0;text-transform:none;margin-top:2px;font-family:'DM Sans',sans-serif}
-.hkpi span.pos{color:var(--teal)}
-.hkpi span.neg{color:var(--neg)}
-
-/* LAYOUT */
-.shell{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 60px)}
-.sidebar{background:#fff;border-right:1px solid var(--border);padding:24px 0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto}
-.nav-group{padding:0 16px;margin-bottom:18px}
-.nav-label{font-family:'DM Sans',sans-serif;font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;font-weight:700;padding:0 12px 8px}
-.nav a{display:flex;align-items:baseline;padding:9px 12px;border-radius:6px;text-decoration:none;color:var(--near-black);font-size:13px;margin-bottom:2px;border:1px solid transparent;gap:8px}
-.nav a:hover{background:var(--off-white);border-color:var(--light-border)}
-.nav a.active{background:#eaf1f2;border-color:var(--teal);color:var(--slate);font-weight:600}
-.nav-num{font-family:'DM Sans',sans-serif;font-weight:700;color:var(--teal);font-size:11px;min-width:18px}
-
-.content{padding:32px 40px;max-width:1100px}
-
-/* SECTIONS */
-.page{display:none}
-.page.active{display:block}
-.page-head{margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid var(--border)}
-.page-num{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--teal);letter-spacing:0.1em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
-.page-title{font-family:'DM Sans',sans-serif;font-size:24px;font-weight:700;color:var(--slate);letter-spacing:-0.3px}
-.page-sub{font-size:13px;color:var(--muted);margin-top:6px}
-
-.block{margin-bottom:32px}
-.block h3{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:var(--slate);letter-spacing:0.02em;margin-bottom:12px;padding-top:8px}
-.block h4{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:var(--teal);letter-spacing:0.08em;text-transform:uppercase;margin:18px 0 10px}
-.block p{margin-bottom:10px;font-size:13px}
-
-.callout{background:#eaf1f2;border-left:3px solid var(--teal);padding:14px 18px;border-radius:4px;font-size:13px;color:var(--near-black);line-height:1.6;margin-bottom:14px}
+.hkpi span.pos{color:var(--teal)}.hkpi span.neg{color:var(--neg)}.hkpi span.warn{color:var(--warn)}
+.shell{display:grid;grid-template-columns:300px 1fr;align-items:start}
+.sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 16px;display:flex;flex-direction:column;gap:14px;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto}
+.content{padding:24px 28px;max-width:1100px}
+.sec-label{font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:700;display:flex;align-items:center;justify-content:space-between}
+.sec-label .pin{font-size:9px;padding:2px 6px;border-radius:10px;background:var(--mist);color:var(--slate);letter-spacing:.04em}
+.pills{display:flex;flex-direction:column;gap:5px;margin-bottom:6px}
+.pill{padding:9px 12px;border-radius:7px;cursor:pointer;font-size:12px;border:1px solid var(--border);color:var(--muted);background:transparent;text-align:left;display:flex;justify-content:space-between;align-items:center;line-height:1.4;transition:all .15s}
+.pill:hover{border-color:var(--slate);color:var(--near-black);background:rgba(49,67,91,.04)}
+.pill.active{border-color:var(--slate);color:var(--slate);background:rgba(49,67,91,.07);font-weight:500}
+.pill-name{font-weight:500}
+.pill-sub{font-size:10px;color:var(--muted);margin-top:1px;font-weight:400}
+.slider-group{display:flex;flex-direction:column;gap:11px}
+.slider-row{display:flex;flex-direction:column;gap:3px;margin-bottom:3px}
+.slider-head{display:flex;justify-content:space-between;align-items:baseline;font-size:11px}
+.slider-name{color:var(--muted)}
+.slider-val{font-family:'DM Sans',sans-serif;font-weight:600;color:var(--near-black)}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--border);border-radius:2px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--teal);cursor:pointer;box-shadow:0 0 0 3px rgba(46,119,128,.15)}
+.reset-btn{padding:7px 12px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:7px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.04em;text-align:center;font-weight:500}
+.reset-btn:hover{border-color:var(--slate);color:var(--slate)}
+.section{background:#fff;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.section>summary{padding:14px 20px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:.04em;color:var(--near-black);font-weight:700;display:flex;align-items:center;gap:10px;user-select:none;list-style:none}
+.section>summary::-webkit-details-marker{display:none}
+.section>summary::before{content:'▸';transition:transform .15s;font-size:11px;color:var(--teal)}
+.section[open]>summary::before{transform:rotate(90deg)}
+.section[open]>summary{border-bottom:1px solid var(--light-border);background:var(--off-white)}
+.section-meta{margin-left:auto;font-family:'Inter',sans-serif;font-size:11px;color:var(--muted);font-weight:400}
+.section-num{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--teal);letter-spacing:.1em;background:rgba(46,119,128,.08);padding:2px 8px;border-radius:10px;font-weight:700}
+.section-body{padding:18px 22px}
+.block{margin-bottom:22px}
+.block h3{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--slate);margin-bottom:10px}
+.block h4{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.06em;text-transform:uppercase;margin:16px 0 8px}
+.block p{margin-bottom:8px;font-size:13px}
+.block ul{margin-left:20px;font-size:13px}
+.callout{background:#eaf1f2;border-left:3px solid var(--teal);padding:12px 16px;border-radius:4px;font-size:12.5px;line-height:1.6;margin-bottom:12px}
 .callout strong{color:var(--slate)}
 .callout.warn{background:#f5ecd5;border-left-color:var(--warn)}
 .callout.danger{background:#f3dada;border-left-color:var(--neg)}
 .callout.dark{background:var(--slate);color:#fff;border-left:3px solid var(--teal)}
 .callout.dark strong{color:#fff}
-
-/* APEX */
-.apex-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
-.apex-kpi{background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px 16px}
-.apex-label{font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:5px}
-.apex-val{font-family:'DM Sans',sans-serif;font-size:22px;font-weight:700;line-height:1;color:var(--slate)}
-.apex-val.pos{color:var(--teal)}
-.apex-val.neg{color:var(--neg)}
-.apex-val.warn{color:var(--warn)}
-.apex-val.small{font-size:16px}
-.apex-sub{font-size:10px;color:var(--muted);margin-top:5px}
-
-/* TABLES */
-.tbl{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px}
-.tbl thead th{text-align:left;font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:10px 12px;border-bottom:1px solid var(--border);background:var(--off-white)}
+.apex-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.apex-kpi{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+.apex-label{font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:5px}
+.apex-val{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;line-height:1;color:var(--slate)}
+.apex-val.pos{color:var(--teal)}.apex-val.neg{color:var(--neg)}.apex-val.warn{color:var(--warn)}
+.apex-val.small{font-size:15px}
+.apex-sub{font-size:10px;color:var(--muted);margin-top:4px}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px}
+.tbl thead th{text-align:left;font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:9px 11px;border-bottom:1px solid var(--border);background:var(--off-white)}
 .tbl thead th.r{text-align:right}
 .tbl thead th.c{text-align:center}
-.tbl tbody td{padding:9px 12px;border-bottom:1px solid var(--light-border);color:var(--near-black);vertical-align:top}
+.tbl tbody td{padding:9px 11px;border-bottom:1px solid var(--light-border);vertical-align:top}
 .tbl tbody td.r{text-align:right;font-family:'DM Sans',sans-serif;font-weight:500}
 .tbl tbody td.c{text-align:center}
-.tbl tbody tr.section-row td{background:var(--mist);font-family:'DM Sans',sans-serif;font-weight:700;color:var(--slate);font-size:10px;letter-spacing:0.06em;text-transform:uppercase}
+.tbl tbody tr.section-row td{background:var(--mist);font-family:'DM Sans',sans-serif;font-weight:700;color:var(--slate);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
 .tbl tbody tr.total-row td{border-top:2px solid var(--slate);background:#fff;font-weight:700;color:var(--slate)}
 .tbl tbody tr.subtotal-row td{font-weight:600;background:var(--off-white)}
-.tbl tbody td.neg{color:var(--neg)}
-.tbl tbody td.pos{color:var(--teal)}
+.tbl tbody td.neg{color:var(--neg)}.tbl tbody td.pos{color:var(--teal)}
 .tbl .src{font-size:10px;color:var(--muted)}
-.tbl .src a{color:var(--teal);text-decoration:none;border-bottom:1px dotted}
-.conf-pill,.type-pill{display:inline-block;font-family:'DM Sans',sans-serif;font-size:9px;padding:2px 7px;border-radius:10px;letter-spacing:0.04em;text-transform:uppercase;font-weight:700}
-.conf-high{background:rgba(46,119,128,0.12);color:var(--teal)}
-.conf-med{background:rgba(196,160,74,0.15);color:#8c6e1f}
-.conf-low{background:rgba(193,69,69,0.12);color:var(--neg)}
-.type-pill{background:var(--mist);color:var(--slate)}
-.badge-scale{background:rgba(46,119,128,0.15);color:var(--teal);padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;font-family:'DM Sans',sans-serif}
-.badge-defer{background:rgba(196,160,74,0.15);color:#8c6e1f;padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;font-family:'DM Sans',sans-serif}
-.badge-last{background:rgba(193,69,69,0.12);color:var(--neg);padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;font-family:'DM Sans',sans-serif}
-.badge-bottleneck{background:#fde6e6;color:var(--neg);padding:3px 8px;border-radius:11px;font-size:9px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;font-family:'DM Sans',sans-serif;border:1px solid var(--neg)}
-
-/* GLOSSARY */
-.glossary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
-.gloss-item{background:#fff;border:1px solid var(--border);border-radius:6px;padding:12px 14px}
-.gloss-term{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:var(--slate);letter-spacing:0.02em;margin-bottom:4px}
-.gloss-def{font-size:12px;color:var(--near-black);line-height:1.5}
-
-/* CONTROL PANEL (sticky right) */
-.controls-panel{position:fixed;bottom:20px;right:20px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;width:280px;max-height:70vh;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.06);z-index:90;display:none}
-.controls-panel.visible{display:block}
-.controls-panel h4{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:var(--slate);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
-.controls-panel .close-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;line-height:1}
-.driver-block{margin-bottom:14px}
-.driver-block .lab{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--muted);letter-spacing:0.04em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
-.slider-row{margin-bottom:9px}
-.slider-head{display:flex;justify-content:space-between;align-items:baseline;font-size:11px;margin-bottom:3px}
-.slider-name{color:var(--muted)}
-.slider-val{font-family:'DM Sans',sans-serif;font-weight:600}
-input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--border);border-radius:2px;outline:none;cursor:pointer}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--teal);cursor:pointer;box-shadow:0 0 0 3px rgba(46,119,128,0.15)}
-
-/* FLOAT BUTTON */
-.fab{position:fixed;bottom:20px;right:20px;background:var(--slate);color:#fff;border:none;border-radius:50%;width:52px;height:52px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.04em;box-shadow:0 4px 12px rgba(49,67,91,0.3);z-index:80}
-.fab:hover{background:var(--teal)}
-
-/* SCENARIOS */
-.scen-pills{display:flex;gap:8px;margin-bottom:18px}
-.scen-pill{flex:1;padding:14px 16px;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:#fff;text-align:left}
+.tbl .src a{color:var(--teal);text-decoration:none}
+.badge-scale{background:rgba(46,119,128,.15);color:var(--teal);padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;text-transform:uppercase;font-family:'DM Sans',sans-serif}
+.badge-defer{background:rgba(196,160,74,.15);color:#8c6e1f;padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;text-transform:uppercase;font-family:'DM Sans',sans-serif}
+.badge-last{background:rgba(193,69,69,.12);color:var(--neg);padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;text-transform:uppercase;font-family:'DM Sans',sans-serif}
+.badge-bottleneck{background:#fde6e6;color:var(--neg);padding:3px 8px;border-radius:11px;font-size:9px;font-weight:700;text-transform:uppercase;font-family:'DM Sans',sans-serif;border:1px solid var(--neg)}
+.glossary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:8px}
+.gloss-item{background:var(--off-white);border:1px solid var(--border);border-radius:6px;padding:10px 12px}
+.gloss-term{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:var(--slate);margin-bottom:4px}
+.gloss-def{font-size:11.5px;line-height:1.5}
+.scen-pills{display:flex;gap:6px;margin-bottom:14px}
+.scen-pill{flex:1;padding:11px 14px;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:#fff;text-align:left}
 .scen-pill:hover{border-color:var(--slate)}
-.scen-pill.active{border-color:var(--slate);background:var(--mist);box-shadow:0 0 0 2px rgba(49,67,91,0.06)}
-.scen-pill-name{font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;color:var(--slate)}
+.scen-pill.active{border-color:var(--slate);background:var(--mist)}
+.scen-pill-name{font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;color:var(--slate)}
 .scen-pill-desc{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.5}
-
-/* TORNADO */
-.tornado-row{display:grid;grid-template-columns:200px 1fr 100px;gap:14px;align-items:center;padding:9px 0;border-bottom:1px solid var(--light-border);font-size:12px}
+.tornado-row{display:grid;grid-template-columns:200px 1fr 100px;gap:14px;align-items:center;padding:8px 0;border-bottom:1px solid var(--light-border);font-size:12px}
 .tornado-name{font-weight:500}
-.tornado-bar-wrap{height:14px;background:var(--mist);border-radius:7px;overflow:hidden}
-.tornado-bar{height:14px;background:linear-gradient(90deg,var(--teal),var(--slate));border-radius:7px}
-.tornado-val{font-family:'DM Sans',sans-serif;font-weight:600;text-align:right}
-
-/* CONTROLS */
-.ctrl-row{display:grid;grid-template-columns:24px 1fr auto;gap:10px;padding:9px 12px;background:var(--off-white);border-radius:6px;margin-bottom:6px;font-size:12px;align-items:center}
-.ctrl-row.ok{background:rgba(46,119,128,0.08)}
-.ctrl-row.warn{background:rgba(196,160,74,0.12)}
-.ctrl-row.fail{background:rgba(193,69,69,0.12)}
+.tornado-bar-wrap{height:12px;background:var(--mist);border-radius:6px;overflow:hidden}
+.tornado-bar{height:12px;background:linear-gradient(90deg,var(--teal),var(--slate));border-radius:6px}
+.tornado-val{font-family:'DM Sans',sans-serif;font-weight:600;text-align:right;font-size:11px}
+.ctrl-row{display:grid;grid-template-columns:24px 1fr auto;gap:10px;padding:9px 12px;background:var(--off-white);border-radius:6px;margin-bottom:5px;font-size:12px;align-items:center}
+.ctrl-row.ok{background:rgba(46,119,128,.08)}.ctrl-row.warn{background:rgba(196,160,74,.12)}.ctrl-row.fail{background:rgba(193,69,69,.12)}
 .ctrl-icon{font-family:'DM Sans',sans-serif;font-weight:700;text-align:center}
-.ctrl-icon.ok{color:var(--teal)}
-.ctrl-icon.warn{color:var(--warn)}
-.ctrl-icon.fail{color:var(--neg)}
+.ctrl-icon.ok{color:var(--teal)}.ctrl-icon.warn{color:var(--warn)}.ctrl-icon.fail{color:var(--neg)}
 .ctrl-val{font-family:'DM Sans',sans-serif;font-weight:600;color:var(--muted);font-size:11px}
-
-/* CHARTS */
-.chart-wrap{position:relative;width:100%;height:280px;margin-bottom:14px}
-.chart-wrap.h220{height:220px}
-
-/* DECISIONS */
-.decision-card{background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:10px}
-.decision-card h5{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:var(--teal);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:6px}
+.decision-card{background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:8px}
+.decision-card h5{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:var(--teal);letter-spacing:.04em;text-transform:uppercase;margin-bottom:5px}
 .decision-card .metric{font-family:'DM Sans',sans-serif;font-weight:700;color:var(--slate)}
-
-/* VTABS */
-.vtabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--border)}
-.vtab{padding:8px 16px;background:transparent;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);border-bottom:2px solid transparent}
+.chart-wrap{position:relative;width:100%;height:260px;margin-bottom:14px}
+.chart-wrap.h220{height:220px}
+.vtabs{display:flex;gap:4px;margin-bottom:14px;border-bottom:1px solid var(--border)}
+.vtab{padding:7px 14px;background:transparent;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);border-bottom:2px solid transparent}
 .vtab:hover{color:var(--slate)}
 .vtab.active{color:var(--slate);border-bottom-color:var(--teal);font-weight:600}
-
-footer{padding:32px 40px;border-top:1px solid var(--border);background:#fff;color:var(--muted);font-size:11px;text-align:center}
-
-@media(max-width:980px){.shell{grid-template-columns:1fr}.sidebar{display:none}.apex-grid{grid-template-columns:repeat(2,1fr)}.glossary-grid{grid-template-columns:1fr}}
+footer{padding:24px;border-top:1px solid var(--border);background:#fff;color:var(--muted);font-size:11px;text-align:center}
+@media(max-width:960px){.shell{grid-template-columns:1fr}.sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border)}.apex-grid{grid-template-columns:repeat(2,1fr)}.glossary-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -181,220 +131,666 @@ footer{padding:32px 40px;border-top:1px solid var(--border);background:#fff;colo
 </header>
 
 <div class="shell">
+
   <aside class="sidebar">
-    <div class="nav-group">
-      <div class="nav-label">Sections</div>
-      <nav class="nav">
-        <a href="#0" onclick="setPage('0',this)" class="active"><span class="nav-num">0</span>Executive summary</a>
-        <a href="#1" onclick="setPage('1',this)"><span class="nav-num">1</span>Industry analysis</a>
-        <a href="#2" onclick="setPage('2',this)"><span class="nav-num">2</span>Benchmarks</a>
-        <a href="#3" onclick="setPage('3',this)"><span class="nav-num">3</span>Our hypothesis</a>
-        <a href="#4" onclick="setPage('4',this)"><span class="nav-num">4</span>Scenarios & decisions</a>
-        <a href="#5" onclick="setPage('5',this)"><span class="nav-num">5</span>Controls</a>
-      </nav>
+    <div>
+      <div class="sec-label">Scenario</div>
+      <div class="pills">
+        <button class="pill" onclick="applyScen('bear',this)"><div><div class="pill-name">Bear</div><div class="pill-sub">Karina solo · no Lusin</div></div></button>
+        <button class="pill active" onclick="applyScen('real',this)"><div><div class="pill-name">Realistic</div><div class="pill-sub">2 engineers · 200 emails/wk</div></div></button>
+        <button class="pill" onclick="applyScen('bull',this)"><div><div class="pill-name">Bull</div><div class="pill-sub">Lusin ×5 · 4 engineers</div></div></button>
+      </div>
     </div>
-    <div class="nav-group">
-      <div class="nav-label">Reference</div>
-      <nav class="nav">
-        <a href="#g" onclick="setPage('g',this)"><span class="nav-num">G</span>Glossary</a>
-      </nav>
+
+    <div>
+      <div class="sec-label">Outreach intensity <span class="pin">KARINA</span></div>
+      <div class="slider-group">
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Karina hrs/wk</span><span class="slider-val" id="v-karinaHrs">35h</span></div><input type="range" min="10" max="50" step="1" value="35" id="sl-karinaHrs"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Cold email touches/wk</span><span class="slider-val" id="v-emTw">200</span></div><input type="range" min="0" max="500" step="10" value="200" id="sl-emTw"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">LinkedIn touches/wk</span><span class="slider-val" id="v-liTw">60</span></div><input type="range" min="0" max="200" step="5" value="60" id="sl-liTw"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Warm intros/mo</span><span class="slider-val" id="v-wmIn">4</span></div><input type="range" min="0" max="15" step="1" value="4" id="sl-wmIn"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Conferences in 6mo</span><span class="slider-val" id="v-cfEv">3</span></div><input type="range" min="0" max="8" step="1" value="3" id="sl-cfEv"></div>
+      </div>
     </div>
+
+    <div>
+      <div class="sec-label">Quality &amp; pricing</div>
+      <div class="slider-group">
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Cold email reply %</span><span class="slider-val" id="v-emRp">6%</span></div><input type="range" min="1" max="30" step="0.5" value="6" id="sl-emRp"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Lusin signal lift</span><span class="slider-val" id="v-lusin">1.0×</span></div><input type="range" min="1" max="10" step="0.5" value="1" id="sl-lusin"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Pilot → Close %</span><span class="slider-val" id="v-pc">60%</span></div><input type="range" min="30" max="90" step="1" value="60" id="sl-pc"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sec-label">Implementation fee per vertical</div>
+      <div class="slider-group">
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">HR ($K)</span><span class="slider-val" id="v-hrFee">30</span></div><input type="range" min="15" max="60" step="1" value="30" id="sl-hrFee"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">MSP ($K)</span><span class="slider-val" id="v-mspFee">28</span></div><input type="range" min="15" max="50" step="1" value="28" id="sl-mspFee"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Accounting ($K)</span><span class="slider-val" id="v-accFee">22</span></div><input type="range" min="15" max="40" step="1" value="22" id="sl-accFee"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Legal ($K)</span><span class="slider-val" id="v-legFee">60</span></div><input type="range" min="30" max="120" step="2" value="60" id="sl-legFee"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Monthly retainer $K/mo</span><span class="slider-val" id="v-rec">2.5</span></div><input type="range" min="0" max="8" step="0.5" value="2.5" id="sl-rec"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sec-label">Team cost ($K/mo)</div>
+      <div class="slider-group">
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Engineers (FTE)</span><span class="slider-val" id="v-engN">2</span></div><input type="range" min="1" max="6" step="1" value="2" id="sl-engN"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Engineer cost each</span><span class="slider-val" id="v-engCost">12</span></div><input type="range" min="6" max="22" step="0.5" value="12" id="sl-engCost"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Karina cost</span><span class="slider-val" id="v-sdrCost">4</span></div><input type="range" min="2" max="10" step="0.5" value="4" id="sl-sdrCost"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Tools (Apollo/Clay/Lusin)</span><span class="slider-val" id="v-tools">2</span></div><input type="range" min="0.5" max="6" step="0.5" value="2" id="sl-tools"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Fixed overhead</span><span class="slider-val" id="v-overhead">3.5</span></div><input type="range" min="1" max="10" step="0.5" value="3.5" id="sl-overhead"></div>
+        <div class="slider-row"><div class="slider-head"><span class="slider-name">Founder draw</span><span class="slider-val" id="v-draw">5</span></div><input type="range" min="0" max="20" step="1" value="5" id="sl-draw"></div>
+      </div>
+    </div>
+    <button class="reset-btn" onclick="resetAll()">↺ Reset to defaults</button>
   </aside>
 
   <main class="content">
 
-    <!-- ============ PAGE 0: APEX ============ -->
-    <section class="page active" id="page-0">
-      <div class="page-head">
-        <div class="page-num">SECTION 0</div>
-        <div class="page-title">Executive summary</div>
-        <div class="page-sub">Master conclusion в одном экране · live KPIs</div>
-      </div>
-
-      <div class="callout dark">
-        <strong>Bottom Line Up Front.</strong> Two engines separate: Engine A = acquisition channels (referrals, warm, conferences, targeted outbound), Engine B = sales motion (founder-led now → hybrid → sales-team-led). Economics healthy at <strong>LTV ≈ $48K · blended CAC ≈ $4.5K · LTV/CAC ≈ 11× · payback ≈ 3 mo</strong> — but capped by founder time. Headcount plan hard-codes the trigger to move selling off founder. <strong>Hire delivery first, sales second.</strong> Lusin signal engine = primary leverage point.
-      </div>
-
-      <div class="apex-grid">
-        <div class="apex-kpi"><div class="apex-label">Lifetime Value</div><div class="apex-val" id="apex-ltv">$48K</div><div class="apex-sub">3-yr · 55% GM</div></div>
-        <div class="apex-kpi"><div class="apex-label">Blended CAC</div><div class="apex-val" id="apex-cac">$4.5K</div><div class="apex-sub">weighted channel mix</div></div>
-        <div class="apex-kpi"><div class="apex-label">LTV / CAC ratio</div><div class="apex-val pos" id="apex-ratio">11×</div><div class="apex-sub">target ≥3× / world-class ≥10×</div></div>
-        <div class="apex-kpi"><div class="apex-label">Payback</div><div class="apex-val pos" id="apex-payback">~3 mo</div><div class="apex-sub">target <12 mo</div></div>
-        <div class="apex-kpi"><div class="apex-label">EBITDA break-even</div><div class="apex-val small warn" id="apex-be">—</div><div class="apex-sub">first +month</div></div>
-        <div class="apex-kpi"><div class="apex-label">Cash break-even</div><div class="apex-val small warn" id="apex-cbe">—</div><div class="apex-sub">otстаёт от EBITDA</div></div>
-        <div class="apex-kpi"><div class="apex-label">Founder + Karina util.</div><div class="apex-val small" id="apex-futil">—</div><div class="apex-sub">capacity</div></div>
-        <div class="apex-kpi"><div class="apex-label">Engineer utilization</div><div class="apex-val small" id="apex-eutil">—</div><div class="apex-sub">delivery throughput</div></div>
-      </div>
-
-      <h3>Logical spine модели</h3>
-      <p style="font-size:13px;background:var(--off-white);padding:12px 14px;border-radius:6px;font-family:'DM Sans',sans-serif;color:var(--slate)">
-        Drivers → Capacity gates → 6-stage pipeline per vertical → Bookings → Recognized revenue → COGS → EBITDA → Cash → De-foundering trigger check
-      </p>
-
-      <h3>Что в этом документе</h3>
-      <table class="tbl">
-        <thead><tr><th>Section</th><th>Содержание</th><th>Откуда логика</th></tr></thead>
-        <tbody>
-          <tr><td><strong>1 · Industry</strong></td><td>Контекст рынка AI integration services · какие каналы работают · кто играет</td><td>От общего к конкретному</td></tr>
-          <tr><td><strong>2 · Benchmarks</strong></td><td>Pricing per vertical · channel conversions · pipeline stages · CAC/LTV · capacity · payment terms</td><td>Блок 1 Реестр допущений + Engine A benchmark</td></tr>
-          <tr><td><strong>3 · Our hypothesis</strong></td><td>Engine A (наш channel mix) + Engine B (motion) + headcount roadmap + capacity gates + cohort funnel + revenue/COGS/cash + unit economics</td><td>Блоки 2-7 Николая + Engine framework</td></tr>
-          <tr><td><strong>4 · Scenarios + decisions</strong></td><td>Coherent bundles · tornado · decision layer · de-foundering trigger check · So What · Risk caveat</td><td>Блок 8-9 Николая + McKinsey callouts</td></tr>
-          <tr><td><strong>5 · Controls</strong></td><td>Validation checks · assumption log с источниками</td><td>Блок 10 Николая</td></tr>
-        </tbody>
-      </table>
-
-      <p style="margin-top:18px;font-size:12px;color:var(--muted)">
-        💡 Settings panel (правый нижний угол) появляется в Hypothesis, Scenarios и Controls — для интерактивного покручивания модели.
-      </p>
-    </section>
-
-    <!-- ============ PAGE 1: INDUSTRY ============ -->
-    <section class="page" id="page-1">
-      <div class="page-head">
-        <div class="page-num">SECTION 1</div>
-        <div class="page-title">Industry analysis · от рынка к нашему месту</div>
-        <div class="page-sub">Positioning Bobroff и выбор verticals — в <a href="https://github.com/bobroff-cap/roll-ups/blob/main/analysis/roll-ups%20analysis%20business-models-replication%20%E2%80%93%202026-06-10.html" target="_blank" style="color:var(--teal)">Business Model Selection doc</a> · здесь не дублируем</div>
-      </div>
-
-      <div class="block">
-        <h3>1.1 Market context</h3>
-        <ul style="margin-left:20px;color:var(--near-black);font-size:13px">
-          <li>AI consulting market 2026: <strong>$1B+ TAM US</strong>, 30%+ CAGR</li>
-          <li>87% маркетёров используют GenAI; только 6% получают bottom-line ценность → разрыв = boutique implementation tier востребован</li>
-          <li>73% SMB сидят на legacy stacks, 60% out of compliance → большой addressable demand</li>
-          <li>Две стратегии играют на рынке: <strong>services-as-service</strong> (продаём интеграцию) vs <strong>acquisition rollup</strong> (покупаем + трансформируем)</li>
-        </ul>
-      </div>
-
-      <div class="block">
-        <h3>1.2 GTM channels в AI integration services — что вообще работает</h3>
-        <p>Industry-standard channel mix для high-ticket AI integration services. Ranked by efficiency (CAC / LTV ratio benchmark):</p>
-        <table class="tbl">
-          <thead><tr><th>#</th><th>Channel</th><th>Industry status</th><th>Phase активации</th></tr></thead>
-          <tbody>
-            <tr><td>1</td><td>Referrals & partnerships</td><td><span class="badge-scale">SCALE</span> — самый эффективный для high-trust B2B services</td><td>Phase 0+ (post-pilot)</td></tr>
-            <tr><td>2</td><td>Warm network</td><td>Finite resource, max efficiency пока есть</td><td>Phase 0 (exhaust quickly)</td></tr>
-            <tr><td>3</td><td>Communities & vertical events</td><td>Active · HR Tech, MSP Summit, Karbon Connect, Legalweek</td><td>Phase 0+</td></tr>
-            <tr><td>4</td><td>Targeted outbound (cold email + LinkedIn)</td><td>Volume play · scalable, особенно с signal-engine (Lusin)</td><td>Phase 0+ (primary volume)</td></tr>
-            <tr><td>5</td><td>Content & founder brand</td><td>Build for compound effect</td><td>Phase 2+</td></tr>
-            <tr><td>6</td><td>Organic search (SEO)</td><td><span class="badge-defer">DEFER</span> Long ramp, future asset</td><td>Phase 2-3</td></tr>
-            <tr><td>7</td><td>Paid advertising</td><td><span class="badge-last">LAST</span> Defer until team can absorb cost</td><td>Phase 3+</td></tr>
-          </tbody>
-        </table>
-        <p style="margin-top:10px;color:var(--muted);font-size:12px">
-          <strong>Note:</strong> Acquisition rollup tier (Long Lake, Crete, Shield) НЕ продаёт services — покупает существующие. Это другая стратегия и каналы там M&A pipeline, не sales.
+    <!-- SECTION 0 · APEX -->
+    <details class="section" open>
+      <summary><span class="section-num">SECTION 0</span> Executive summary · BLUF + KPIs <span class="section-meta">Master conclusion в одном экране</span></summary>
+      <div class="section-body">
+        <div class="callout dark">
+          <strong>Bottom Line Up Front.</strong> Two engines separate: Engine A = acquisition channels (referrals, warm, conferences, targeted outbound), Engine B = sales motion (founder-led now → hybrid → sales-team-led). Economics healthy at <strong>LTV ≈ $48K · blended CAC ≈ $4.5K · LTV/CAC ≈ 11× · payback ≈ 3 mo</strong> — but capped by founder time. Headcount plan hard-codes the trigger to move selling off founder. <strong>Hire delivery first, sales second.</strong> Lusin signal engine = primary leverage point.
+        </div>
+        <div class="apex-grid">
+          <div class="apex-kpi"><div class="apex-label">Lifetime Value</div><div class="apex-val" id="apex-ltv">—</div><div class="apex-sub">3-yr · 55% GM</div></div>
+          <div class="apex-kpi"><div class="apex-label">Blended CAC</div><div class="apex-val" id="apex-cac">—</div><div class="apex-sub">weighted channel mix</div></div>
+          <div class="apex-kpi"><div class="apex-label">LTV / CAC</div><div class="apex-val pos" id="apex-ratio">—</div><div class="apex-sub">target ≥3× · world-class ≥10×</div></div>
+          <div class="apex-kpi"><div class="apex-label">Payback</div><div class="apex-val pos" id="apex-payback">—</div><div class="apex-sub">target &lt;12 mo</div></div>
+          <div class="apex-kpi"><div class="apex-label">EBITDA break-even</div><div class="apex-val small warn" id="apex-be">—</div><div class="apex-sub">first +month</div></div>
+          <div class="apex-kpi"><div class="apex-label">Cash break-even</div><div class="apex-val small warn" id="apex-cbe">—</div><div class="apex-sub">отстаёт от EBITDA</div></div>
+          <div class="apex-kpi"><div class="apex-label">Karina util.</div><div class="apex-val small" id="apex-futil">—</div><div class="apex-sub">capacity</div></div>
+          <div class="apex-kpi"><div class="apex-label">Engineer util.</div><div class="apex-val small" id="apex-eutil">—</div><div class="apex-sub">delivery throughput</div></div>
+        </div>
+        <p style="font-size:12px;background:var(--off-white);padding:10px 12px;border-radius:6px;font-family:'DM Sans',sans-serif;color:var(--slate)">
+          <strong>Logical spine:</strong> Drivers → Capacity gates → 6-stage pipeline per vertical → Bookings → Recognized revenue → COGS → EBITDA → Cash → De-foundering trigger
         </p>
       </div>
+    </details>
 
-      <div class="block">
-        <h3>1.3 Competitor map · GTM strategies</h3>
-        <p>Кто играет в US AI integration market и какими каналами:</p>
-        <table class="tbl">
-          <thead>
-            <tr><th>Tier</th><th>Player</th><th>Target</th><th>GTM channels</th><th>Pricing model</th><th>Implementation $</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Enterprise outcome</td><td><strong>Distyl AI</strong></td><td>F500 telecom/health/manufacturing</td><td>Forward-deployed teams · OpenAI partnership</td><td>Outcome-based + platform</td><td>$200K–$2M Y1</td></tr>
-            <tr><td>Enterprise outcome</td><td><strong>Eudia</strong></td><td>In-house legal teams</td><td>Sales-led enterprise</td><td>SaaS + implementation</td><td>$50K–$300K</td></tr>
-            <tr><td>Enterprise outcome</td><td><strong>Harvey AI</strong></td><td>Am Law 100 + mid-market law</td><td>Sales-led + partnerships</td><td>License + implementation</td><td>$50K–$300K/yr</td></tr>
-            <tr><td>Rollup acquisition</td><td><strong>Long Lake</strong></td><td>Services businesses</td><td>M&A pipeline · Nexus platform</td><td>Acquire+transform</td><td>N/A — buys companies</td></tr>
-            <tr><td>Rollup acquisition</td><td><strong>Crete/Current Professionals</strong></td><td>Accounting firms</td><td>M&A + OpenAI tools</td><td>Acquire+integrate</td><td>N/A — buys firms</td></tr>
-            <tr><td>Rollup acquisition</td><td><strong>Shield Technology Partners</strong></td><td>MSPs</td><td>M&A + Sentinel platform</td><td>Acquire+integrate</td><td>N/A — buys MSPs</td></tr>
-            <tr><td>Mid-market integrator</td><td><strong>GC Services / Thrive portfolio</strong></td><td>Mid-market services</td><td>Partners + outbound</td><td>Project + recurring</td><td>$50K–$150K</td></tr>
-            <tr class="total-row"><td><strong>Boutique (our space)</strong></td><td><strong>Bobroff AI-Integration Co</strong></td><td>SMB/mid-market в 4 verticals</td><td>Engine A + Engine B (см. Section 3)</td><td>Implementation fee + Monthly retainer</td><td><strong>$22K–$60K target</strong></td></tr>
-          </tbody>
-        </table>
-        <div class="callout" style="margin-top:14px">
-          <strong>Key takeaway.</strong> Boutique mid-market integration partner tier — открытое пространство. Distyl-tier слишком enterprise; rollups покупают, не продают services. <strong>Наша ниша = boutique implementation $22-60K для SMB/mid-market в 4 vertikalях.</strong>
+    <!-- GLOSSARY -->
+    <details class="section">
+      <summary><span class="section-num">GLOSSARY</span> Ключевые термины <span class="section-meta">Для нового читателя</span></summary>
+      <div class="section-body">
+        <div class="glossary-grid" id="glossary"></div>
+      </div>
+    </details>
+
+    <!-- SECTION 1 -->
+    <details class="section" open>
+      <summary><span class="section-num">SECTION 1</span> Industry analysis <span class="section-meta">От рынка к нашему месту</span></summary>
+      <div class="section-body">
+        <p style="font-size:12px;color:var(--muted);margin-bottom:14px"><em>Positioning Bobroff и выбор verticals → в <a href="https://github.com/bobroff-cap/roll-ups/blob/main/analysis/roll-ups%20analysis%20business-models-replication%20%E2%80%93%202026-06-10.html" target="_blank" style="color:var(--teal)">Business Model Selection doc</a>. Здесь не дублируем.</em></p>
+
+        <div class="block">
+          <h3>1.1 Market context</h3>
+          <ul>
+            <li>AI consulting market 2026: <strong>$1B+ TAM US</strong>, 30%+ CAGR</li>
+            <li>87% маркетёров используют GenAI; только 6% получают bottom-line ценность → разрыв = boutique implementation tier востребован</li>
+            <li>73% SMB сидят на legacy stacks, 60% out of compliance → большой addressable demand</li>
+            <li>Две стратегии играют на рынке: <strong>services-as-service</strong> (продаём интеграцию) vs <strong>acquisition rollup</strong> (покупаем + трансформируем)</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3>1.2 GTM channels в AI integration services · что вообще работает</h3>
+          <table class="tbl">
+            <thead><tr><th>#</th><th>Channel</th><th>Industry status</th><th>Phase активации</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Referrals &amp; partnerships</td><td><span class="badge-scale">SCALE</span> Самый эффективный для high-trust B2B services</td><td>Phase 0+ (post-pilot)</td></tr>
+              <tr><td>2</td><td>Warm network</td><td>Finite resource · max efficiency пока есть</td><td>Phase 0 (exhaust quickly)</td></tr>
+              <tr><td>3</td><td>Communities &amp; vertical events</td><td>Active · HR Tech, MSP Summit, Karbon Connect, Legalweek</td><td>Phase 0+</td></tr>
+              <tr><td>4</td><td>Targeted outbound (cold email + LinkedIn)</td><td>Volume play · scalable с signal-engine (Lusin)</td><td>Phase 0+ (primary volume)</td></tr>
+              <tr><td>5</td><td>Content &amp; founder brand</td><td>Build for compound effect</td><td>Phase 2+</td></tr>
+              <tr><td>6</td><td>Organic search (SEO)</td><td><span class="badge-defer">DEFER</span> Long ramp</td><td>Phase 2-3</td></tr>
+              <tr><td>7</td><td>Paid advertising</td><td><span class="badge-last">LAST</span> Defer until team can absorb</td><td>Phase 3+</td></tr>
+            </tbody>
+          </table>
+          <p class="src" style="font-size:11px;color:var(--muted)"><strong>Note:</strong> Acquisition rollup tier (Long Lake, Crete, Shield) НЕ продаёт services — покупает существующие компании. Это другая стратегия (M&A pipeline, не sales channels).</p>
+        </div>
+
+        <div class="block">
+          <h3>1.3 Competitor map · кто играет какими стратегиями</h3>
+          <table class="tbl">
+            <thead><tr><th>Tier</th><th>Player</th><th>Target</th><th>GTM channels</th><th>Implementation $</th></tr></thead>
+            <tbody>
+              <tr><td>Enterprise outcome</td><td><strong>Distyl AI</strong></td><td>F500 telecom/health/manufacturing</td><td>Forward-deployed teams · OpenAI partnership</td><td>$200K–$2M Y1</td></tr>
+              <tr><td>Enterprise outcome</td><td><strong>Eudia</strong></td><td>In-house legal teams</td><td>Sales-led enterprise</td><td>$50K–$300K</td></tr>
+              <tr><td>Enterprise outcome</td><td><strong>Harvey AI</strong></td><td>Am Law 100 + mid-market law</td><td>Sales-led + partnerships</td><td>$50K–$300K/yr</td></tr>
+              <tr><td>Rollup acquisition</td><td><strong>Long Lake</strong></td><td>Services businesses</td><td>M&A · Nexus AI platform</td><td>N/A — buys companies</td></tr>
+              <tr><td>Rollup acquisition</td><td><strong>Crete/Current Professionals</strong></td><td>Accounting firms</td><td>M&A + OpenAI tools</td><td>N/A — buys firms</td></tr>
+              <tr><td>Rollup acquisition</td><td><strong>Shield Technology Partners</strong></td><td>MSPs</td><td>M&A + Sentinel platform</td><td>N/A — buys MSPs</td></tr>
+              <tr><td>Mid-market integrator</td><td><strong>GC Services / Thrive portfolio</strong></td><td>Mid-market services</td><td>Partners + outbound</td><td>$50K–$150K</td></tr>
+              <tr class="total-row"><td><strong>Boutique (our space)</strong></td><td><strong>Bobroff AI-Integration Co</strong></td><td>SMB/mid-market · 4 verticals</td><td>Engine A: referrals/warm/conferences/outbound · Engine B: founder-led → team</td><td><strong>$22K–$60K target</strong></td></tr>
+            </tbody>
+          </table>
+          <div class="callout"><strong>Key takeaway.</strong> Boutique mid-market integration partner tier — открытое пространство. Distyl-tier слишком enterprise; rollups не продают services. <strong>Наша ниша = boutique implementation $22-60K для SMB/mid-market в 4 vertikalях.</strong></div>
         </div>
       </div>
-    </section>
+    </details>
 
-    <!-- Pages 2-5 + Glossary loaded via separate files in production. For now stub. -->
-    <section class="page" id="page-2"><div class="page-head"><div class="page-num">SECTION 2</div><div class="page-title">Benchmarks · Vertical × Channel evidence</div></div><p>Loading content from 2-benchmarks page...</p></section>
-    <section class="page" id="page-3"><div class="page-head"><div class="page-num">SECTION 3</div><div class="page-title">Our hypothesis</div></div><p>Loading content from 3-hypothesis page...</p></section>
-    <section class="page" id="page-4"><div class="page-head"><div class="page-num">SECTION 4</div><div class="page-title">Scenarios & decisions</div></div><p>Loading content from 4-scenarios page...</p></section>
-    <section class="page" id="page-5"><div class="page-head"><div class="page-num">SECTION 5</div><div class="page-title">Controls & assumption log</div></div><p>Loading content from 5-controls page...</p></section>
-    <section class="page" id="page-g">
-      <div class="page-head"><div class="page-num">REFERENCE</div><div class="page-title">Glossary · ключевые термины</div></div>
-      <div class="glossary-grid" id="glossary"></div>
-    </section>
+    <!-- SECTION 2 -->
+    <details class="section" open>
+      <summary><span class="section-num">SECTION 2</span> Benchmarks · Vertical × Channel evidence <span class="section-meta">База для гипотезы · Block 1 Николая</span></summary>
+      <div class="section-body">
+
+        <div class="block">
+          <h3>2.1 Pricing benchmarks per vertical</h3>
+          <table class="tbl">
+            <thead><tr><th>Vertical</th><th class="r">Market median</th><th>Anchor competitor</th><th class="r">Our target</th><th class="r">Uplift</th><th>Justification</th></tr></thead>
+            <tbody>
+              <tr><td><strong>HR / Recruiting</strong></td><td class="r">$22K</td><td>Greenhouse partners $20-50K · ServiceTitan $5-50K</td><td class="r"><strong>$30K</strong></td><td class="r pos">+36%</td><td>Lusin = unfair advantage; HR cold reply 1.8× generic</td></tr>
+              <tr><td><strong>MSP / IT</strong></td><td class="r">$25K</td><td>Atera/Ninja $20-40K · Shield Sentinel $25-100K</td><td class="r"><strong>$28K</strong></td><td class="r pos">+12%</td><td>AI ticket auto = $18K/yr savings</td></tr>
+              <tr><td><strong>Accounting</strong></td><td class="r">$18K</td><td>Karbon partners $15-30K · above migration $1-2.5K</td><td class="r"><strong>$22K</strong></td><td class="r pos">+22%</td><td>Pilot implementation with measurable savings</td></tr>
+              <tr><td><strong>Legal</strong></td><td class="r">$50K</td><td>Harvey $50-300K/yr · Eudia $50-300K</td><td class="r"><strong>$60K</strong></td><td class="r pos">+20%</td><td>Highest cold reply rate market-wide</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="block">
+          <h3>2.2 Channel × Vertical conversion matrix</h3>
+          <div class="callout warn"><strong>Master approximation.</strong> Channel conversions применяем одинаково across verticals. Per-vertical lifts отражают known industry differences. Будет locked per-vertical когда получим first pilot data (target M3-M4).</div>
+          <table class="tbl">
+            <thead><tr><th>Channel</th><th class="r">Generic B2B</th><th class="r">HR</th><th class="r">MSP</th><th class="r">Accounting</th><th class="r">Legal</th></tr></thead>
+            <tbody>
+              <tr><td>Cold email reply</td><td class="r">3.4%</td><td class="r"><strong>5.8–7.2%</strong></td><td class="r">3-4%</td><td class="r">5.1%</td><td class="r"><strong>8-12% top</strong></td></tr>
+              <tr><td>LinkedIn InMail reply</td><td class="r">10-25%</td><td class="r"><strong>18-25%</strong></td><td class="r">4.77%</td><td class="r">10.3%</td><td class="r">10.42%</td></tr>
+              <tr><td>Warm intro → meeting</td><td class="r">75-85%</td><td class="r">Same</td><td class="r">Same</td><td class="r">Same</td><td class="r">Same</td></tr>
+              <tr><td>Conf lead → MQL</td><td class="r">54%</td><td class="r">Same</td><td class="r">Same</td><td class="r">Same</td><td class="r">Same</td></tr>
+              <tr><td>Sales cycle (cold)</td><td class="r">60-120d</td><td class="r">51d</td><td class="r">60d</td><td class="r">66d</td><td class="r">84d</td></tr>
+            </tbody>
+          </table>
+          <p class="src" style="font-size:11px"><strong>Sources:</strong> Cleanlist + Mailshake 2026 · LinkedIn 2026 by industry · LaunchLeads · BeExecutiveEvents · B2B SaaS 2026 by ACV</p>
+        </div>
+
+        <div class="block">
+          <h3>2.3 6-stage sales pipeline (унифицированная воронка)</h3>
+          <table class="tbl">
+            <thead><tr><th>Stage</th><th>Name</th><th class="r">Conversion</th><th class="r">Cumulative</th><th>Owner (Phase 0)</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Lead</td><td class="r">100% base</td><td class="r">100%</td><td>Channels feed</td></tr>
+              <tr><td>2</td><td>Qualification (ICP fit)</td><td class="r">40-60%</td><td class="r">40-60%</td><td>Karina + Lusin</td></tr>
+              <tr><td>3</td><td>Pain Diagnostic call</td><td class="r">50-70%</td><td class="r">20-42%</td><td>Founder</td></tr>
+              <tr><td>4</td><td><strong>Paid Pilot ($10K)</strong> <span class="badge-bottleneck">BOTTLENECK</span></td><td class="r"><strong>25-40%</strong></td><td class="r"><strong>5-17%</strong></td><td>Founder converts</td></tr>
+              <tr><td>5</td><td>Implementation Deal</td><td class="r">60-80%</td><td class="r">3-13%</td><td>Engineer delivers</td></tr>
+              <tr><td>6</td><td>Account Expansion (retainer)</td><td class="r">NRR &gt;110%</td><td class="r">—</td><td>CS / founder</td></tr>
+            </tbody>
+          </table>
+          <p class="src" style="font-size:11px"><strong>Source:</strong> McKinsey GTM template + Salesforce State of Sales 2026 для high-ticket B2B consulting</p>
+        </div>
+
+        <div class="block">
+          <h3>2.4 CAC / LTV benchmarks per channel · Engine A reference</h3>
+          <table class="tbl">
+            <thead><tr><th>#</th><th>Channel</th><th class="r">Benchmark CAC</th><th class="r">LTV/CAC</th><th class="r">Payback</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Referrals &amp; partnerships</td><td class="r">$3,000</td><td class="r"><strong>24×</strong></td><td class="r">1.1 mo</td><td><span class="badge-scale">SCALE</span></td></tr>
+              <tr><td>2</td><td>Warm network · finite</td><td class="r">$3,500</td><td class="r">21×</td><td class="r">1.3 mo</td><td>Maximize</td></tr>
+              <tr><td>3</td><td>Communities &amp; events</td><td class="r">$8,000</td><td class="r">9×</td><td class="r">2.9 mo</td><td>Active</td></tr>
+              <tr><td>4</td><td>Targeted outbound</td><td class="r">$11,000</td><td class="r">7×</td><td class="r">4.0 mo</td><td>Primary volume</td></tr>
+              <tr><td>5</td><td>Content &amp; founder brand</td><td class="r">$7,000</td><td class="r">10×</td><td class="r">2.5 mo</td><td>Build</td></tr>
+              <tr><td>6</td><td>Organic search</td><td class="r">$5,000</td><td class="r">15×</td><td class="r">1.8 mo</td><td><span class="badge-defer">DEFER</span></td></tr>
+              <tr><td>7</td><td>Paid advertising</td><td class="r">$20,000</td><td class="r">3.6×</td><td class="r">7.3 mo</td><td><span class="badge-last">LAST</span></td></tr>
+              <tr class="subtotal-row"><td colspan="2"><strong>Blended (top-weighted)</strong></td><td class="r"><strong>$6,500</strong></td><td class="r"><strong>11×</strong></td><td class="r"><strong>2.4 mo</strong></td><td>—</td></tr>
+            </tbody>
+          </table>
+          <p class="src" style="font-size:11px"><strong>Industry benchmark</strong> для high-ticket AI integration · наш hypothesis CAC см. Section 3.1 (с Lusin lift applied)</p>
+        </div>
+
+        <div class="block">
+          <h3>2.5 Lusin signal-triggered · наш unfair advantage</h3>
+          <div class="callout">
+            <strong>Internal pilot data (Cyborg HR / Peter Kelly, April 2026):</strong><br>
+            • Cold outreach без сигнала: <strong>3% reply rate</strong><br>
+            • Cold outreach с Lusin сигналом: <strong>30% reply rate</strong><br>
+            → <strong>×10 lift validated.</strong> Переводит Targeted outbound (rank #4 standard) в rank #2-3 по CAC. Снижает effective CAC outbound с $11K до ~$4K.
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>2.6 Capacity benchmarks</h3>
+          <ul>
+            <li>Engineer billable utilization realistic: <strong>60-70%</strong> · industry avg 68.9%</li>
+            <li>Engineer monthly billable @ 65%: ~95 hrs/mo</li>
+            <li>Integration project: 40-60 hrs typical → <strong>~1.75 implementations/mo per engineer</strong></li>
+            <li>SDR research Lusin-assisted: <strong>5-7 min/touch</strong> (vs manual 15-30 min)</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3>2.7 Payment terms + L2 churn</h3>
+          <ul>
+            <li>Standard: <strong>30% advance / 40% milestone M+1 / 30% net-30 after delivery (M+3)</strong></li>
+            <li>L2 monthly churn anchor: <strong>3%</strong> (SMB tier · annual 10-15%)</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- SECTION 3 -->
+    <details class="section" open>
+      <summary><span class="section-num">SECTION 3</span> Our hypothesis · Two engines + math <span class="section-meta">Blocks 2-7 Николая + Engine framework</span></summary>
+      <div class="section-body">
+
+        <div class="block">
+          <h3>3.1 Engine A · наши channels с CAC/LTV</h3>
+          <table class="tbl">
+            <thead><tr><th>Channel</th><th class="r">Our CAC</th><th class="r">Our LTV/CAC</th><th>Priority</th><th>Phase</th></tr></thead>
+            <tbody>
+              <tr><td>Referrals &amp; partnerships</td><td class="r">$1.5–3K</td><td class="r"><strong>24×+</strong></td><td><span class="badge-scale">#1 SCALE</span></td><td>Phase 0+ (post-pilot)</td></tr>
+              <tr><td>Warm network · Nicolas + Lisa</td><td class="r">$2–4K</td><td class="r">21×</td><td><strong>#2 Maximize</strong></td><td>Phase 0 (exhaust)</td></tr>
+              <tr><td>Communities &amp; conferences</td><td class="r">$5–8K</td><td class="r">9×</td><td><strong>#3</strong></td><td>Phase 0+</td></tr>
+              <tr><td>Targeted outbound + Lusin</td><td class="r"><strong>$3–5K (Lusin) / $10–14K (no)</strong></td><td class="r"><strong>10-18×</strong></td><td><strong>#4 Primary</strong></td><td>Phase 0+ (Karina)</td></tr>
+              <tr><td>Content &amp; founder brand</td><td class="r">$5–8K</td><td class="r">10×</td><td>#5</td><td><span class="badge-defer">Phase 2+</span></td></tr>
+              <tr><td>Organic SEO</td><td class="r">n/a</td><td class="r">15× eventual</td><td>Deferred</td><td><span class="badge-defer">Phase 2-3</span></td></tr>
+              <tr><td>Paid advertising</td><td class="r">$20K</td><td class="r">3.6×</td><td>LAST</td><td><span class="badge-last">Phase 3+</span></td></tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px"><strong>Spend order:</strong> Referrals + Warm + Conferences + Lusin-powered outbound. <strong>Defer paid until Phase 3.</strong></p>
+        </div>
+
+        <div class="block">
+          <h3>3.2 Engine B · Sales motion (orthogonal to channels)</h3>
+          <table class="tbl">
+            <thead><tr><th>Phase</th><th>Motion</th><th class="r">Win-rate</th><th>Scale</th></tr></thead>
+            <tbody>
+              <tr><td><strong>NOW (Phase 0)</strong></td><td>Founder-led — Nicolas + Lisa sell; Karina assists sourcing</td><td class="r">~80%</td><td>Zero</td></tr>
+              <tr><td><strong>NEXT (Phase 2)</strong></td><td>Hybrid — founder + 1st AE; Paid Pilot productized</td><td class="r">~60-70%</td><td>Limited</td></tr>
+              <tr><td><strong>TARGET (Phase 3)</strong></td><td>Sales-team-led; founder = strategic accts + partnerships only</td><td class="r">~50-60%</td><td>Full</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="block">
+          <h3>3.3 Headcount &amp; De-foundering Roadmap</h3>
+          <div class="callout warn"><strong>⚠️ Order matters.</strong> Delivery is easier to systematize than trust-based selling — <strong>offload delivery first (Phase 1)</strong>. Reverse order breaks economics.</div>
+          <table class="tbl">
+            <thead><tr><th>Role / Phase</th><th class="c">Phase 0 NOW</th><th class="c">Phase 1</th><th class="c">Phase 2 Hybrid</th><th class="c">Phase 3 Target</th></tr></thead>
+            <tbody>
+              <tr><td>Founder (sell + strategy)</td><td class="c">2 · sell all</td><td class="c">2 · sell all</td><td class="c">1 · co-sells</td><td class="c">1 · strategic</td></tr>
+              <tr><td>Karina (SDR)</td><td class="c">1 · part-time</td><td class="c">1</td><td class="c">0.5 (assist AE)</td><td class="c">1 dedicated</td></tr>
+              <tr><td>Integration engineer</td><td class="c">0</td><td class="c"><strong>1 ← 1st hire</strong></td><td class="c">2</td><td class="c">3 (1/vertical)</td></tr>
+              <tr><td>Account Executive</td><td class="c">0</td><td class="c">0</td><td class="c"><strong>1 ← 1st sales</strong></td><td class="c">2-3</td></tr>
+              <tr><td>Sales lead</td><td class="c">0</td><td class="c">0</td><td class="c">0</td><td class="c"><strong>1</strong></td></tr>
+              <tr class="subtotal-row"><td><strong>Team total (ex-founder)</strong></td><td class="c"><strong>1</strong></td><td class="c"><strong>2</strong></td><td class="c"><strong>3.5</strong></td><td class="c"><strong>6-7</strong></td></tr>
+              <tr><td>Founder time on selling</td><td class="c">~80%</td><td class="c">~60%</td><td class="c">~40%</td><td class="c">&lt;20%</td></tr>
+              <tr><td><strong>Advance trigger →</strong></td><td class="c" style="font-size:10px">5-8 qual.deals/mo founder can't service & Diag→Pilot &gt;30% over ≥10 deals</td><td class="c" style="font-size:10px">Paid Pilot productized + ≥3 accts without founder</td><td class="c" style="font-size:10px">AE ramped to quota · win-rate within ~20% of founder</td><td class="c" style="font-size:10px">Steady state NRR &gt;110% · payback &lt;12mo</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="block">
+          <h3>3.4 Capacity gates · MIN(demand, capacity)</h3>
+          <div id="capacity-gauges"></div>
+        </div>
+
+        <div class="block">
+          <h3>3.5 Cohort funnel · channel × month с cycle lag</h3>
+          <p>Активность Karina в M → закрытие в конкретном месяце с лагом. Cold cycle 60d (M+2), warm/conf 30d (M+1). Karina ramp M1:50%, M2:80%, M3-M6:100%.</p>
+          <div style="overflow-x:auto" id="cohort-tbl"></div>
+        </div>
+
+        <div class="block">
+          <h3>3.6 Per-vertical breakdown</h3>
+          <div class="vtabs">
+            <button class="vtab active" onclick="setVTab('hr',this)">HR / Recruiting</button>
+            <button class="vtab" onclick="setVTab('msp',this)">MSP / IT</button>
+            <button class="vtab" onclick="setVTab('acc',this)">Accounting</button>
+            <button class="vtab" onclick="setVTab('leg',this)">Legal</button>
+          </div>
+          <div id="vertical-body"></div>
+        </div>
+
+        <div class="block">
+          <h3>3.7 Revenue assembly · booked / recognized / billed</h3>
+          <div style="overflow-x:auto" id="revenue-tbl"></div>
+        </div>
+
+        <div class="block">
+          <h3>3.8 COGS + true EBITDA</h3>
+          <p>COGS per deal = 50 engineer hrs × loaded rate ($75/hr). Gross margin → contribution → EBITDA — не "revenue минус fixed".</p>
+          <div style="overflow-x:auto" id="ebitda-tbl"></div>
+        </div>
+
+        <div class="block">
+          <h3>3.9 Cash separately from EBITDA</h3>
+          <p>EBITDA breakeven ≠ Cash breakeven. Из-за payment terms (net-30 after delivery) cash отстаёт на 1-2 месяца.</p>
+          <div class="chart-wrap"><canvas id="chartCash"></canvas></div>
+          <div style="overflow-x:auto" id="cash-tbl"></div>
+        </div>
+
+        <div class="block">
+          <h3>3.10 Unit economics per customer</h3>
+          <div id="unit-econ"></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- SECTION 4 -->
+    <details class="section" open>
+      <summary><span class="section-num">SECTION 4</span> Scenarios &amp; decisions <span class="section-meta">Coherent bundles · tornado · So What · Risk</span></summary>
+      <div class="section-body">
+
+        <div class="block">
+          <h3>4.1 Coherent scenarios</h3>
+          <div class="scen-pills">
+            <button class="scen-pill" onclick="applyScen('bear',this)"><div class="scen-pill-name">Bear</div><div class="scen-pill-desc">Karina solo · no Lusin · 1 engineer · slow ramp</div></button>
+            <button class="scen-pill active" onclick="applyScen('real',this)"><div class="scen-pill-name">Realistic</div><div class="scen-pill-desc">2 engineers · Lusin off · 3 conferences · benchmark pricing</div></button>
+            <button class="scen-pill" onclick="applyScen('bull',this)"><div class="scen-pill-name">Bull</div><div class="scen-pill-desc">Lusin ×5 · 4 engineers · top-quartile · 5 conferences</div></button>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>4.2 Tornado · normalised per $1K effort</h3>
+          <div id="tornado"></div>
+        </div>
+
+        <div class="block">
+          <h3>4.3 Decision layer</h3>
+          <div id="decisions"></div>
+        </div>
+
+        <div class="block">
+          <h3>4.4 De-foundering trigger check</h3>
+          <div id="trigger-check"></div>
+        </div>
+
+        <div class="block">
+          <h3>4.5 So What</h3>
+          <div class="callout"><strong>Value is built mid-funnel (Paid Pilot filter + early cash) and in the tail (Monthly retainer = 50%+ of LTV).</strong> Spend first on referrals, warm network, и Lusin-powered targeted outbound — defer paid ads until Phase 3. <strong>Diag→Pilot conversion = highest-leverage point</strong> (25-40% — biggest drop).</div>
+        </div>
+
+        <div class="block">
+          <h3>4.6 Risk caveat</h3>
+          <div class="callout danger"><strong>All ratios assume founder closes during Phase 0-1.</strong> Hand selling to AE before Paid Pilot is productized → win-rate collapses, CAC rises, economics break. <strong>Advance by trigger, never by calendar.</strong><br><br><strong>Lusin lift (×10) based on single pilot</strong> (Cyborg HR / Peter Kelly, April 2026); validate across 10+ deals before locking as benchmark.</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- SECTION 5 -->
+    <details class="section" open>
+      <summary><span class="section-num">SECTION 5</span> Controls &amp; assumption log <span class="section-meta">Validation + journal с источниками</span></summary>
+      <div class="section-body">
+        <div class="block">
+          <h3>5.1 Validation checks</h3>
+          <div id="controls"></div>
+        </div>
+        <div class="block">
+          <h3>5.2 Assumption log</h3>
+          <div style="overflow-x:auto" id="assumption-log"></div>
+        </div>
+      </div>
+    </details>
 
   </main>
 </div>
 
-<footer>
-  AI-Integration Co · Commercial Operating Model · Confidential Working Draft · 2026-06-11 · Bobroff Capital
-</footer>
+<footer>AI-Integration Co · Commercial Operating Model · Confidential Working Draft · Bobroff Capital · 2026-06-11</footer>
 
-<script src="assets/model.js"></script>
 <script>
-const GLOSSARY = [
-  ['Engine A — Acquisition channels','Откуда приходят лиды (referrals, warm, conferences, outbound, content, SEO, paid).'],
-  ['Engine B — Sales motion','Кто закрывает (founder-led NOW → hybrid + AE NEXT → sales-team-led TARGET). Ортогонально каналам.'],
-  ['Implementation fee','One-time платёж при подписании контракта за внедрение AI системы. Year-1 contract value (ACV).'],
-  ['Monthly retainer','Ежемесячный recurring платёж после внедрения — за поддержку и gainshare от savings/uplift.'],
-  ['Paid Pilot ($10K)','Filter-deal перед full implementation. Stage 4 BOTTLENECK воронки. 25-40% от Pain Diagnostic.'],
-  ['ACV','Annual Contract Value · стоимость контракта Year 1.'],
-  ['CAC','Customer Acquisition Cost · сколько $ тратим на привлечение 1 клиента в канале.'],
-  ['LTV','Lifetime Value · сколько $ принёс клиент за 3yr × 55% gross margin.'],
-  ['LTV/CAC','Health ratio · target ≥3×, world-class ≥10×.'],
-  ['Payback','Месяцев чтобы окупить CAC через Year-1 gross margin. Target <12 mo.'],
-  ['NRR','Net Revenue Retention · L2 retained / L2 last year. Target >110%.'],
-  ['De-foundering trigger','Условие перехода к следующей фазе команды (НЕ календарь).'],
-  ['Booked / Recognized / Billed','3 состояния revenue: подписан / earned по бухучёту / счёт выставлен.'],
-  ['COGS','Cost of Goods Sold · себестоимость доставки одной сделки (engineer hours × cost).'],
-  ['EBITDA break-even','Месяц первого положительного EBITDA (доход − все расходы).'],
-  ['Cash break-even','Месяц когда накопленная касса ≥0. Отстаёт от EBITDA из-за payment terms.'],
-  ['Runway','Сколько месяцев живём при текущем negative cash flow.'],
-  ['Capacity gate','Funnel output = MIN(спрос, мощность). Founder + Karina + engineer throughput.'],
-  ['Lusin lift','Множитель reply rate от signal engine. Validated 3% → 30% = ×10.'],
-  ['Master approximation','Допущение что channel conversions одинаковы по 4 verticals; будет locked when first pilot data per vertical.']
-];
-
-function renderGlossary(){
-  document.getElementById('glossary').innerHTML = GLOSSARY.map(g => `
-    <div class="gloss-item">
-      <div class="gloss-term">${g[0]}</div>
-      <div class="gloss-def">${g[1]}</div>
+const MONTHS=['Jul','Aug','Sep','Oct','Nov','Dec'];
+const VERTICALS=['hr','msp','acc','leg'];
+const VLABELS={hr:'HR / Recruiting',msp:'MSP / IT',acc:'Accounting',leg:'Legal'};
+const VMIX={hr:0.40,msp:0.20,acc:0.20,leg:0.20};
+const VERTICAL_LIFTS={hr:{emRp:1.8,liReply:2.5,cycleDays:0.85},msp:{emRp:0.7,liReply:0.5,cycleDays:1.0},acc:{emRp:1.0,liReply:1.1,cycleDays:1.1},leg:{emRp:0.8,liReply:1.1,cycleDays:1.4}};
+const TIME_PER_TOUCH={email:6,linkedin:12,warm:35,conference:240};
+const ENG_THROUGHPUT=1.75,ENG_HOURS_PER_DEAL=50;
+const SCENARIOS={bear:{karinaHrs:25,emTw:100,liTw:30,wmIn:2,cfEv:0,emRp:5,lusin:1,pc:50,hrFee:25,mspFee:22,accFee:18,legFee:45,rec:2,engN:1,engCost:11,sdrCost:4,tools:1.5,overhead:3,draw:3},real:{karinaHrs:35,emTw:200,liTw:60,wmIn:4,cfEv:3,emRp:6,lusin:1,pc:60,hrFee:30,mspFee:28,accFee:22,legFee:60,rec:2.5,engN:2,engCost:12,sdrCost:4,tools:2,overhead:3.5,draw:5},bull:{karinaHrs:40,emTw:300,liTw:80,wmIn:6,cfEv:5,emRp:6,lusin:5,pc:70,hrFee:42,mspFee:38,accFee:30,legFee:90,rec:4,engN:4,engCost:13,sdrCost:5,tools:3,overhead:4,draw:6}};
+let currentVTab='hr',chartCash;
+const $ = id => document.getElementById(id);
+function getInputs(){
+  const d = {
+    karinaHrs:+$('sl-karinaHrs').value,emTw:+$('sl-emTw').value,liTw:+$('sl-liTw').value,wmIn:+$('sl-wmIn').value,cfEv:+$('sl-cfEv').value,
+    emRp:+$('sl-emRp').value,lusin:+$('sl-lusin').value,pc:+$('sl-pc').value,
+    hrFee:+$('sl-hrFee').value*1000,mspFee:+$('sl-mspFee').value*1000,accFee:+$('sl-accFee').value*1000,legFee:+$('sl-legFee').value*1000,
+    rec:+$('sl-rec').value*1000,
+    engN:+$('sl-engN').value,engCost:+$('sl-engCost').value*1000,sdrCost:+$('sl-sdrCost').value*1000,tools:+$('sl-tools').value*1000,overhead:+$('sl-overhead').value*1000,draw:+$('sl-draw').value*1000,
+    rm:30,mp:25 // implicit: reply→meeting and meeting→pilot fixed at industry midpoint
+  };
+  return d;
+}
+function karinaCapacity(d){const weekly=d.karinaHrs*60;const em=d.emTw*TIME_PER_TOUCH.email;const li=d.liTw*TIME_PER_TOUCH.linkedin;const wm=(d.wmIn*TIME_PER_TOUCH.warm)/4.33;const cf=(d.cfEv*TIME_PER_TOUCH.conference)/26;const used=em+li+wm+cf;return{weekly,used,em,li,wm,cf,pct:used/weekly}}
+function engineerCapacity(d){return{monthlyCap:d.engN*ENG_THROUGHPUT,periodCap:d.engN*ENG_THROUGHPUT*6}}
+function cohortFunnel(d,v,ok,ov){
+  const f=(k)=>ok===k?ov:d[k];
+  const dedup=0.85;
+  const share=v==='all'?1:VMIX[v];
+  const lifts=v==='all'?{emRp:1,liReply:1,cycleDays:1}:VERTICAL_LIFTS[v];
+  const emRe=Math.min(50,f('emRp')*f('lusin')*lifts.emRp);
+  const liRe=Math.min(60,30*lifts.liReply);
+  const ramp=[.5,.8,1,1,1,1];
+  const emAct=ramp.map(r=>f('emTw')*4.33*r*share);
+  const liAct=ramp.map(r=>f('liTw')*4.33*r*share);
+  const wmAct=ramp.map(r=>f('wmIn')*share*r);
+  const cf=f('cfEv');const cfAct=[0,cf/3,cf/3,0,cf/3,0].map(e=>e*80*share);
+  const cCold=(60*lifts.cycleDays)/30;const cWarm=(30*lifts.cycleDays)/30;
+  const emC=(emRe/100)*(d.rm/100)*(d.mp/100)*(f('pc')/100);
+  const liC=0.45*(liRe/100)*(d.rm/100)*(d.mp/100)*(f('pc')/100);
+  const wmC=0.80*0.50*0.75;const cfC=0.54*0.35*0.70;
+  const closes=Array(6).fill(0).map(()=>({em:0,li:0,wm:0,cf:0,total:0}));
+  for(let i=0;i<6;i++){
+    const mE=i+Math.round(cCold),mL=i+Math.round(cCold),mW=i+Math.round(cWarm),mC=i+Math.round(cWarm);
+    if(mE<6)closes[mE].em+=emAct[i]*emC;if(mL<6)closes[mL].li+=liAct[i]*liC;
+    if(mW<6)closes[mW].wm+=wmAct[i]*wmC;if(mC<6)closes[mC].cf+=cfAct[i]*cfC;
+  }
+  closes.forEach(c=>{c.em*=dedup;c.li*=dedup;c.wm*=dedup;c.cf*=dedup;c.total=c.em+c.li+c.wm+c.cf});
+  return{closes};
+}
+function calcAll(d,ok,ov){
+  const vd={};VERTICALS.forEach(v=>vd[v]=cohortFunnel(d,v,ok,ov));
+  const pre=Array(6).fill(0).map((_,i)=>VERTICALS.reduce((s,v)=>s+vd[v].closes[i].total,0));
+  const engCap=(ok==='engN'?ov:d.engN)*ENG_THROUGHPUT;
+  const gated=pre.map(c=>Math.min(c,engCap));
+  const vCloses={};VERTICALS.forEach(v=>vCloses[v]=Array(6).fill(0));
+  for(let i=0;i<6;i++){const s=pre[i]>0?gated[i]/pre[i]:0;VERTICALS.forEach(v=>vCloses[v][i]=vd[v].closes[i].total*s)}
+  const fees={hr:d.hrFee,msp:d.mspFee,acc:d.accFee,leg:d.legFee};
+  const monthly=Array(6).fill(0).map((_,i)=>{
+    const closes=gated[i];
+    const l1B=VERTICALS.reduce((s,v)=>s+vCloses[v][i]*fees[v],0);
+    let l1R=0,l1Bl=0;
+    for(let j=0;j<=i;j++){const ma=i-j;const cj=gated[j];const af=cj>0?VERTICALS.reduce((s,v)=>s+vCloses[v][j]*fees[v],0)/cj:0;
+      const rR=ma===0?.3:ma===1?.4:ma===2?.3:0;const bR=ma===0?.3:ma===1?.4:ma===3?.3:0;
+      l1R+=cj*af*rR;l1Bl+=cj*af*bR;}
+    let l2A=0;for(let j=0;j<=i-2;j++){const ms=i-2-j;const ra=ms===0?.5:1;const re=Math.pow(.97,Math.max(0,ms));l2A+=gated[j]*ra*re}
+    const l2R=l2A*d.rec;
+    const cogs=closes*ENG_HOURS_PER_DEAL*(d.engCost/160);
+    const cf=(d.cfEv*24000)/6;const fixed=d.engN*d.engCost+d.sdrCost+d.overhead+d.draw;
+    const rev=l1R+l2R;const gm=rev-cogs;const cont=gm-cf-d.tools;const ebitda=cont-fixed;
+    const cIn=l1Bl+l2R;const cOut=cogs+cf+d.tools+fixed;const cf2=cIn-cOut;
+    return{month:MONTHS[i],closes,l1B,l1R,l1Bl,l2A,l2R,rev,cogs,cf,fixed,gm,cont,ebitda,cIn,cOut,cf2};
+  });
+  let ce=0,cc=0;monthly.forEach(m=>{ce+=m.ebitda;m.cumE=ce;cc+=m.cf2;m.cumC=cc});
+  return{monthly,vCloses,pre,gated,engCap,vd};
+}
+function fmtFull(v){return(v<0?'-':'')+'$'+Math.abs(Math.round(v)).toLocaleString('en-US')}
+function fmtK(v){const a=Math.abs(Math.round(v));return(v<0?'-':'')+'$'+(a>=1000?(a/1000).toFixed(0)+'K':a.toString())}
+function fmtN(v,p){return v===0?'—':v.toFixed(p||1)}
+function calcUE(d,r){
+  const tC=r.monthly.reduce((s,m)=>s+m.closes,0);
+  const af=VERTICALS.reduce((s,v)=>s+VMIX[v]*({hr:d.hrFee,msp:d.mspFee,acc:d.accFee,leg:d.legFee}[v]),0);
+  const lr=10000+af+(d.rec*36*0.5);
+  const ltv=lr*0.55;
+  const cac=tC>0?(d.sdrCost*6+d.tools*6+d.cfEv*24000)/tC:0;
+  const ratio=cac>0?ltv/cac:0;
+  const mGM=af*0.55/12;const pb=mGM>0?cac/mGM:99;
+  return{ltv,cac,ratio,pb,af,tC};
+}
+function updateHeaderKPIs(){const d=getInputs();const r=calcAll(d);const ue=calcUE(d,r);const bE=r.monthly.findIndex(m=>m.ebitda>=0);const bC=r.monthly.findIndex(m=>m.cumC>=0);
+  $('hkpi-ltv').textContent=fmtK(ue.ltv);$('hkpi-cac').textContent=fmtK(ue.cac);$('hkpi-ratio').textContent=ue.ratio.toFixed(1)+'×';
+  $('hkpi-be').textContent=bE>=0?MONTHS[bE]:'—';$('hkpi-cbe').textContent=bC>=0?MONTHS[bC]:'—';
+}
+function renderApex(){
+  const d=getInputs();const r=calcAll(d);const ue=calcUE(d,r);
+  const bE=r.monthly.findIndex(m=>m.ebitda>=0);const bC=r.monthly.findIndex(m=>m.cumC>=0);
+  const k=karinaCapacity(d);const e=engineerCapacity(d);const tC=r.monthly.reduce((s,m)=>s+m.closes,0);
+  $('apex-ltv').textContent=fmtK(ue.ltv);$('apex-cac').textContent=fmtK(ue.cac);
+  $('apex-ratio').textContent=ue.ratio.toFixed(1)+'×';
+  $('apex-payback').textContent='~'+ue.pb.toFixed(1)+' mo';
+  $('apex-be').textContent=bE>=0?MONTHS[bE]:'None';$('apex-be').className='apex-val small '+(bE>=0&&bE<=3?'pos':bE>=0?'warn':'neg');
+  $('apex-cbe').textContent=bC>=0?MONTHS[bC]:'None';$('apex-cbe').className='apex-val small '+(bC>=0&&bC<=4?'pos':bC>=0?'warn':'neg');
+  $('apex-futil').textContent=(k.pct*100).toFixed(0)+'%';$('apex-futil').className='apex-val small '+(k.pct<=0.85?'pos':k.pct<=1?'warn':'neg');
+  const u=tC/e.periodCap;$('apex-eutil').textContent=(u*100).toFixed(0)+'%';$('apex-eutil').className='apex-val small '+(u<=0.85?'pos':u<=1?'warn':'neg');
+}
+function renderCapGauges(){const d=getInputs();const k=karinaCapacity(d);const e=engineerCapacity(d);const r=calcAll(d);const tC=r.monthly.reduce((s,m)=>s+m.closes,0);const eU=Math.min(150,tC/e.periodCap*100);
+  $('capacity-gauges').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div style="background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:12px">
+      <div style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:var(--slate);margin-bottom:8px">Karina time · ${d.karinaHrs}h/wk = ${Math.round(k.weekly)}min</div>
+      <div style="height:18px;background:var(--mist);border-radius:9px;overflow:hidden;margin-bottom:8px"><div style="height:18px;width:${Math.min(150,k.pct*100)}%;background:${k.pct<=0.85?'var(--teal)':k.pct<=1?'var(--warn)':'var(--neg)'}"></div></div>
+      <div style="font-size:11px"><div style="display:flex;justify-content:space-between;padding:2px 0">Email · ${d.emTw}<span><strong>${Math.round(k.em)}min</strong></span></div><div style="display:flex;justify-content:space-between;padding:2px 0">LinkedIn · ${d.liTw}<span><strong>${Math.round(k.li)}min</strong></span></div><div style="display:flex;justify-content:space-between;padding:2px 0">Warm · ${d.wmIn}/mo<span><strong>${Math.round(k.wm)}min</strong></span></div><div style="display:flex;justify-content:space-between;padding:2px 0">Conferences amort.<span><strong>${Math.round(k.cf)}min</strong></span></div><div style="display:flex;justify-content:space-between;padding:5px 0 0;border-top:1px solid var(--light-border);margin-top:3px;font-weight:700">Used/Budget<span><strong>${Math.round(k.used)}/${Math.round(k.weekly)} (${(k.pct*100).toFixed(0)}%)</strong></span></div></div>
     </div>
-  `).join('');
+    <div style="background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:12px">
+      <div style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:var(--slate);margin-bottom:8px">Engineer delivery · ${d.engN} FTE × 1.75/mo</div>
+      <div style="height:18px;background:var(--mist);border-radius:9px;overflow:hidden;margin-bottom:8px"><div style="height:18px;width:${eU}%;background:${eU<=85?'var(--teal)':eU<=100?'var(--warn)':'var(--neg)'}"></div></div>
+      <div style="font-size:11px"><div style="display:flex;justify-content:space-between;padding:2px 0">Throughput<span><strong>1.75/mo</strong></span></div><div style="display:flex;justify-content:space-between;padding:2px 0">Period capacity<span><strong>${e.periodCap.toFixed(1)} deals</strong></span></div><div style="display:flex;justify-content:space-between;padding:2px 0">Pre-gate demand<span><strong>${r.pre.reduce((s,x)=>s+x,0).toFixed(1)}</strong></span></div><div style="display:flex;justify-content:space-between;padding:5px 0 0;border-top:1px solid var(--light-border);margin-top:3px;font-weight:700">After gate<span><strong>${tC.toFixed(1)} (${eU.toFixed(0)}%)</strong></span></div></div>
+    </div></div>`;
 }
-
-function setPage(id, el){
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
-  if(el) el.classList.add('active');
-  // Lazy load other pages
-  if(id !== '0' && id !== '1' && id !== 'g'){
-    loadPage(id);
-  }
-  // Show/hide settings panel
-  const showPanel = ['3','4','5'].includes(id);
-  document.querySelectorAll('.controls-panel').forEach(p => p.classList.toggle('visible', showPanel));
-  window.scrollTo(0,0);
+function renderCohort(){const d=getInputs();const r=calcAll(d);
+  const out=[`<table class="tbl"><thead><tr><th>Channel × month</th>${MONTHS.map(m=>`<th class="r">${m}</th>`).join('')}<th class="r">Total</th></tr></thead><tbody>`];
+  const chs=['em','li','wm','cf'];const lbs={em:'Cold email',li:'LinkedIn DM',wm:'Warm intros',cf:'Conferences'};
+  chs.forEach(c=>{const v=Array(6).fill(0);VERTICALS.forEach(vt=>{for(let i=0;i<6;i++)v[i]+=r.vd[vt].closes[i][c]});const t=v.reduce((s,x)=>s+x,0);
+    out.push(`<tr><td>${lbs[c]} closes</td>${v.map(x=>`<td class="r">${x.toFixed(1)}</td>`).join('')}<td class="r"><strong>${t.toFixed(1)}</strong></td></tr>`);});
+  out.push(`<tr class="subtotal-row"><td>Total demand (pre-gate)</td>${r.pre.map(v=>`<td class="r">${v.toFixed(1)}</td>`).join('')}<td class="r">${r.pre.reduce((s,x)=>s+x,0).toFixed(1)}</td></tr>`);
+  out.push(`<tr class="total-row"><td>Closes after capacity gate</td>${r.gated.map(v=>`<td class="r">${v.toFixed(1)}</td>`).join('')}<td class="r">${r.gated.reduce((s,x)=>s+x,0).toFixed(1)}</td></tr></tbody></table>`);
+  $('cohort-tbl').innerHTML=out.join('');
 }
-
-async function loadPage(id){
-  const target = document.getElementById('page-'+id);
-  if(target.dataset.loaded === '1') return;
-  try {
-    const map = {'2':'2-benchmarks.html','3':'3-hypothesis.html','4':'4-scenarios.html','5':'5-controls.html'};
-    const res = await fetch(map[id]);
-    if(res.ok){
-      const text = await res.text();
-      target.innerHTML = text;
-      target.dataset.loaded = '1';
-      if(window.initPage) window.initPage(id);
-    }
-  } catch(e) {
-    target.innerHTML += '<p style="color:var(--neg)">Error loading content. Make sure file is served via HTTP (not file://). Open via Live Server or python -m http.server.</p>';
-  }
+function setVTab(v,el){currentVTab=v;document.querySelectorAll('.vtab').forEach(t=>t.classList.remove('active'));if(el)el.classList.add('active');renderVTab()}
+function renderVTab(){const d=getInputs();const r=calcAll(d);const v=currentVTab;const fees={hr:d.hrFee,msp:d.mspFee,acc:d.accFee,leg:d.legFee};
+  const closes=r.vCloses[v];const tC=closes.reduce((s,x)=>s+x,0);const tR=tC*fees[v];const l=VERTICAL_LIFTS[v];
+  $('vertical-body').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px">
+    <div style="background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:12px"><h4 style="margin-bottom:8px">${VLABELS[v]} · parameters</h4><table class="tbl" style="font-size:11px;margin:0"><tbody>
+    <tr><td>Implementation fee</td><td class="r">$${(fees[v]/1000).toFixed(0)}K</td></tr><tr><td>Vertical mix %</td><td class="r">${(VMIX[v]*100).toFixed(0)}%</td></tr>
+    <tr><td>Effective cold reply</td><td class="r">${(d.emRp*d.lusin*l.emRp).toFixed(1)}%</td></tr><tr><td>LinkedIn lift</td><td class="r">${l.liReply.toFixed(1)}×</td></tr>
+    <tr><td>Cycle effective</td><td class="r">${Math.round(60*l.cycleDays)}d</td></tr></tbody></table></div>
+    <div style="background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:12px"><h4 style="margin-bottom:8px">${VLABELS[v]} · 6mo output</h4><table class="tbl" style="font-size:11px;margin:0"><tbody>
+    <tr><td>Total closes</td><td class="r"><strong>${tC.toFixed(1)}</strong></td></tr><tr><td>Implementation revenue</td><td class="r">${fmtFull(tR)}</td></tr>
+    <tr><td>Retainer revenue (period)</td><td class="r">${fmtFull(tC*d.rec*2.5)}</td></tr><tr><td>COGS per deal</td><td class="r">${fmtFull(50*d.engCost/160)}</td></tr></tbody></table></div></div>
+    <table class="tbl"><thead><tr><th>Channel</th>${MONTHS.map(m=>`<th class="r">${m}</th>`).join('')}<th class="r">Total</th></tr></thead><tbody>${['em','li','wm','cf'].map(ch=>{const c=r.vd[v].closes;const va=c.map(x=>x[ch]);const t=va.reduce((s,x)=>s+x,0);return `<tr><td>${{em:'Cold email',li:'LinkedIn DM',wm:'Warm intros',cf:'Conferences'}[ch]}</td>${va.map(x=>`<td class="r">${x.toFixed(1)}</td>`).join('')}<td class="r"><strong>${t.toFixed(1)}</strong></td></tr>`}).join('')}<tr class="total-row"><td>Closes (vertical)</td>${closes.map(x=>`<td class="r">${x.toFixed(1)}</td>`).join('')}<td class="r">${tC.toFixed(1)}</td></tr></tbody></table>`;
 }
-
-renderGlossary();
-if(window.initApex) initApex();
+function buildPnl(id,rows){const head=`<thead><tr><th>Line</th>${MONTHS.map(m=>`<th class="r">${m}</th>`).join('')}<th class="r">Total</th></tr></thead><tbody>`;
+  const body=rows.map(r=>{if(r.section)return `<tr class="section-row"><td colspan="8">${r.section}</td></tr>`;
+    const t=r.vals.reduce((s,v)=>s+v,0);const cls=r.total?'total-row':r.sub?'subtotal-row':'';
+    return `<tr class="${cls}"><td>${r.label}</td>${r.vals.map(v=>{const c=v<0?'neg':v>0&&r.fmt===fmtFull?'pos':'';return `<td class="r ${c}">${v===0?'—':r.fmt(v)}</td>`}).join('')}<td class="r"><strong>${t===0?'—':r.fmt(t)}</strong></td></tr>`;
+  }).join('');
+  $(id).innerHTML=`<table class="tbl">${head}${body}</tbody></table>`;
+}
+function renderRevenue(r){const m=r.monthly;buildPnl('revenue-tbl',[
+  {label:'Closes (new this month)',vals:m.map(x=>x.closes),fmt:fmtN},
+  {section:'Implementation fee (one-time)'},
+  {label:'Booked (contract signed)',vals:m.map(x=>x.l1B),fmt:fmtFull},
+  {label:'Recognized (delivery progress)',vals:m.map(x=>x.l1R),fmt:fmtFull},
+  {label:'Billed (cash schedule)',vals:m.map(x=>x.l1Bl),fmt:fmtFull},
+  {section:'Monthly retainer'},
+  {label:'Active clients (ramp + churn)',vals:m.map(x=>x.l2A),fmt:fmtN},
+  {label:'Retainer revenue',vals:m.map(x=>x.l2R),fmt:fmtFull},
+  {section:'Total'},
+  {label:'Total revenue recognized',vals:m.map(x=>x.rev),fmt:fmtFull,total:true}]);}
+function renderEbitda(r){const m=r.monthly;buildPnl('ebitda-tbl',[
+  {section:'Revenue'},{label:'Revenue recognized',vals:m.map(x=>x.rev),fmt:fmtFull,sub:true},
+  {section:'Costs'},{label:'COGS (engineer hours)',vals:m.map(x=>-x.cogs),fmt:fmtFull},
+  {label:'Gross margin',vals:m.map(x=>x.gm),fmt:fmtFull,sub:true},
+  {label:'Variable: conferences amortised',vals:m.map(x=>-x.cf),fmt:fmtFull},
+  {label:'Contribution',vals:m.map(x=>x.cont),fmt:fmtFull,sub:true},
+  {label:'Fixed: team + overhead + draw',vals:m.map(x=>-x.fixed),fmt:fmtFull},
+  {section:'Bottom line'},{label:'EBITDA (monthly)',vals:m.map(x=>x.ebitda),fmt:fmtFull,total:true},
+  {label:'Cumulative EBITDA',vals:m.map(x=>x.cumE),fmt:fmtFull,total:true}]);}
+function renderCash(r){const m=r.monthly;buildPnl('cash-tbl',[
+  {section:'Cash in'},{label:'Implementation billed (30/40/30 net-30)',vals:m.map(x=>x.l1Bl),fmt:fmtFull},
+  {label:'Retainer billed monthly',vals:m.map(x=>x.l2R),fmt:fmtFull},
+  {label:'Total cash in',vals:m.map(x=>x.cIn),fmt:fmtFull,sub:true},
+  {section:'Cash out'},{label:'Total cash out',vals:m.map(x=>-x.cOut),fmt:fmtFull},
+  {section:'Net'},{label:'Monthly cash flow',vals:m.map(x=>x.cf2),fmt:fmtFull,total:true},
+  {label:'Cumulative cash position',vals:m.map(x=>x.cumC),fmt:fmtFull,total:true}]);
+  if(!chartCash){chartCash=new Chart($('chartCash'),{type:'line',data:{labels:MONTHS,datasets:[
+    {label:'Cumulative cash',data:[],borderColor:'#31435B',borderWidth:2.5,pointRadius:3,fill:false,tension:0.25},
+    {label:'Cumulative EBITDA',data:[],borderColor:'#2E7780',borderWidth:2,pointRadius:3,fill:false,borderDash:[4,3],tension:0.25},
+    {label:'Zero',data:Array(6).fill(0),borderColor:'rgba(122,136,150,0.4)',borderWidth:1,pointRadius:0,fill:false,borderDash:[4,3]}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{family:"'Inter',sans-serif",size:11},boxWidth:12,color:'#7A8896'}},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtFull(c.parsed.y)}}},scales:{x:{grid:{display:false},ticks:{color:'#7A8896'}},y:{grid:{color:'rgba(49,67,91,0.06)'},ticks:{callback:v=>fmtK(v),color:'#7A8896'}}}}});}
+  chartCash.data.datasets[0].data=m.map(x=>x.cumC);chartCash.data.datasets[1].data=m.map(x=>x.cumE);chartCash.update('none');}
+function renderUE(){const d=getInputs();const r=calcAll(d);const ue=calcUE(d,r);const ret=d.rec*36*0.5;const lr=10000+ue.af+ret;
+  $('unit-econ').innerHTML=`<table class="tbl"><thead><tr><th>Item</th><th class="r">Value</th><th>Calculation</th></tr></thead><tbody>
+    <tr><td>Paid Pilot fee</td><td class="r">$10,000</td><td>Filter-deal industry standard</td></tr>
+    <tr><td>Year-1 Implementation fee (blended)</td><td class="r">${fmtFull(ue.af)}</td><td>HR ${(d.hrFee/1000).toFixed(0)}K × 40% + MSP ${(d.mspFee/1000).toFixed(0)}K × 20% + Acc ${(d.accFee/1000).toFixed(0)}K × 20% + Legal ${(d.legFee/1000).toFixed(0)}K × 20%</td></tr>
+    <tr><td>Retainer × 36 mo × 50% retention</td><td class="r">${fmtFull(ret)}</td><td>$${(d.rec/1000).toFixed(1)}K/mo × 36 × 0.5</td></tr>
+    <tr class="subtotal-row"><td>Lifetime revenue</td><td class="r">${fmtFull(lr)}</td><td>Sum</td></tr>
+    <tr><td>× 55% gross margin</td><td class="r">× 0.55</td><td>B2B services standard GM</td></tr>
+    <tr class="total-row"><td><strong>LTV per customer</strong></td><td class="r"><strong>${fmtFull(ue.ltv)}</strong></td><td>—</td></tr>
+    <tr><td>Blended CAC</td><td class="r">${fmtFull(ue.cac)}</td><td>(Karina + tools + conferences) / closes</td></tr>
+    <tr class="total-row"><td><strong>LTV / CAC ratio</strong></td><td class="r pos"><strong>${ue.ratio.toFixed(1)}×</strong></td><td>Target ≥3×, world-class ≥10×</td></tr>
+    <tr class="total-row"><td><strong>Payback</strong></td><td class="r pos"><strong>~${ue.pb.toFixed(1)} mo</strong></td><td>CAC ÷ monthly GM</td></tr>
+  </tbody></table>`;
+}
+function renderTornado(){const d=getInputs();const base=calcAll(d).monthly.reduce((s,m)=>s+m.rev,0);
+  const tests=[{n:'Karina +5h/week',k:'karinaHrs',dt:5,c:0},{n:'Cold email +50/wk',k:'emTw',dt:50,c:100},{n:'LinkedIn +20/wk',k:'liTw',dt:20,c:100},{n:'Warm intros +2/mo',k:'wmIn',dt:2,c:500},{n:'Conferences +1',k:'cfEv',dt:1,c:24000},{n:'Lusin lift ×2',k:'lusin',dt:d.lusin,c:5000},{n:'HR fee +$5K',k:'hrFee',dt:5000,c:0},{n:'Legal fee +$10K',k:'legFee',dt:10000,c:0},{n:'Pilot→Close +10pp',k:'pc',dt:10,c:0},{n:'+1 engineer',k:'engN',dt:1,c:72000}];
+  const res=tests.map(t=>{const nv=(d[t.k]||0)+t.dt;const sx=Object.assign({},d,{[t.k]:nv});const nr=calcAll(sx).monthly.reduce((s,m)=>s+m.rev,0);const up=nr-base;return Object.assign({},t,{up,perK:t.c>0?up/(t.c/1000):up});}).sort((a,b)=>b.perK-a.perK);
+  const max=Math.max(...res.map(r=>Math.abs(r.perK)),1);
+  $('tornado').innerHTML=res.map(r=>{const w=Math.min(100,Math.abs(r.perK/max)*100);return `<div class="tornado-row"><div class="tornado-name">${r.n}</div><div class="tornado-bar-wrap"><div class="tornado-bar" style="width:${w.toFixed(1)}%"></div></div><div class="tornado-val">+${fmtFull(r.up)}<br><span style="font-size:9px;color:var(--muted)">${r.c>0?'/ '+fmtK(r.c):'no cost'}</span></div></div>`}).join('');
+}
+function renderDecisions(){const d=getInputs();const r=calcAll(d);const ue=calcUE(d,r);
+  const bE=r.monthly.findIndex(m=>m.ebitda>=0);const bC=r.monthly.findIndex(m=>m.cumC>=0);
+  const k=karinaCapacity(d);const e=engineerCapacity(d);const tC=r.monthly.reduce((s,m)=>s+m.closes,0);
+  let rec;if(k.pct>1)rec='Karina over capacity. Reduce one channel — capacity is binding.';
+  else if(tC>=e.periodCap*0.95)rec='Pipeline at engineer capacity. Hire 1-2 more engineers before scaling outreach.';
+  else if(bE>4||bE<0)rec='Break-even late. Raise pricing OR activate Lusin signal.';
+  else rec='Balanced. Focus on Diag→Pilot conversion + Lusin lift.';
+  $('decisions').innerHTML=`
+    <div class="decision-card"><h5>Top recommendation</h5><p>${rec}</p></div>
+    <div class="decision-card"><h5>EBITDA vs Cash gap</h5><p>EBITDA breaks <span class="metric">${bE>=0?MONTHS[bE]:'never'}</span>; Cash breaks <span class="metric">${bC>=0?MONTHS[bC]:'never'}</span>. Gap = payment terms lag. Plan ~1.5–2mo cash burn cushion.</p></div>
+    <div class="decision-card"><h5>What drives growth</h5><p>Karina <span class="metric">${(k.pct*100).toFixed(0)}%</span> · Engineer <span class="metric">${(tC/e.periodCap*100).toFixed(0)}%</span>. ${k.pct>0.85?'Outreach-bound — invest in Lusin.':tC/e.periodCap>0.85?'Delivery-bound — hire engineers.':'Both have headroom — push conversion & pricing.'}</p></div>
+    <div class="decision-card"><h5>Unit economics</h5><p>CAC: <span class="metric">${fmtFull(ue.cac)}</span> · LTV: <span class="metric">${fmtFull(ue.ltv)}</span> · Ratio: <span class="metric">${ue.ratio.toFixed(1)}×</span> · Payback: <span class="metric">${ue.pb.toFixed(1)} mo</span>. ${ue.ratio>=10?'World-class.':ue.ratio>=3?'Healthy.':'Unhealthy — fix before scaling.'}</p></div>
+    <div class="decision-card"><h5>Required activity for 24 closes</h5><p>Current: <span class="metric">${tC.toFixed(1)}</span> closes. Need +${(((24/Math.max(tC,0.1))-1)*100).toFixed(0)}% Karina OR Lusin ×${(24/Math.max(tC,0.1)).toFixed(1)} of current OR Pilot→Close to ${Math.min(90,d.pc*24/Math.max(tC,0.1)).toFixed(0)}%.</p></div>`;
+}
+function renderTriggers(){const d=getInputs();const r=calcAll(d);const tC=r.monthly.reduce((s,m)=>s+m.closes,0);const mD=tC/6;
+  const trs=[{n:'Phase 1 ready · 5-8 qual.deals/mo',p:mD>=5,v:mD.toFixed(1)+'/mo'},{n:'Diag→Pilot >30% over ≥10 deals',p:false,v:'pilot pending'},{n:'Phase 2 ready · Pilot productized + ≥3 accts',p:false,v:'pending playbook'},{n:'Phase 3 ready · AE at quota',p:false,v:'AE not hired'},{n:'Steady state · NRR >110% · payback <12mo',p:false,v:'too early'}];
+  $('trigger-check').innerHTML=trs.map(t=>{const cls=t.p?'ok':'fail';const ic=t.p?'✓':'—';return `<div class="ctrl-row ${cls}"><div class="ctrl-icon ${cls}">${ic}</div><div class="ctrl-text">${t.n}</div><div class="ctrl-val">${t.v}</div></div>`}).join('');
+}
+function renderControls(){const d=getInputs();const r=calcAll(d);const k=karinaCapacity(d);const e=engineerCapacity(d);const ue=calcUE(d,r);const tC=r.monthly.reduce((s,m)=>s+m.closes,0);
+  const ch=[{n:'Karina capacity not exceeded',p:k.pct<=1,v:(k.pct*100).toFixed(0)+'%',w:k.pct>0.85&&k.pct<=1},
+    {n:'Engineer capacity not exceeded',p:tC<=e.periodCap,v:tC.toFixed(1)+'/'+e.periodCap.toFixed(1),w:tC>e.periodCap*0.85},
+    {n:'Vertical mix sums to 100%',p:true,v:'100%'},
+    {n:'Cold email reply 1-30%',p:d.emRp>=1&&d.emRp<=30,v:d.emRp+'%'},
+    {n:'Lusin lift 1-10×',p:d.lusin>=1&&d.lusin<=10,v:d.lusin.toFixed(1)+'×'},
+    {n:'HR ≤ Legal fee',p:d.hrFee<=d.legFee,v:'HR $'+(d.hrFee/1000).toFixed(0)+'K · Leg $'+(d.legFee/1000).toFixed(0)+'K',w:d.hrFee>d.legFee},
+    {n:'COGS / fee ratio 5-25%',p:(50*d.engCost/160)/((d.hrFee+d.mspFee+d.accFee+d.legFee)/4)<=0.25,v:((50*d.engCost/160)/((d.hrFee+d.mspFee+d.accFee+d.legFee)/4)*100).toFixed(0)+'%'},
+    {n:'LTV/CAC ≥ 3×',p:ue.ratio>=3,v:ue.ratio.toFixed(1)+'×',w:ue.ratio>=3&&ue.ratio<10},
+    {n:'Payback < 12mo',p:ue.pb<12,v:ue.pb.toFixed(1)+' mo'},
+    {n:'No negative pipeline',p:tC>=0,v:tC.toFixed(1)}];
+  $('controls').innerHTML=ch.map(c=>{const cls=!c.p?'fail':c.w?'warn':'ok';const ic=!c.p?'✗':c.w?'!':'✓';return `<div class="ctrl-row ${cls}"><div class="ctrl-icon ${cls}">${ic}</div><div class="ctrl-text">${c.n}</div><div class="ctrl-val">${c.v}</div></div>`}).join('');
+  const as=[['Karina hrs/wk',d.karinaHrs+'h','20-50h typical SDR'],['Cold email touches/wk',d.emTw,'150-250 personalized'],['Cold reply blended',d.emRp+'%','3.4% generic / 5.8-7.2% HR / 8-12% Legal top'],['Lusin lift',d.lusin+'×','Pilot validated 10×'],['HR fee','$'+(d.hrFee/1000).toFixed(0)+'K','Market $20-50K'],['MSP fee','$'+(d.mspFee/1000).toFixed(0)+'K','Market $20-45K'],['Acc fee','$'+(d.accFee/1000).toFixed(0)+'K','Market $15-35K'],['Legal fee','$'+(d.legFee/1000).toFixed(0)+'K','Market $40-100K'],['Retainer','$'+(d.rec/1000).toFixed(1)+'K/mo','Geometric centre'],['Engineers',d.engN,'Stage 1: 2 · Stage 2: 4'],['Cycle cold','60d','Mid-market $25-150K ACV'],['Throughput','1.75/mo','65% util × 95hrs / 50hrs'],['Payment 30/40/30 net-30','—','RepSpark 2026'],['L2 churn','3%/mo','Optifai N=939 SaaS 2026'],['Dedup factor','15%','Email+LinkedIn overlap']];
+  $('assumption-log').innerHTML='<table class="tbl"><thead><tr><th>Assumption</th><th class="r">Current</th><th>Benchmark</th></tr></thead><tbody>'+as.map(a=>`<tr><td>${a[0]}</td><td class="r"><strong>${a[1]}</strong></td><td class="src">${a[2]}</td></tr>`).join('')+'</tbody></table>';
+}
+const GLOSS=[['Engine A — Acquisition channels','Откуда приходят лиды (referrals, warm, conferences, outbound, content, SEO, paid).'],['Engine B — Sales motion','Кто закрывает (founder-led → hybrid → sales-team-led). Ортогонально каналам.'],['Implementation fee','One-time платёж клиента при подписании за внедрение AI (Year-1 ACV).'],['Monthly retainer','Ежемесячный recurring платёж после внедрения за поддержку и gainshare.'],['Paid Pilot ($10K)','Filter-deal перед full implementation. Stage 4 BOTTLENECK воронки.'],['ACV','Annual Contract Value · стоимость контракта Year 1.'],['CAC','Customer Acquisition Cost · сколько $ тратим на привлечение 1 клиента.'],['LTV','Lifetime Value · сколько $ принёс клиент за 3yr × 55% GM.'],['LTV/CAC','Health ratio · target ≥3×, world-class ≥10×.'],['Payback','Месяцев чтобы окупить CAC через Year-1 GM. Target <12 mo.'],['NRR','Net Revenue Retention · target >110%.'],['De-foundering trigger','Условие перехода к следующей фазе команды (не календарь).'],['Booked / Recognized / Billed','3 состояния revenue: подписан / earned / счёт выставлен.'],['COGS','Себестоимость доставки одной сделки (engineer hours × cost).'],['EBITDA break-even','Месяц первого положительного EBITDA.'],['Cash break-even','Месяц когда накопленная касса ≥0. Отстаёт от EBITDA.'],['Runway','Сколько месяцев живём при negative cash flow.'],['Capacity gate','Funnel output = MIN(спрос, мощность).'],['Lusin lift','Множитель reply от signal engine. Validated 3% → 30% = ×10.'],['Master approximation','Допущение что channel conversions одинаковы по 4 verticals.']];
+function renderGloss(){$('glossary').innerHTML=GLOSS.map(g=>`<div class="gloss-item"><div class="gloss-term">${g[0]}</div><div class="gloss-def">${g[1]}</div></div>`).join('')}
+function onDriverInput(){
+  // update labels
+  $('v-karinaHrs').textContent=$('sl-karinaHrs').value+'h';
+  $('v-emTw').textContent=$('sl-emTw').value;$('v-liTw').textContent=$('sl-liTw').value;
+  $('v-wmIn').textContent=$('sl-wmIn').value;$('v-cfEv').textContent=$('sl-cfEv').value;
+  $('v-emRp').textContent=$('sl-emRp').value+'%';$('v-lusin').textContent=(+$('sl-lusin').value).toFixed(1)+'×';
+  $('v-pc').textContent=$('sl-pc').value+'%';
+  $('v-hrFee').textContent=$('sl-hrFee').value;$('v-mspFee').textContent=$('sl-mspFee').value;
+  $('v-accFee').textContent=$('sl-accFee').value;$('v-legFee').textContent=$('sl-legFee').value;
+  $('v-rec').textContent=(+$('sl-rec').value).toFixed(1);
+  $('v-engN').textContent=$('sl-engN').value;$('v-engCost').textContent=(+$('sl-engCost').value).toFixed(1);
+  $('v-sdrCost').textContent=(+$('sl-sdrCost').value).toFixed(1);$('v-tools').textContent=(+$('sl-tools').value).toFixed(1);
+  $('v-overhead').textContent=(+$('sl-overhead').value).toFixed(1);$('v-draw').textContent=$('sl-draw').value;
+  redraw();
+}
+function redraw(){renderApex();updateHeaderKPIs();renderCapGauges();renderCohort();renderVTab();const d=getInputs();const r=calcAll(d);renderRevenue(r);renderEbitda(r);renderCash(r);renderUE();renderTornado();renderDecisions();renderTriggers();renderControls();}
+function applyScen(name,btn){
+  const s=SCENARIOS[name];
+  Object.keys(s).forEach(k=>{const el=$('sl-'+k);if(el)el.value=s[k]});
+  document.querySelectorAll('.scen-pill, .pill').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.pill').forEach(p=>{if(p.textContent.toLowerCase().includes(name)||(name==='real'&&p.textContent.includes('Realistic')))p.classList.add('active')});
+  if(btn)btn.classList.add('active');
+  onDriverInput();
+}
+function resetAll(){applyScen('real',null);document.querySelectorAll('.pill')[1].classList.add('active');}
+document.querySelectorAll('input[type=range]').forEach(el=>el.addEventListener('input',onDriverInput));
+renderGloss();onDriverInput();
 </script>
 </body>
 </html>
