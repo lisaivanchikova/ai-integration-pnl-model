@@ -1,0 +1,69 @@
+<div class="page-head">
+  <div class="page-num">SECTION 5</div>
+  <div class="page-title">Controls & assumption log</div>
+  <div class="page-sub">Validation checks + assumption journal с источниками (Block 10 Николая)</div>
+</div>
+
+<div class="block">
+  <h3>5.1 Validation checks · color-coded</h3>
+  <div id="controls"></div>
+</div>
+
+<div class="block">
+  <h3>5.2 Assumption log · текущая конфигурация vs benchmarks</h3>
+  <div style="overflow-x:auto" id="assumption-log"></div>
+</div>
+
+<script>
+function renderControls(){
+  const d = getInputs(); const result = calcAll(d);
+  const karina = karinaCapacity(d); const eng = engineerCapacity(d);
+  const ue = calcUnitEconomics(d,result);
+  const totalCloses = result.monthly.reduce((s,m)=>s+m.closes,0);
+  const checks = [
+    {name:'Karina capacity not exceeded',pass:karina.pct<=1,val:(karina.pct*100).toFixed(0)+'%',warn:karina.pct>0.85&&karina.pct<=1},
+    {name:'Engineer capacity not exceeded',pass:totalCloses<=eng.periodCap,val:totalCloses.toFixed(1)+'/'+eng.periodCap.toFixed(1),warn:totalCloses>eng.periodCap*0.85},
+    {name:'Vertical mix sums to 100%',pass:Math.abs(Object.values(VMIX).reduce((s,v)=>s+v,0)-1)<0.001,val:'100%'},
+    {name:'Cold email reply within market band (1-30%)',pass:d.emRp>=1&&d.emRp<=30,val:d.emRp+'%'},
+    {name:'Lusin lift in reasonable range (1-10×)',pass:d.lusin>=1&&d.lusin<=10,val:d.lusin.toFixed(1)+'×'},
+    {name:'Implementation fee absurdity (HR ≤ Legal)',pass:d.hrFee<=d.legFee,val:'HR $'+(d.hrFee/1000).toFixed(0)+'K · Legal $'+(d.legFee/1000).toFixed(0)+'K',warn:d.hrFee>d.legFee},
+    {name:'COGS / Implementation fee ratio (5-25%)',pass:(50*d.engCost/160)/((d.hrFee+d.mspFee+d.accFee+d.legFee)/4)<=0.25,val:((50*d.engCost/160)/((d.hrFee+d.mspFee+d.accFee+d.legFee)/4)*100).toFixed(0)+'%'},
+    {name:'LTV/CAC ≥ 3× (healthy)',pass:ue.ratio>=3,val:ue.ratio.toFixed(1)+'×',warn:ue.ratio>=3&&ue.ratio<10},
+    {name:'Payback < 12 mo',pass:ue.payback<12,val:ue.payback.toFixed(1)+' mo'},
+    {name:'No negative pipeline',pass:totalCloses>=0,val:totalCloses.toFixed(1)+' total'}
+  ];
+  document.getElementById('controls').innerHTML = checks.map(c => {
+    const cls = !c.pass?'fail':c.warn?'warn':'ok';
+    const icon = !c.pass?'✗':c.warn?'!':'✓';
+    return `<div class="ctrl-row ${cls}"><div class="ctrl-icon ${cls}">${icon}</div><div class="ctrl-text">${c.name}</div><div class="ctrl-val">${c.val}</div></div>`;
+  }).join('');
+
+  const assumptions = [
+    ['Karina hours/week',d.karinaHrs+'h','20-50h typical SDR'],
+    ['Cold email touches/week',d.emTw,'150-250 personalized, 350+ requires automation'],
+    ['Cold email reply % (blended)',d.emRp+'%','3.4% generic / 5.8-7.2% HR / 5.1% Acct / 8-12% Legal top'],
+    ['Lusin lift',d.lusin+'×','Internal pilot: 3% → 30% = 10× lift validated'],
+    ['LinkedIn DM touches/week',d.liTw,'Multi-channel SDR: 20-25/day = 100-125/week'],
+    ['Warm intros/month',d.wmIn,'4 conservative · top quartile 8/mo dense network'],
+    ['Conferences in period',d.cfEv,'HR Tech Oct · MSP Summit · Karbon Connect · Legalweek'],
+    ['HR fee','$'+(d.hrFee/1000).toFixed(0)+'K','Market band $20-50K boutique'],
+    ['MSP fee','$'+(d.mspFee/1000).toFixed(0)+'K','Market band $20-45K'],
+    ['Accounting fee','$'+(d.accFee/1000).toFixed(0)+'K','Market band $15-35K above Karbon floor'],
+    ['Legal fee','$'+(d.legFee/1000).toFixed(0)+'K','Market band $40-100K (Harvey $50-300K)'],
+    ['Monthly retainer','$'+(d.rec/1000).toFixed(1)+'K','Geometric centre across verticals'],
+    ['Engineers (FTE)',d.engN,'Stage 1: 2 · Stage 2 ramp: 4 (1 per vertical)'],
+    ['Engineer cost/mo','$'+(d.engCost/1000).toFixed(1)+'K','Senior integration engineer 2026 US'],
+    ['Karina cost/mo','$'+(d.sdrCost/1000).toFixed(1)+'K','SDR salary + tools'],
+    ['Cycle (cold)','60d','Mid-market $25-150K ACV B2B benchmark'],
+    ['Engineer throughput','1.75 impls/mo','65% utilization × 95 hrs / 50 hrs per project'],
+    ['L1 payment terms','30/40/30 net-30','RepSpark 2026 B2B services'],
+    ['L2 monthly churn','3%','SMB SaaS Optifai 2026 N=939'],
+    ['Channel dedup factor','15%','Email+LinkedIn overlap (industry estimate)']
+  ];
+  document.getElementById('assumption-log').innerHTML = '<table class="tbl"><thead><tr><th>Assumption</th><th class="r">Current</th><th>Benchmark / source</th></tr></thead><tbody>' +
+    assumptions.map(a => `<tr><td>${a[0]}</td><td class="r"><strong>${a[1]}</strong></td><td class="src">${a[2]}</td></tr>`).join('') + '</tbody></table>';
+}
+
+window.initControls = renderControls;
+renderControls();
+</script>
