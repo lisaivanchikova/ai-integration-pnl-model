@@ -3,748 +3,860 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Accounting GTM Operating Model — AI-Integration Co</title>
+<title>AI-Integration Co · Accounting · Commercial Operating Model</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-:root{
-  --deep-slate:#31435B;
-  --petrol:#2E7780;
-  --soft-steel:#A9C5D6;
-  --silver-mist:#DCE5EC;
-  --near-black:#151A1F;
-  --cool-gray:#C9D2DC;
-  --off-white:#FAF9F6;
-  --warn:#B8623A;
-  --good:#3D7A5B;
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--off-white);color:var(--near-black);font-family:'Inter','Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
-a{color:var(--petrol);text-decoration:none}
-a:hover{text-decoration:underline}
-.wrap{max-width:1200px;margin:0 auto;padding:48px 32px}
-h1,h2,h3,h4{font-family:'Inter',sans-serif;font-weight:600;color:var(--deep-slate);letter-spacing:-0.01em;margin:0 0 12px}
-h1{font-size:34px;line-height:1.15;letter-spacing:-0.02em}
-h2{font-size:24px;margin-top:48px;padding-bottom:10px;border-bottom:2px solid var(--silver-mist)}
-h3{font-size:18px;margin-top:28px;color:var(--petrol)}
-h4{font-size:15px;margin-top:20px;color:var(--deep-slate);text-transform:uppercase;letter-spacing:0.04em;font-size:12px}
-p{margin:0 0 12px}
-.hero{background:linear-gradient(135deg,var(--deep-slate),var(--petrol));color:var(--off-white);padding:56px 48px;border-radius:14px;margin-bottom:40px}
-.hero h1{color:var(--off-white);font-size:38px;margin-bottom:16px}
-.hero .sub{font-size:16px;opacity:.92;max-width:760px;line-height:1.55}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
-.kpi{background:rgba(250,249,246,.10);border:1px solid rgba(220,229,236,.30);border-radius:10px;padding:14px 16px}
-.kpi .label{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;opacity:.80;margin-bottom:6px}
-.kpi .val{font-size:24px;font-weight:600;color:var(--off-white);line-height:1.0}
-.kpi .note{font-size:11px;opacity:.75;margin-top:6px}
-.card{background:#fff;border:1px solid var(--silver-mist);border-radius:10px;padding:24px 28px;margin-bottom:18px;box-shadow:0 1px 3px rgba(21,26,31,.03)}
-.callout{background:var(--silver-mist);border-left:4px solid var(--petrol);padding:14px 18px;border-radius:6px;margin:14px 0;font-size:13px}
-.callout strong{color:var(--deep-slate)}
-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
-th{background:var(--deep-slate);color:var(--off-white);padding:10px 12px;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.04em}
-td{padding:10px 12px;border-bottom:1px solid var(--silver-mist);vertical-align:top}
-tr:hover td{background:var(--off-white)}
-.tag{display:inline-block;padding:3px 9px;border-radius:11px;font-size:11px;font-weight:600;letter-spacing:0.03em}
-.tag-scale{background:#d8eadd;color:var(--good)}
-.tag-active{background:#dde9eb;color:var(--petrol)}
+:root{--slate:#31435B;--teal:#2E7780;--steel:#A9C5D6;--mist:#DCE5EC;--near-black:#151A1F;--off-white:#FAF9F6;--bg:#FAF9F6;--border:#C9D2DC;--light-border:#E4E9EE;--muted:#7A8896;--pos:#2E7780;--neg:#A14545;--warn:#C4A04A}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--near-black);font-family:'Inter',sans-serif;font-size:13px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.header{position:sticky;top:0;z-index:50;background:var(--slate);color:var(--off-white);padding:14px 28px;border-bottom:3px solid var(--teal);display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;flex-direction:column}
+.brand-name{font-family:'DM Sans';font-weight:700;letter-spacing:0.08em;font-size:13px;color:var(--steel)}
+.brand-sub{font-size:11px;opacity:0.75;margin-top:2px}
+.header-kpis{display:flex;gap:18px}
+.hkpi{text-align:right}
+.hkpi-lab{font-size:9px;text-transform:uppercase;letter-spacing:0.08em;opacity:0.65;margin-bottom:2px}
+.hkpi-val{font-family:'DM Sans';font-weight:700;font-size:18px;color:var(--off-white)}
+.layout{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 60px)}
+.sidebar{position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;background:#fff;border-right:1px solid var(--border);padding:18px 16px}
+.sidebar h3{font-family:'DM Sans';font-size:10px;text-transform:uppercase;letter-spacing:0.10em;color:var(--muted);margin:18px 0 8px;font-weight:500}
+.sidebar h3:first-child{margin-top:0}
+.pills{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.pill{background:var(--off-white);border:1px solid var(--border);border-radius:6px;padding:8px 12px;text-align:left;cursor:pointer;font-family:'Inter';transition:all 0.15s}
+.pill:hover{border-color:var(--teal)}
+.pill.active{background:var(--slate);color:var(--off-white);border-color:var(--slate)}
+.pill-name{font-weight:600;font-size:12px}
+.pill-sub{font-size:10px;opacity:0.75;margin-top:1px}
+.slider-row{margin-bottom:10px}
+.slider-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;font-size:11px}
+.slider-name{color:var(--near-black)}
+.slider-val{font-family:'DM Sans';font-weight:700;color:var(--teal)}
+input[type=range]{width:100%;height:4px;-webkit-appearance:none;background:var(--mist);border-radius:2px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--teal);border-radius:50%;cursor:pointer;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;background:var(--teal);border-radius:50%;cursor:pointer;border:2px solid #fff}
+.btn-reset{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px;border-radius:6px;cursor:pointer;font-size:11px;margin-top:14px}
+.btn-reset:hover{border-color:var(--teal);color:var(--teal)}
+.content{padding:24px 32px;max-width:1100px}
+.section{background:#fff;border:1px solid var(--border);border-radius:10px;margin-bottom:14px;overflow:hidden}
+.section>summary{padding:14px 20px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;background:var(--off-white);border-bottom:1px solid var(--light-border);font-family:'DM Sans';font-weight:500;font-size:14px;color:var(--slate);transition:background 0.15s}
+.section>summary::-webkit-details-marker{display:none}
+.section>summary:hover{background:var(--mist)}
+.section>summary::before{content:'▸';font-size:10px;color:var(--teal);transition:transform 0.2s}
+.section[open]>summary::before{transform:rotate(90deg)}
+.section-num{background:var(--teal);color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;letter-spacing:0.06em;font-family:'DM Sans'}
+.section-meta{margin-left:auto;font-size:11px;color:var(--muted);font-weight:400}
+.section-body{padding:20px}
+.section-body h3{font-family:'DM Sans';font-size:13px;color:var(--slate);margin:18px 0 8px;font-weight:700;letter-spacing:0.02em}
+.section-body h3:first-child{margin-top:0}
+.section-body h4{font-family:'DM Sans';font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin:14px 0 6px;font-weight:500}
+.section-body p{margin-bottom:10px;font-size:12.5px}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0}
+.tbl th{background:var(--slate);color:var(--off-white);padding:7px 10px;text-align:left;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.04em;font-family:'DM Sans'}
+.tbl th.r{text-align:right}
+.tbl td{padding:7px 10px;border-bottom:1px solid var(--light-border)}
+.tbl td.r{text-align:right;font-family:'DM Sans';font-weight:500}
+.tbl tr:hover td{background:var(--off-white)}
+.tbl .section-row td{background:var(--mist);color:var(--slate);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.04em;font-family:'DM Sans';padding:5px 10px}
+.tbl .subtotal-row td{background:var(--off-white);font-weight:600;border-top:1px solid var(--border)}
+.tbl .total-row td{background:var(--slate);color:var(--off-white);font-weight:700;border-top:2px solid var(--teal)}
+.tbl .neg{color:var(--neg)}
+.tbl .pos{color:var(--pos)}
+.callout{background:var(--mist);border-left:4px solid var(--teal);padding:12px 14px;border-radius:4px;margin:12px 0;font-size:12px}
+.callout strong{color:var(--slate)}
+.callout-danger{background:#f7e7e3;border-left-color:var(--neg)}
+.callout-danger strong{color:var(--neg)}
+.callout-dark{background:var(--slate);color:var(--off-white);border:none}
+.callout-dark strong{color:var(--steel)}
+.apex-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.apex-tile{background:var(--off-white);border:1px solid var(--border);border-radius:6px;padding:10px}
+.apex-tile.dark{background:var(--slate);color:var(--off-white);border-color:var(--slate)}
+.apex-lab{font-size:9px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:3px}
+.apex-tile.dark .apex-lab{color:var(--steel)}
+.apex-val{font-family:'DM Sans';font-weight:700;font-size:18px;color:var(--teal)}
+.apex-tile.dark .apex-val{color:var(--off-white)}
+.apex-val.pos{color:var(--pos)}.apex-val.warn{color:var(--warn)}.apex-val.neg{color:var(--neg)}
+.apex-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.gauges{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+.gauge{background:var(--off-white);border:1px solid var(--border);border-radius:6px;padding:12px}
+.gauge h4{margin-top:0;margin-bottom:8px}
+.gauge-bar{height:12px;background:var(--mist);border-radius:6px;overflow:hidden;margin:6px 0}
+.gauge-fill{height:100%;border-radius:6px;transition:width 0.3s}
+.gauge-fill.pos{background:var(--teal)}.gauge-fill.warn{background:var(--warn)}.gauge-fill.neg{background:var(--neg)}
+.gauge-detail{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.5}
+.scen-pills{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.scen-pill{background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:left;cursor:pointer;font-family:'Inter'}
+.scen-pill:hover{border-color:var(--teal)}
+.scen-pill.active{background:var(--slate);color:var(--off-white);border-color:var(--slate)}
+.scen-pill-name{font-family:'DM Sans';font-weight:700;font-size:14px;margin-bottom:4px}
+.scen-pill-desc{font-size:10px;opacity:0.85}
+.tornado-row{display:grid;grid-template-columns:170px 1fr 110px;align-items:center;gap:10px;padding:5px 0;font-size:11px}
+.tornado-name{color:var(--slate);font-weight:500}
+.tornado-bar-wrap{background:var(--mist);height:14px;border-radius:3px;overflow:hidden}
+.tornado-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--slate));border-radius:3px;transition:width 0.3s}
+.tornado-val{text-align:right;font-family:'DM Sans';font-weight:600;color:var(--teal);font-size:11px;line-height:1.2}
+.ctrl-row{display:grid;grid-template-columns:24px 1fr 80px;align-items:center;gap:8px;padding:5px 0;font-size:11px;border-bottom:1px solid var(--light-border)}
+.ctrl-icon{font-weight:700;font-size:12px;text-align:center}
+.ctrl-icon.pass{color:var(--pos)}.ctrl-icon.warn{color:var(--warn)}.ctrl-icon.fail{color:var(--neg)}
+.ctrl-val{text-align:right;font-family:'DM Sans';font-weight:600;color:var(--muted)}
+.dash-tile-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:10px 0}
+.dash-tile{background:var(--near-black);color:var(--off-white);border-radius:6px;padding:10px 8px;text-align:center}
+.dash-tile .lab{font-size:9px;text-transform:uppercase;letter-spacing:0.05em;color:var(--steel);margin-bottom:3px}
+.dash-tile .num{font-family:'DM Sans';font-weight:700;font-size:20px;color:var(--off-white)}
+.dash-tile .target{font-size:9px;color:var(--steel);margin-top:2px;opacity:0.75}
+.src{font-size:10px;color:var(--muted);font-style:italic;margin-top:6px;padding-top:5px;border-top:1px dotted var(--border);line-height:1.5}
+.src a{color:var(--muted)}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+.tag{display:inline-block;padding:1px 7px;border-radius:9px;font-size:9px;font-weight:700;letter-spacing:0.04em;font-family:'DM Sans'}
+.tag-scale{background:#d8eadd;color:#3D7A5B}
+.tag-active{background:#dde9eb;color:var(--teal)}
 .tag-test{background:#f0e3d6;color:var(--warn)}
-.tag-defer{background:var(--silver-mist);color:var(--deep-slate)}
-.tag-last{background:#e8d5d5;color:#8a3a3a}
-.src{font-size:11px;color:#6b7785;font-style:italic;margin-top:6px;border-top:1px dotted var(--cool-gray);padding-top:6px}
-.src a{color:#6b7785}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.metric-box{background:var(--off-white);border:1px solid var(--silver-mist);border-radius:8px;padding:14px}
-.metric-box .label{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--deep-slate);font-weight:600;margin-bottom:6px}
-.metric-box .val{font-size:22px;font-weight:600;color:var(--petrol)}
-.metric-box .delta{font-size:11px;color:#6b7785;margin-top:4px}
-.scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
-.scn{border-radius:10px;padding:18px 20px;color:var(--off-white)}
-.scn h4{color:var(--off-white);margin-bottom:10px;font-size:13px}
-.scn-bear{background:#7a8a99}
-.scn-real{background:var(--deep-slate)}
-.scn-bull{background:var(--petrol)}
-.scn ul{margin:0;padding-left:18px;font-size:12px;line-height:1.55}
-.scn li{margin-bottom:4px}
-.dash{background:var(--near-black);color:var(--off-white);border-radius:10px;padding:22px 24px;margin:18px 0}
-.dash h3{color:var(--soft-steel);margin-top:0}
-.dash-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:14px}
-.dash-tile{background:rgba(250,249,246,.06);border:1px solid rgba(169,197,214,.20);border-radius:8px;padding:12px 10px;text-align:center}
-.dash-tile .lab{font-size:10px;text-transform:uppercase;letter-spacing:0.05em;opacity:.70;margin-bottom:4px}
-.dash-tile .num{font-size:20px;font-weight:600;color:var(--soft-steel)}
-.dash-tile .target{font-size:10px;opacity:.65;margin-top:3px}
-.bar-row{display:grid;grid-template-columns:160px 1fr 60px;align-items:center;gap:10px;margin:6px 0;font-size:12px}
-.bar-row .lab{color:var(--deep-slate);font-weight:500}
-.bar{background:var(--silver-mist);border-radius:4px;height:18px;position:relative;overflow:hidden}
-.bar-fill{background:var(--petrol);height:100%;border-radius:4px}
-.funnel-stage{display:grid;grid-template-columns:1fr 80px 80px;gap:8px;padding:8px 12px;background:var(--off-white);border:1px solid var(--silver-mist);border-radius:6px;margin-bottom:6px;font-size:13px}
-.funnel-stage .stage-name{font-weight:500;color:var(--deep-slate)}
-.funnel-stage .conv{color:var(--petrol);text-align:right;font-weight:600}
-.funnel-stage .count{color:var(--near-black);text-align:right;font-weight:600}
-.nav{position:sticky;top:0;background:rgba(250,249,246,.96);backdrop-filter:blur(8px);padding:12px 32px;border-bottom:1px solid var(--silver-mist);z-index:10;font-size:13px}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;gap:18px;flex-wrap:wrap}
-.nav a{color:var(--deep-slate);font-weight:500}
-.sources-block{background:var(--silver-mist);border-radius:10px;padding:24px 28px;margin-top:32px;font-size:12px;line-height:1.7;color:var(--deep-slate)}
-.footer{text-align:center;color:#6b7785;font-size:11px;padding:28px 0;border-top:1px solid var(--silver-mist);margin-top:40px}
-@media(max-width:900px){
-  .kpi-grid,.dash-grid{grid-template-columns:repeat(2,1fr)}
-  .two-col,.three-col,.scenarios{grid-template-columns:1fr}
-  .hero{padding:36px 24px}
-  .wrap{padding:28px 18px}
-}
+.tag-defer{background:var(--mist);color:var(--slate)}
+.tag-last{background:#e8d5d5;color:var(--neg)}
+.cash-chart-wrap{position:relative;height:240px;margin:14px 0}
+.footer{padding:18px 32px;color:var(--muted);font-size:10px;text-align:center;border-top:1px solid var(--border);margin-top:20px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{position:relative;top:0;height:auto}.apex-grid,.dash-tile-grid{grid-template-columns:repeat(2,1fr)}.scen-pills,.three-col,.two-col{grid-template-columns:1fr}.header-kpis{display:none}}
 </style>
 </head>
 <body>
 
-<div class="nav">
-  <div class="nav-inner">
-    <a href="#summary">Summary</a>
-    <a href="#industry">Industry</a>
-    <a href="#channels">Channels</a>
-    <a href="#conversion">Conversion</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#capacity">Capacity</a>
-    <a href="#daily">Daily Tracker</a>
-    <a href="#monthly">Monthly P&amp;L</a>
-    <a href="#scenarios">Scenarios</a>
-    <a href="#decisions">Decisions</a>
+<header class="header">
+  <div class="brand">
+    <div class="brand-name">AI-INTEGRATION CO · ACCOUNTING</div>
+    <div class="brand-sub">Commercial Operating Model · Single-vertical</div>
   </div>
-</div>
-
-<div class="wrap">
-
-<section class="hero">
-  <h1>Accounting GTM Operating Model</h1>
-  <div class="sub">A single-vertical commercial model for AI-integration sales into US accounting firms (11-50 employees) and PE roll-up platforms. Built on AICPA, BLS, Mailshake, Salesforce, PitchBook, and Karbon public disclosures. Two engines separated — Engine A acquires, Engine B converts. Six-stage funnel, three scenarios, daily and monthly dashboards.</div>
-  <div class="kpi-grid">
-    <div class="kpi"><div class="label">Addressable ICP</div><div class="val">5,750</div><div class="note">SMB firms + PE platforms</div></div>
-    <div class="kpi"><div class="label">Realistic LTV</div><div class="val">$45K</div><div class="note">3-year, 55% GM</div></div>
-    <div class="kpi"><div class="label">Blended CAC</div><div class="val">$4.8K</div><div class="note">Weighted across 7 channels</div></div>
-    <div class="kpi"><div class="label">LTV / CAC</div><div class="val">9.4×</div><div class="note">Payback 3.4 months</div></div>
+  <div class="header-kpis">
+    <div class="hkpi"><div class="hkpi-lab">LTV</div><div class="hkpi-val" id="hkpi-ltv">—</div></div>
+    <div class="hkpi"><div class="hkpi-lab">CAC</div><div class="hkpi-val" id="hkpi-cac">—</div></div>
+    <div class="hkpi"><div class="hkpi-lab">LTV/CAC</div><div class="hkpi-val" id="hkpi-ratio">—</div></div>
+    <div class="hkpi"><div class="hkpi-lab">EBITDA BE</div><div class="hkpi-val" id="hkpi-be">—</div></div>
+    <div class="hkpi"><div class="hkpi-lab">Cash BE</div><div class="hkpi-val" id="hkpi-cbe">—</div></div>
   </div>
-</section>
+</header>
 
-<!-- ============================ SECTION 0 — EXECUTIVE SUMMARY ============================ -->
-<section id="summary">
-<h2>0 · Executive Summary</h2>
-<div class="card">
-<p>The US accounting services market is mid-cycle in a digital wave that has already cleared two well-funded entrants (Bench shut down December 2024; Botkeeper failed to scale and pivoted twice). Karbon shipped Kai (AI assistant) on June 3, 2026 — competitive table-stakes for client-management workflow. Sage Intacct remains effectively uncovered for AI-native cross-system reconciliation. This document models a boutique AI-integration motion targeting 5,500 independent firms (11-50 employees) and 250+ PE roll-up platforms.</p>
+<div class="layout">
 
-<div class="callout"><strong>Core thesis.</strong> Accounting firms have a structural pain that incumbents do not solve: cross-system reconciliation between Sage Intacct, QuickBooks Online, Karbon, document portals, and the bank/AP/AR ledgers. Karbon Kai is workflow-layer. Botkeeper was bookkeeping outsourcing. Bench was consumer-grade. The mid-market boutique slot ($25-40K ACV) sits underneath enterprise (Distyl, Eudia, Harvey) and above SaaS subscription tools. Referrals dominate this market (~70% of new clients per AICPA PCPS surveys); paid channels are weak. Conference and PE-platform partnerships dominate top-of-funnel pricing leverage.</p>
+<aside class="sidebar">
+  <h3>Scenario</h3>
+  <div class="pills">
+    <button class="pill" onclick="applyScen('bear',this)"><div><div class="pill-name">Bear</div><div class="pill-sub">Karina solo · 1 engineer · slow ramp</div></div></button>
+    <button class="pill active" onclick="applyScen('real',this)"><div><div class="pill-name">Realistic</div><div class="pill-sub">2 engineers · 800 emails/mo</div></div></button>
+    <button class="pill" onclick="applyScen('bull',this)"><div><div class="pill-name">Bull</div><div class="pill-sub">Lusin ×5 · 3 engineers · PE partnerships</div></div></button>
+  </div>
 
-<h4>Headline metrics — Realistic scenario</h4>
-<div class="three-col">
-  <div class="metric-box"><div class="label">EBITDA Break-even</div><div class="val">Month 5</div><div class="delta">Cash break-even Month 6</div></div>
-  <div class="metric-box"><div class="label">Deals / month (M6)</div><div class="val">6.2</div><div class="delta">2 engineers × 1.75 throughput + 12% bench</div></div>
-  <div class="metric-box"><div class="label">Booked revenue M6</div><div class="val">$173K</div><div class="delta">6.2 deals × $28K impl + retainer ramp</div></div>
+  <h3>Outreach intensity (Karina)</h3>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Karina hrs/wk</span><span class="slider-val" id="v-karinaHrs">35h</span></div><input type="range" min="10" max="50" step="1" value="35" id="sl-karinaHrs"></div>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Emails/wk</span><span class="slider-val" id="v-emTw">200</span></div><input type="range" min="50" max="400" step="10" value="200" id="sl-emTw"></div>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">LinkedIn/wk</span><span class="slider-val" id="v-liTw">60</span></div><input type="range" min="0" max="120" step="5" value="60" id="sl-liTw"></div>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Warm intros/mo</span><span class="slider-val" id="v-wmIn">4</span></div><input type="range" min="0" max="12" step="1" value="4" id="sl-wmIn"></div>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Conferences (AICPA)/6mo</span><span class="slider-val" id="v-cfEv">3</span></div><input type="range" min="0" max="6" step="1" value="3" id="sl-cfEv"></div>
+
+  <h3>Quality &amp; pricing</h3>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Cold email reply %</span><span class="slider-val" id="v-emRp">6%</span></div><input type="range" min="1" max="20" step="0.5" value="6" id="sl-emRp"></div>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Lusin signal lift ×</span><span class="slider-val" id="v-lusin">1.0×</span></div><input type="range" min="1" max="8" step="0.5" value="1" id="sl-lusin"></div>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Pilot → Close %</span><span class="slider-val" id="v-pc">60%</span></div><input type="range" min="20" max="90" step="5" value="60" id="sl-pc"></div>
+
+  <h3>Pricing ($K)</h3>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Implementation fee</span><span class="slider-val" id="v-accFee">28</span></div><input type="range" min="15" max="60" step="1" value="28" id="sl-accFee"></div>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Retainer / mo</span><span class="slider-val" id="v-rec">2.8</span></div><input type="range" min="1" max="6" step="0.1" value="2.8" id="sl-rec"></div>
+
+  <h3>Team cost ($K/mo)</h3>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Engineers #</span><span class="slider-val" id="v-engN">2</span></div><input type="range" min="1" max="5" step="1" value="2" id="sl-engN"></div>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Cost / engineer</span><span class="slider-val" id="v-engCost">12.0</span></div><input type="range" min="8" max="18" step="0.5" value="12" id="sl-engCost"></div>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">SDR (Karina)</span><span class="slider-val" id="v-sdrCost">4.0</span></div><input type="range" min="2" max="8" step="0.5" value="4" id="sl-sdrCost"></div>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Tools (Apollo+Clay+Lusin)</span><span class="slider-val" id="v-tools">2.0</span></div><input type="range" min="0.5" max="5" step="0.1" value="2" id="sl-tools"></div>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Fixed overhead</span><span class="slider-val" id="v-overhead">3.5</span></div><input type="range" min="1" max="8" step="0.5" value="3.5" id="sl-overhead"></div>
+  <div class="slider-row"><div class="slider-head"><span class="slider-name">Founder draw</span><span class="slider-val" id="v-draw">5</span></div><input type="range" min="0" max="15" step="1" value="5" id="sl-draw"></div>
+
+  <button class="btn-reset" onclick="resetAll()">Reset to Realistic</button>
+</aside>
+
+<main class="content">
+
+<!-- ============== SECTION 0 ============== -->
+<details class="section" open>
+<summary><span class="section-num">SECTION 0</span> Executive Summary <span class="section-meta">live KPIs · scenario-driven</span></summary>
+<div class="section-body">
+<div class="callout callout-dark"><strong>Single-vertical commercial model for AI-integration sales into US accounting firms (11-50 employees) and PE roll-up platforms.</strong> Engine A acquires through referrals, PE partnerships, AICPA conferences, LinkedIn outbound, and intent-signal cold email. Engine B converts via founder-led discovery → $10K paid pilot → $28K implementation → $2.8K/mo retainer. Two engines separated; math collapses on the Accounting vertical from a 4-vertical baseline model. All driver inputs in the left rail; recompute is live.</div>
+
+<div class="apex-grid">
+  <div class="apex-tile"><div class="apex-lab">3-yr LTV</div><div class="apex-val" id="apex-ltv">—</div><div class="apex-sub">55% GM</div></div>
+  <div class="apex-tile"><div class="apex-lab">Blended CAC</div><div class="apex-val" id="apex-cac">—</div><div class="apex-sub">All channels</div></div>
+  <div class="apex-tile"><div class="apex-lab">LTV/CAC</div><div class="apex-val" id="apex-ratio">—</div><div class="apex-sub">≥3 healthy · ≥10 world-class</div></div>
+  <div class="apex-tile"><div class="apex-lab">Payback</div><div class="apex-val" id="apex-payback">—</div><div class="apex-sub">Target &lt;12 mo</div></div>
+  <div class="apex-tile dark"><div class="apex-lab">EBITDA Break-even</div><div class="apex-val" id="apex-be">—</div><div class="apex-sub">First positive month</div></div>
+  <div class="apex-tile dark"><div class="apex-lab">Cash Break-even</div><div class="apex-val" id="apex-cbe">—</div><div class="apex-sub">Cumulative ≥0</div></div>
+  <div class="apex-tile"><div class="apex-lab">Karina util</div><div class="apex-val" id="apex-futil">—</div><div class="apex-sub">≤85% healthy</div></div>
+  <div class="apex-tile"><div class="apex-lab">Engineer util</div><div class="apex-val" id="apex-eutil">—</div><div class="apex-sub">≤85% healthy</div></div>
 </div>
 
-<div class="src">Sources: AICPA Trends in the Supply of Accounting Graduates 2023; AICPA PCPS National MAP Survey 2024 (referrals 60-72% of new client acquisition); Bench shutdown — TechCrunch, Dec 27 2024; Botkeeper Series D press release Feb 2022 + restructuring coverage Going Concern 2023; Karbon Kai launch — Accounting Today Jun 3 2026; Sage Intacct API coverage analysis — CPA Practice Advisor 2024.</div>
+<h4>Core thesis</h4>
+<p>Accounting firms face a structural pain that incumbents do not solve: cross-system reconciliation between Sage Intacct, QuickBooks Online, Karbon, document portals, and bank/AP/AR ledgers. Karbon Kai (launched June 3, 2026) is workflow-layer. Botkeeper was bookkeeping outsourcing. Bench was consumer-grade and shut down December 2024. The mid-market boutique slot ($25-40K ACV) sits below enterprise consultancies (Distyl, Eudia, Harvey) and above SaaS subscription tools. Referrals dominate this market (~70% of new clients per AICPA PCPS surveys); paid channels are weak.</p>
+
+<div class="src">Sources: AICPA PCPS National MAP Survey 2024; Bench shutdown coverage TechCrunch Dec 27 2024; Karbon Kai launch Accounting Today Jun 3 2026; PitchBook Accounting Roll-up Tracker Q1 2025.</div>
 </div>
-</section>
+</details>
 
-<!-- ============================ SECTION 1 — INDUSTRY ============================ -->
-<section id="industry">
-<h2>1 · Accounting Industry — Map &amp; ICP</h2>
+<!-- ============== SECTION 1 ============== -->
+<details class="section" open>
+<summary><span class="section-num">SECTION 1</span> Industry Analysis <span class="section-meta">market · ICP · competitive landscape</span></summary>
+<div class="section-body">
 
-<div class="card">
 <h3>1.1 — Market structure</h3>
-<table>
-<thead><tr><th>Segment</th><th>Count (US)</th><th>Avg Revenue</th><th>Buyer</th><th>Relevance</th></tr></thead>
+<table class="tbl">
+<thead><tr><th>Segment</th><th class="r">Count</th><th class="r">Avg revenue</th><th>Relevance</th></tr></thead>
 <tbody>
-<tr><td>Big 4 (Deloitte, PwC, EY, KPMG)</td><td>4</td><td>$40-65B</td><td>CIO / Partner Innovation</td><td>Out of scope — in-house AI labs</td></tr>
-<tr><td>Top 25 firms (excl. Big 4)</td><td>21</td><td>$200M-$2B</td><td>CTO / Managing Partner</td><td>Distyl / Harvey / Eudia territory</td></tr>
-<tr><td>Mid-market firms (51-500 emp)</td><td>~2,400</td><td>$8-80M</td><td>Managing Partner</td><td>Adjacent — secondary target</td></tr>
-<tr><td><strong>Independent firms (11-50 emp)</strong></td><td><strong>~5,500</strong></td><td>$1.5-7M</td><td>Owner / Senior Partner</td><td><strong>PRIMARY ICP</strong></td></tr>
-<tr><td><strong>PE roll-up platforms</strong></td><td><strong>~250</strong></td><td>$50M-$1B (platform)</td><td>CEO / COO / Head of Tech</td><td><strong>PRIMARY ICP — high ACV</strong></td></tr>
-<tr><td>Sole / micro (≤10 emp)</td><td>~115,000</td><td>&lt;$1M</td><td>Owner</td><td>Out of scope — WTP too low</td></tr>
+<tr><td>Big 4 (Deloitte, PwC, EY, KPMG)</td><td class="r">4</td><td class="r">$40-65B</td><td>Out of scope — in-house AI labs</td></tr>
+<tr><td>Top 25 firms (excl. Big 4)</td><td class="r">21</td><td class="r">$200M-$2B</td><td>Distyl / Harvey / Eudia territory</td></tr>
+<tr><td>Mid-market firms (51-500 emp)</td><td class="r">~2,400</td><td class="r">$8-80M</td><td>Adjacent — secondary target</td></tr>
+<tr class="subtotal-row"><td><strong>Independent firms (11-50 emp)</strong></td><td class="r"><strong>5,500</strong></td><td class="r">$1.5-7M</td><td><strong>PRIMARY ICP</strong></td></tr>
+<tr class="subtotal-row"><td><strong>PE roll-up platforms</strong></td><td class="r"><strong>250</strong></td><td class="r">$50M-$1B</td><td><strong>PRIMARY ICP — high ACV</strong></td></tr>
+<tr><td>Sole / micro (≤10 emp)</td><td class="r">115,000</td><td class="r">&lt;$1M</td><td>Out of scope — WTP too low</td></tr>
 </tbody>
 </table>
-<div class="src">Sources: US Census Bureau, County Business Patterns 2022 (NAICS 5412 — Accounting, Tax Preparation, Bookkeeping); IBISWorld Accounting Services in the US, May 2025 ($145.3B revenue, 1.2% CAGR); INSIDE Public Accounting Top 500 2024; PitchBook Q1 2025 — Accounting Roll-up Tracker (Ascend, Aprio Capital, Carbon Crest, Citrin Cooperman, Eisner Advisory Group, Whitman Transition Advisors).</div>
-</div>
+<div class="src">Sources: US Census County Business Patterns 2022 (NAICS 5412); IBISWorld Accounting Services May 2025 ($145.3B revenue); INSIDE Public Accounting Top 500 2024; PitchBook Q1 2025 Accounting Roll-up Tracker.</div>
 
-<div class="card">
-<h3>1.2 — ICP refinement (5,750 total)</h3>
-<table>
-<thead><tr><th>Sub-ICP</th><th>Count</th><th>Pain anchor</th><th>Implementation ACV</th><th>Retainer/mo</th></tr></thead>
+<h3>1.2 — Competitive landscape</h3>
+<table class="tbl">
+<thead><tr><th>Layer</th><th>Players</th><th>Motion</th><th>Our position</th></tr></thead>
 <tbody>
-<tr><td>Independent firm, Sage Intacct stack</td><td>~1,200</td><td>Cross-system recon (Intacct↔QBO↔bank)</td><td>$28-35K</td><td>$3.0K</td></tr>
-<tr><td>Independent firm, QBO/Karbon stack</td><td>~3,400</td><td>Client-facing workflow + AP automation</td><td>$22-28K</td><td>$2.5K</td></tr>
-<tr><td>Independent firm, mixed legacy (Drake, CCH)</td><td>~900</td><td>Tax-season throughput + e-file rejects</td><td>$25-32K</td><td>$2.5K</td></tr>
-<tr><td>PE platform (sub-$500M revenue)</td><td>~180</td><td>Multi-firm consolidation + standardization</td><td>$80-120K</td><td>$6-10K</td></tr>
-<tr><td>PE platform (large, $500M+)</td><td>~70</td><td>M&amp;A integration playbook + reporting</td><td>$150-300K</td><td>$10-18K</td></tr>
+<tr><td>Enterprise AI consultancies</td><td>Distyl, Harvey, Eudia</td><td>Top-25 + Big 4. $500K-$5M ACV.</td><td>Different floor — we serve $1.5-80M revenue firms</td></tr>
+<tr><td>Workflow-layer AI</td><td>Karbon Kai (Jun 2026), Canopy, TaxDome AI</td><td>$59-99/seat/mo, in-product AI</td><td>Complement — we integrate them with the rest of the stack</td></tr>
+<tr><td>Vertical AI bookkeeping</td><td>Truewind, Pry, Digits, Klarity</td><td>SMB SaaS $200-2,000/mo</td><td>Different buyer (SMB vs firm)</td></tr>
+<tr><td>AP / AR automation</td><td>Vic.ai, Stampli, Tipalti, Ramp Bill Pay</td><td>$20-100K ACV, narrow workflow</td><td>Adjacent — orchestrate across these</td></tr>
+<tr><td>Failed entrants (cautionary)</td><td>Bench (shut Dec 2024), Botkeeper (pivoted twice)</td><td>Consumer-grade SMB, low WTP, high churn</td><td>Validates boutique mid-market positioning</td></tr>
+<tr><td>PE roll-up consolidators</td><td>Ascend, Aprio Capital, Carbon Crest</td><td>Buy firms, standardize tech stack</td><td>Channel partners — they need integration capacity</td></tr>
 </tbody>
 </table>
-<div class="src">Sources: Sage Intacct partner directory (Q1 2025); Intuit ProAdvisor census 2024; Wolters Kluwer CCH user base disclosure 10-K 2024; PitchBook Accounting Roll-up Tracker; AICPA PCPS firm size benchmarks 2024 (firms 11-50 emp: avg billing $3.4M, avg partner count 4.2).</div>
-</div>
+<div class="src">Sources: Distyl Series C Mar 2025; Eudia Series A Reuters Jan 2025; Karbon Kai launch Accounting Today Jun 3 2026; Vic.ai funding Crunchbase; Bench shutdown TechCrunch Dec 27 2024; PitchBook Q1 2025.</div>
 
-<div class="card">
-<h3>1.3 — Competitive landscape</h3>
-<table>
-<thead><tr><th>Layer</th><th>Players</th><th>Their motion</th><th>Our position vs. them</th></tr></thead>
+<h3>1.3 — ICP (5,750 entities)</h3>
+<table class="tbl">
+<thead><tr><th>Sub-ICP</th><th class="r">Count</th><th>Pain anchor</th><th class="r">Implementation ACV</th></tr></thead>
 <tbody>
-<tr><td>Enterprise AI consultancies</td><td>Distyl, Harvey, Eudia</td><td>Top-25 firms + Big 4. ACV $500K-$5M.</td><td>Different floor — we serve $1.5-80M revenue firms they ignore</td></tr>
-<tr><td>Workflow-layer AI</td><td>Karbon Kai (Jun 2026), Canopy, TaxDome AI</td><td>Subscription, $59-$99/seat/mo, in-product AI</td><td>Complement, not substitute — we integrate them with the rest of the stack</td></tr>
-<tr><td>Vertical AI bookkeeping</td><td>Truewind, Pry (acq. Brex), Digits, Klarity</td><td>SMB SaaS, $200-2,000/mo</td><td>Different buyer — they sell to the SMB itself, we sell to the firm serving SMBs</td></tr>
-<tr><td>AP / AR automation</td><td>Vic.ai, Stampli, Tipalti, Ramp Bill Pay</td><td>$20-100K ACV, narrow workflow</td><td>Adjacent — we orchestrate across these point tools</td></tr>
-<tr><td>Failed entrants (cautionary)</td><td>Bench (shutdown Dec 2024), Botkeeper (pivoted twice)</td><td>Consumer-grade SMB, low WTP, high churn</td><td>Validates the boutique mid-market positioning — not commodity SaaS</td></tr>
-<tr><td>PE roll-up consolidators</td><td>Ascend, Aprio Capital, Carbon Crest</td><td>Buy firms, standardize tech stack post-acquisition</td><td>Channel partners, not competitors — they need integration capacity</td></tr>
+<tr><td>Independent firm · Sage Intacct stack</td><td class="r">1,200</td><td>Cross-system recon (Intacct↔QBO↔bank)</td><td class="r">$28-35K</td></tr>
+<tr><td>Independent firm · QBO/Karbon stack</td><td class="r">3,400</td><td>Client-facing workflow + AP automation</td><td class="r">$22-28K</td></tr>
+<tr><td>Independent firm · mixed legacy</td><td class="r">900</td><td>Tax-season throughput + e-file rejects</td><td class="r">$25-32K</td></tr>
+<tr><td>PE platform (sub-$500M)</td><td class="r">180</td><td>Multi-firm consolidation + standardization</td><td class="r">$80-120K</td></tr>
+<tr><td>PE platform ($500M+)</td><td class="r">70</td><td>M&amp;A integration + reporting</td><td class="r">$150-300K</td></tr>
 </tbody>
 </table>
-<div class="src">Sources: Distyl AI Series C press release Mar 2025; Eudia Series A — Reuters Jan 2025; Karbon Kai product launch — Accounting Today June 3, 2026; Canopy/TaxDome public pricing pages (accessed Jun 2026); Vic.ai funding history Crunchbase; Bench shutdown coverage TechCrunch Dec 27 2024; Botkeeper restructuring — Going Concern Mar 2023; PitchBook PE Roll-up Tracker Q1 2025.</div>
+<div class="src">Sources: Sage Intacct partner directory Q1 2025; Intuit ProAdvisor census 2024; Wolters Kluwer CCH 10-K 2024; AICPA PCPS firm-size benchmarks 2024.</div>
 </div>
-</section>
+</details>
 
-<!-- ============================ SECTION 2 — CHANNELS ============================ -->
-<section id="channels">
-<h2>2 · Engine A — Acquisition Channels</h2>
+<!-- ============== SECTION 2 ============== -->
+<details class="section" open>
+<summary><span class="section-num">SECTION 2</span> Benchmarks &amp; Evidence <span class="section-meta">channels · conversion · pricing</span></summary>
+<div class="section-body">
 
-<div class="card">
-<h3>2.1 — Channel ranking for US accounting</h3>
-<p>Referrals dominate accounting client acquisition more than almost any other vertical. AICPA's National MAP Survey has put referrals at 60-72% of new client acquisition for firms under 100 employees every year since 2018. This makes channel mix structurally different from HR / Legal / MSP — paid acquisition is weak, partnership and conference channels are strong.</p>
-
-<table>
-<thead><tr><th>#</th><th>Channel</th><th>CAC</th><th>LTV/CAC</th><th>Payback</th><th>Cycle</th><th>Phase</th><th>Status</th></tr></thead>
+<h3>2.1 — Engine A channels for US accounting</h3>
+<p>Referrals dominate. AICPA's National MAP Survey has put referrals at 60-72% of new client acquisition for firms under 100 employees every year since 2018. This makes channel mix structurally different from HR / Legal / MSP — paid acquisition is weak; partnership and conference channels are strong.</p>
+<table class="tbl">
+<thead><tr><th>#</th><th>Channel</th><th class="r">CAC</th><th class="r">LTV/CAC</th><th class="r">Cycle</th><th>Status</th></tr></thead>
 <tbody>
-<tr><td>1</td><td>Referrals (peer CPA, vendor partners, alumni)</td><td>$1.2-2K</td><td>28×</td><td>1.0 mo</td><td>30-45d</td><td>P0+</td><td><span class="tag tag-scale">SCALE</span></td></tr>
-<tr><td>2</td><td>PE platform partnerships (Ascend, Aprio Capital, etc.)</td><td>$3-5K</td><td>22×</td><td>1.6 mo</td><td>90-120d</td><td>P0+</td><td><span class="tag tag-scale">PRIMARY</span></td></tr>
-<tr><td>3</td><td>AICPA conferences (ENGAGE, Digital CPA, Scaling New Heights)</td><td>$6-9K</td><td>7×</td><td>3.4 mo</td><td>60-90d</td><td>P0+</td><td><span class="tag tag-active">ACTIVE</span></td></tr>
-<tr><td>4</td><td>LinkedIn outbound (CFO / Controller / Managing Partner)</td><td>$3-4K</td><td>13×</td><td>2.0 mo</td><td>60-75d</td><td>P0+</td><td><span class="tag tag-active">PRIMARY</span></td></tr>
-<tr><td>5</td><td>Cold email + intent signal (Lusin / vendor disclosures)</td><td>$4-5K (signal) / $10-13K (no signal)</td><td>10-18×</td><td>2.4 mo</td><td>75-90d</td><td>P0+</td><td><span class="tag tag-test">TEST</span></td></tr>
-<tr><td>6</td><td>Trade publications (Accounting Today, CPA Practice Advisor, Going Concern)</td><td>$9-13K</td><td>5×</td><td>4.5 mo</td><td>90-120d</td><td>P2+</td><td><span class="tag tag-defer">DEFER</span></td></tr>
-<tr><td>7</td><td>Paid search ("AI bookkeeping software", "accounting automation")</td><td>$18-25K</td><td>2.5×</td><td>8.5 mo</td><td>60-90d</td><td>P3+</td><td><span class="tag tag-last">LAST</span></td></tr>
+<tr><td>1</td><td>Referrals (peer CPA, vendor, alumni)</td><td class="r">$1.2-2K</td><td class="r">28×</td><td class="r">30-45d</td><td><span class="tag tag-scale">SCALE</span></td></tr>
+<tr><td>2</td><td>PE platform partnerships</td><td class="r">$3-5K</td><td class="r">22×</td><td class="r">90-120d</td><td><span class="tag tag-scale">PRIMARY</span></td></tr>
+<tr><td>3</td><td>AICPA conferences (ENGAGE, Digital CPA, Scaling NH)</td><td class="r">$6-9K</td><td class="r">7×</td><td class="r">60-90d</td><td><span class="tag tag-active">ACTIVE</span></td></tr>
+<tr><td>4</td><td>LinkedIn outbound (CFO / Controller / Partner)</td><td class="r">$3-4K</td><td class="r">13×</td><td class="r">60-75d</td><td><span class="tag tag-active">PRIMARY</span></td></tr>
+<tr><td>5</td><td>Cold email + intent signal (Lusin)</td><td class="r">$4-13K</td><td class="r">10-18×</td><td class="r">75-90d</td><td><span class="tag tag-test">TEST</span></td></tr>
+<tr><td>6</td><td>Trade pubs (Accounting Today, CPA Practice Advisor)</td><td class="r">$9-13K</td><td class="r">5×</td><td class="r">90-120d</td><td><span class="tag tag-defer">DEFER</span></td></tr>
+<tr><td>7</td><td>Paid search ("AI bookkeeping software")</td><td class="r">$18-25K</td><td class="r">2.5×</td><td class="r">60-90d</td><td><span class="tag tag-last">LAST</span></td></tr>
 </tbody>
 </table>
-<div class="src">Sources: AICPA PCPS National MAP Survey 2024 (referrals 70.4% of new clients for firms ≤50 emp); Mailshake 2024 Cold Email Benchmarks (financial services 5.1% reply rate); HubSpot State of Sales 2024 (LinkedIn InMail acceptance in finance/accounting 10-15%); WordStream Google Ads benchmarks Q4 2024 (Finance category CPC $4.50-$8.10); AICPA ENGAGE attendance data (5,200 in 2024, 5,800 projected 2025); Woodard Scaling New Heights registration 2024 (1,650 attendees); CPA.com Digital CPA Conference 2024 (1,420 attendees).</div>
-</div>
+<div class="src">Sources: AICPA PCPS National MAP Survey 2024 (referrals 70.4% of new clients for firms ≤50 emp); Mailshake 2024 Cold Email Benchmarks (financial services 5.1% reply); HubSpot State of Sales 2024; LinkedIn Sales Solutions 2024 (financial services InMail acceptance 10-15%); WordStream Google Ads Q4 2024.</div>
 
-<div class="card">
-<h3>2.2 — Channel detail (top 4)</h3>
-
-<h4>Referrals — the dominant channel</h4>
-<p>The structural fact of US accounting: ~70% of new clients arrive through referral. Three referral sub-channels matter for AI integration sales.</p>
-<table>
-<thead><tr><th>Sub-channel</th><th>Volume potential</th><th>Conversion</th><th>Cycle</th></tr></thead>
+<h3>2.2 — Cold email reply rates (accounting-specific)</h3>
+<table class="tbl">
+<thead><tr><th>Approach</th><th class="r">Reply rate</th><th>Source benchmark</th></tr></thead>
 <tbody>
-<tr><td>Peer CPA introduction (existing client → adjacent firm)</td><td>1.5× existing client base / yr</td><td>52% intro→discovery, 38% discovery→pilot</td><td>30-45d</td></tr>
-<tr><td>Vendor partner (Sage, Intuit, Karbon ecosystem)</td><td>3-5 warm intros / mo if ranked partner</td><td>40% intro→discovery, 32% discovery→pilot</td><td>45-60d</td></tr>
-<tr><td>Alumni network (firm partner alumni, B-school)</td><td>1-2 intros / mo founder-driven</td><td>65% intro→discovery, 45% discovery→pilot</td><td>30d</td></tr>
+<tr><td>Generic B2B cold email</td><td class="r">3.4%</td><td>Mailshake 2024 (all industries blended)</td></tr>
+<tr><td>Accounting industry, generic offer</td><td class="r">5.1%</td><td>Mailshake 2024 — finance/accounting cut</td></tr>
+<tr><td>Accounting + segment-specific pain (Intacct, recon)</td><td class="r">7.8%</td><td>Apollo case studies + Lemlist B2B 2024</td></tr>
+<tr><td>Accounting + intent signal (vendor change, hiring, funding)</td><td class="r">11-14%</td><td>Lusin pilot proxy (HR vertical ×10 lift)</td></tr>
+<tr><td>Accounting + named referral in subject</td><td class="r">22-28%</td><td>HubSpot 2024 personalization study</td></tr>
 </tbody>
 </table>
-<div class="src">Sources: AICPA PCPS 2024 survey (referral close rate 38-52% for firms ≤50 emp); Sage Intacct Partner Program tiering doc (accessed Jan 2025); Intuit ProAdvisor referral data 2023 (avg 2.8 partner-driven introductions per active partner per quarter).</div>
+<div class="callout"><strong>Critical unknown.</strong> Lusin signal lift in accounting is unvalidated. The ×10 figure comes from a single April 2026 pilot in HR (Cyborg HR / Peter Kelly). Accounting buyers respond to different triggers (audit cycle, software migration, M&amp;A close, partner change). Plan 2 accounting-specific Lusin pilots in Q3 before treating the lift as a benchmark.</div>
+<div class="src">Sources: Mailshake 2024; Apollo.io Outbound Best Practices 2024; Lemlist Q4 2024; HubSpot 2024 Email Personalization Study.</div>
 
-<h4>PE platform partnerships</h4>
-<p>250+ accounting roll-up platforms operate in US, with 18 of them having completed 10+ acquisitions. They have a structural integration capacity problem: every acquired firm runs a different combination of Intacct / QBO / Karbon / CCH / Drake / ProSeries, and platforms need standardization. Top targets: Ascend (Alpine Investors), Aprio Capital (NewSpring), Carbon Crest, Citrin Cooperman, Eisner Advisory, Pinion (Lone Pine).</p>
-<table>
-<thead><tr><th>Platform tier</th><th>Count</th><th>Acquisitions/yr</th><th>Multi-firm deal size</th></tr></thead>
+<h3>2.3 — Pricing benchmarks in the accounting AI stack</h3>
+<table class="tbl">
+<thead><tr><th>Vendor</th><th>Layer</th><th class="r">Pricing</th><th class="r">Typical ACV</th></tr></thead>
 <tbody>
-<tr><td>Active consolidators (10+ acquisitions)</td><td>18</td><td>4-12 per platform</td><td>$80-300K per integration cohort</td></tr>
-<tr><td>Emerging (3-9 acquisitions)</td><td>62</td><td>2-5 per platform</td><td>$50-150K</td></tr>
-<tr><td>Single platform (1-2 acquisitions)</td><td>170+</td><td>0-2 per platform</td><td>$25-60K (one-firm)</td></tr>
+<tr><td>Karbon + Kai (Jun 2026)</td><td>Workflow + AI</td><td class="r">$59-99 / seat / mo</td><td class="r">$8-18K</td></tr>
+<tr><td>Canopy</td><td>Practice mgmt</td><td class="r">$45-85 / seat / mo</td><td class="r">$6-14K</td></tr>
+<tr><td>TaxDome</td><td>Practice mgmt + AI</td><td class="r">$50-80 / seat / mo</td><td class="r">$5-12K</td></tr>
+<tr><td>Sage Intacct</td><td>ERP</td><td class="r">$15-80K ACV</td><td class="r">$22K median</td></tr>
+<tr><td>QBO Advanced</td><td>SMB ledger</td><td class="r">$235 / mo</td><td class="r">$3-6K</td></tr>
+<tr><td>Botkeeper</td><td>Outsourced bookkeeping</td><td class="r">$69-389 / client / mo</td><td class="r">$2-8K</td></tr>
+<tr><td>Bench (shut Dec 2024)</td><td>SMB bookkeeping</td><td class="r">$249-499 / mo</td><td class="r">$3-6K</td></tr>
+<tr><td>Vic.ai</td><td>AP automation</td><td class="r">$20-100K ACV</td><td class="r">$45K median</td></tr>
+<tr><td>Stampli</td><td>AP automation</td><td class="r">$15-60K ACV</td><td class="r">$28K median</td></tr>
+<tr><td>Truewind</td><td>AI bookkeeping</td><td class="r">$200-2,000 / mo</td><td class="r">$8-18K</td></tr>
+<tr class="total-row"><td><strong>Our boutique integration</strong></td><td><strong>Cross-system orchestration</strong></td><td class="r"><strong>$28K impl + $2.8K/mo</strong></td><td class="r"><strong>$28K median + $34K/yr</strong></td></tr>
 </tbody>
 </table>
-<div class="src">Sources: PitchBook Accounting Roll-up Tracker Q1 2025 (18 active platforms with 10+ acquisitions completed since 2020); Whitman Transition Advisors M&amp;A pipeline report Apr 2025; Citrin Cooperman acquisition announcements 2023-2024; Aprio Capital newspring portfolio page; Ascend Alpine portfolio page (accessed Jun 2026).</div>
+<div class="src">Sources: Karbon public pricing page (Jun 2026); Karbon 2024 Series C disclosure (NRR ~115%); Canopy, TaxDome, Truewind public pricing pages; Sage Intacct partner pricing tier Q1 2025; Botkeeper restructuring Going Concern Mar 2023; Bench shutdown Dec 2024; Vic.ai Series C TechCrunch Jan 2024; Stampli Series D Crunchbase Mar 2025.</div>
 
-<h4>AICPA conferences</h4>
-<table>
-<thead><tr><th>Conference</th><th>Attendees</th><th>Booth cost</th><th>Total amortized cost</th><th>Expected leads</th><th>CAC/lead</th></tr></thead>
+<h3>2.4 — Six-stage pipeline (accounting baseline)</h3>
+<table class="tbl">
+<thead><tr><th>Stage</th><th>Name</th><th class="r">Conv %</th><th class="r">Cumulative</th><th>Owner</th></tr></thead>
 <tbody>
-<tr><td>AICPA ENGAGE (Las Vegas, June)</td><td>5,800</td><td>$28-42K</td><td>$48K (booth+travel+5d)</td><td>180-260 captured / 32 qualified</td><td>$1,500/qual</td></tr>
-<tr><td>Digital CPA Conference (Nov)</td><td>1,420</td><td>$18-24K</td><td>$30K</td><td>120-180 / 28 qualified</td><td>$1,070/qual</td></tr>
-<tr><td>Scaling New Heights (Woodard, Jun)</td><td>1,650</td><td>$20-26K</td><td>$32K</td><td>110-160 / 24 qualified</td><td>$1,330/qual</td></tr>
-<tr><td>State CPA society events (CA, NY, TX, FL)</td><td>200-800 each</td><td>$3-8K</td><td>$10K each</td><td>40-80 / 8-15 qualified</td><td>$830/qual</td></tr>
+<tr><td>1</td><td>Lead (touched)</td><td class="r">100%</td><td class="r">100%</td><td>Channels</td></tr>
+<tr><td>2</td><td>Qualified (ICP fit)</td><td class="r">45%</td><td class="r">45%</td><td>Karina + Lusin</td></tr>
+<tr><td>3</td><td>Discovery call</td><td class="r">22%</td><td class="r">22%</td><td>Founder</td></tr>
+<tr><td>4</td><td>Pain diagnostic + scoping</td><td class="r">11%</td><td class="r">11%</td><td>Founder</td></tr>
+<tr><td>5</td><td>Paid Pilot ($10K, 60d)</td><td class="r">3.8%</td><td class="r">3.8%</td><td>Founder converts</td></tr>
+<tr class="total-row"><td>6</td><td>Implementation deal closed</td><td class="r">65%</td><td class="r">2.5%</td><td>Engineer delivers</td></tr>
 </tbody>
 </table>
-<div class="src">Sources: AICPA ENGAGE 2024 sponsor prospectus (booth pricing $28,500-$42,000); CPA.com Digital CPA 2024 exhibitor brochure; Woodard Scaling New Heights 2024 sponsor packet; California Society of CPAs annual meeting prospectus 2024.</div>
+<div class="src">Sources: Salesforce State of Sales 2024 (financial services SMB funnel); McKinsey B2B Pulse 2024; HubSpot Sales Trends 2024; Mailshake outreach benchmarks accounting Q1 2025.</div>
 
-<h4>LinkedIn outbound</h4>
-<p>Title targeting on LinkedIn Sales Navigator for accounting: filter by "CFO", "Controller", "Managing Partner", "Chief Accounting Officer", company size 11-500, industry "Accounting" or "Financial Services". Accept rates and reply rates in accounting/finance are mid-pack — better than legal, weaker than HR.</p>
-<table>
-<thead><tr><th>Title</th><th>Connection accept</th><th>InMail reply</th><th>Reply→meeting</th></tr></thead>
+<h3>2.5 — Capacity benchmarks</h3>
+<table class="tbl">
+<thead><tr><th>Item</th><th class="r">Standard</th><th>Source</th></tr></thead>
 <tbody>
-<tr><td>Managing Partner (firm)</td><td>32%</td><td>11.2%</td><td>48%</td></tr>
-<tr><td>Controller (PE platform)</td><td>38%</td><td>13.5%</td><td>54%</td></tr>
-<tr><td>CFO (PE platform)</td><td>27%</td><td>9.8%</td><td>62%</td></tr>
-<tr><td>Director of Operations (firm)</td><td>41%</td><td>14.1%</td><td>44%</td></tr>
+<tr><td>SDR productive minutes / 35h week</td><td class="r">2,100</td><td>Bridge Group SDR Metrics 2024</td></tr>
+<tr><td>Cold email touch time (research + personalize + send)</td><td class="r">6 min</td><td>Mailshake 2024</td></tr>
+<tr><td>LinkedIn touch time</td><td class="r">12 min</td><td>HubSpot 2024</td></tr>
+<tr><td>Warm intro coordination</td><td class="r">35 min</td><td>Internal calibration</td></tr>
+<tr><td>Conference follow-up (amortized over 6 mo)</td><td class="r">240 min</td><td>AICPA ENGAGE post-event surveys</td></tr>
+<tr><td>Engineer billable util (loaded)</td><td class="r">65%</td><td>Service Performance Insight 2024</td></tr>
+<tr><td>Engineer hours / implementation</td><td class="r">50</td><td>Vic.ai / Stampli disclosed case studies 2023</td></tr>
+<tr><td>Engineer throughput / mo</td><td class="r">1.75 deals</td><td>95 billable hrs ÷ 50 hrs/deal × dedup</td></tr>
 </tbody>
 </table>
-<div class="src">Sources: LinkedIn Sales Solutions 2024 industry benchmarks (financial services InMail acceptance 10-15%, blended 12.1%); HubSpot State of Sales 2024; Apollo.io outbound benchmarks Q4 2024 (accounting/finance reply 10.3%, accept 31%).</div>
-</div>
-</section>
 
-<!-- ============================ SECTION 3 — CONVERSION ============================ -->
-<section id="conversion">
-<h2>3 · Conversion Benchmarks</h2>
-
-<div class="card">
-<h3>3.1 — Six-stage funnel</h3>
-<div class="funnel-stage"><div class="stage-name">1. Lead (touched, any channel)</div><div class="conv">100%</div><div class="count">1,077</div></div>
-<div class="funnel-stage"><div class="stage-name">2. Qualified (ICP fit confirmed)</div><div class="conv">45%</div><div class="count">485</div></div>
-<div class="funnel-stage"><div class="stage-name">3. Discovery call completed</div><div class="conv">22%</div><div class="count">237</div></div>
-<div class="funnel-stage"><div class="stage-name">4. Pain diagnostic + scoping</div><div class="conv">11%</div><div class="count">119</div></div>
-<div class="funnel-stage"><div class="stage-name">5. Paid Pilot ($10K, 60d)</div><div class="conv">3.8%</div><div class="count">41</div></div>
-<div class="funnel-stage"><div class="stage-name">6. Implementation deal closed</div><div class="conv">2.5%</div><div class="count">27</div></div>
-<p style="margin-top:14px;font-size:13px;color:#6b7785">Above is cumulative top-of-funnel over a 6-month period at Realistic-scenario assumptions: 800 emails/mo + 240 LI/mo + 12 warm/mo + 25 conference/mo. The 4.8% pilot-conversion / 2.5% implementation rate sits in the typical band for B2B enterprise-grade integration sales.</p>
-<div class="src">Sources: Salesforce State of Sales 2024 (financial services SMB funnel: lead→qualified 40-50%, discovery→pilot 30-40%, pilot→close 60-70%); McKinsey B2B Pulse 2024; HubSpot Sales Trends Report 2024; Mailshake outreach benchmarks for accounting Q1 2025.</div>
-</div>
-
-<div class="card">
-<h3>3.2 — Channel × stage matrix</h3>
-<table>
-<thead><tr><th>Channel</th><th>Lead→Qual</th><th>Qual→Discovery</th><th>Discovery→Pilot</th><th>Pilot→Close</th><th>Total funnel</th></tr></thead>
+<h3>2.6 — Payment terms &amp; retention</h3>
+<table class="tbl">
+<thead><tr><th>Item</th><th class="r">Value</th><th>Source</th></tr></thead>
 <tbody>
-<tr><td>Referrals (peer/vendor/alumni)</td><td>70%</td><td>72%</td><td>45%</td><td>72%</td><td><strong>16.3%</strong></td></tr>
-<tr><td>PE platform partnerships</td><td>62%</td><td>68%</td><td>48%</td><td>68%</td><td><strong>13.8%</strong></td></tr>
-<tr><td>Conferences (warm follow-up)</td><td>54%</td><td>58%</td><td>38%</td><td>62%</td><td><strong>7.4%</strong></td></tr>
-<tr><td>LinkedIn outbound</td><td>42%</td><td>54%</td><td>32%</td><td>58%</td><td><strong>4.2%</strong></td></tr>
-<tr><td>Cold email + signal</td><td>38%</td><td>48%</td><td>28%</td><td>56%</td><td><strong>2.9%</strong></td></tr>
-<tr><td>Cold email (no signal)</td><td>22%</td><td>42%</td><td>22%</td><td>52%</td><td><strong>1.1%</strong></td></tr>
-<tr><td>Trade content / inbound</td><td>48%</td><td>55%</td><td>35%</td><td>60%</td><td><strong>5.5%</strong></td></tr>
+<tr><td>Implementation payment schedule</td><td class="r">30% advance / 40% milestone / 30% net-30</td><td>RepSpark 2024 B2B billing standards</td></tr>
+<tr><td>Retainer monthly churn</td><td class="r">3% (≈10-15% annual)</td><td>Optifai SaaS 2024 + Karbon NRR ~115% (2024)</td></tr>
+<tr><td>3-year cohort retention</td><td class="r">50%</td><td>Mid-market B2B services standard</td></tr>
+<tr><td>Gross margin (services)</td><td class="r">55%</td><td>Service Performance Insight 2024</td></tr>
 </tbody>
 </table>
-<div class="src">Sources: AICPA PCPS National MAP Survey 2024; Salesforce CRM aggregated funnel data 2024 (financial services vertical); McKinsey B2B Pulse 2024; HubSpot Sales Hub benchmark report 2024.</div>
 </div>
+</details>
 
-<div class="card">
-<h3>3.3 — Cold email reply benchmarks (accounting-specific)</h3>
-<table>
-<thead><tr><th>Approach</th><th>Reply rate</th><th>Source benchmark</th></tr></thead>
-<tbody>
-<tr><td>Generic B2B cold email</td><td>3.4%</td><td>Mailshake 2024 (all industries blended)</td></tr>
-<tr><td>Accounting industry, generic offer</td><td>5.1%</td><td>Mailshake 2024 — finance/accounting cut</td></tr>
-<tr><td>Accounting + segment-specific pain (Sage Intacct, recon)</td><td>7.8%</td><td>Apollo case studies + Lemlist B2B 2024</td></tr>
-<tr><td>Accounting + intent signal (vendor change, hiring, funding)</td><td>11-14%</td><td>Lusin pilot proxy (HR vertical, 3% → 30% ×10 lift)</td></tr>
-<tr><td>Accounting + named referral in subject</td><td>22-28%</td><td>HubSpot 2024 reply-by-personalization study</td></tr>
-</tbody>
-</table>
-<div class="callout"><strong>Critical unknown.</strong> Lusin signal lift in accounting is unvalidated. The ×10 figure comes from a single April 2026 pilot in HR (Cyborg HR / Peter Kelly). Accounting buyers respond to different triggers (audit cycle, software migration, M&amp;A close, partner change). Plan 2 accounting-specific Lusin pilots in Q3-Q4 before treating the lift as a benchmark.</div>
-<div class="src">Sources: Mailshake Cold Email Benchmarks 2024 (financial services 5.1% reply); Apollo.io Outbound Best Practices 2024 (accounting segment); Lemlist B2B Email Benchmarks Q4 2024; HubSpot 2024 Email Personalization Study (named referral in subject line lifts reply 4-5×).</div>
-</div>
-</section>
+<!-- ============== SECTION 3 ============== -->
+<details class="section" open>
+<summary><span class="section-num">SECTION 3</span> Operating Model — Live Calculations <span class="section-meta">capacity · funnel · revenue · EBITDA · cash</span></summary>
+<div class="section-body">
 
-<!-- ============================ SECTION 4 — PRICING ============================ -->
-<section id="pricing">
-<h2>4 · Pricing &amp; Unit Economics</h2>
+<h3>3.1 — Capacity gates</h3>
+<div class="gauges" id="capacity-gauges"></div>
 
-<div class="card">
-<h3>4.1 — Pricing benchmarks in the accounting AI / automation stack</h3>
-<table>
-<thead><tr><th>Vendor</th><th>Layer</th><th>Pricing</th><th>Typical ACV</th><th>Note</th></tr></thead>
-<tbody>
-<tr><td>Karbon + Kai (Jun 2026)</td><td>Workflow + AI</td><td>$59-99 / user / mo</td><td>$8-18K</td><td>NRR ~115% disclosed 2024</td></tr>
-<tr><td>Canopy</td><td>Practice management</td><td>$45-85 / user / mo</td><td>$6-14K</td><td>—</td></tr>
-<tr><td>TaxDome</td><td>Practice management + AI</td><td>$50-80 / user / mo</td><td>$5-12K</td><td>—</td></tr>
-<tr><td>Sage Intacct</td><td>ERP</td><td>$15-80K ACV</td><td>$22K median</td><td>Cross-system recon = white space</td></tr>
-<tr><td>QuickBooks Online Advanced</td><td>SMB ledger</td><td>$235 / mo + add-ons</td><td>$3-6K</td><td>—</td></tr>
-<tr><td>Botkeeper</td><td>Outsourced bookkeeping + AI</td><td>$69-389 / client / mo</td><td>$2-8K per firm</td><td>Failed scaling — cautionary</td></tr>
-<tr><td>Bench Accounting (shut Dec 2024)</td><td>SMB bookkeeping</td><td>$249-499 / mo</td><td>$3-6K per client</td><td>Consumer-grade, churn failure</td></tr>
-<tr><td>Vic.ai</td><td>AP automation</td><td>$20-100K ACV</td><td>$45K median</td><td>—</td></tr>
-<tr><td>Stampli</td><td>AP automation</td><td>$15-60K ACV</td><td>$28K median</td><td>—</td></tr>
-<tr><td>Truewind</td><td>AI bookkeeping for startups</td><td>$200-2,000 / mo</td><td>$8-18K</td><td>—</td></tr>
-<tr><td><strong>Our boutique AI-integration</strong></td><td><strong>Cross-system orchestration</strong></td><td><strong>$25-40K impl + $2.5-3K retainer</strong></td><td><strong>$28K median + $30K/yr</strong></td><td><strong>Position: above point tools, below Distyl</strong></td></tr>
-</tbody>
-</table>
-<div class="src">Sources: Karbon public pricing page (accessed Jun 2026); Karbon 2024 Series C disclosure (NRR ~115%); Canopy, TaxDome, Truewind public pricing pages; Sage Intacct partner pricing tier (Q1 2025); Intuit QBO Advanced pricing 2026; Botkeeper restructuring coverage — Going Concern Mar 2023; Bench shutdown announcement Dec 27 2024; Vic.ai Series C — TechCrunch Jan 2024; Stampli Series D — Crunchbase Mar 2025.</div>
-</div>
+<h3>3.2 — Cohort funnel by channel × month</h3>
+<div id="cohort-tbl"></div>
 
-<div class="card">
-<h3>4.2 — Our pricing structure</h3>
-<div class="three-col">
-  <div class="metric-box"><div class="label">Paid Pilot (60 days)</div><div class="val">$10K</div><div class="delta">Diagnostic + scoping + 1 workflow proof</div></div>
-  <div class="metric-box"><div class="label">Implementation (60-90d)</div><div class="val">$28K</div><div class="delta">Mid-point of $25-40K band</div></div>
-  <div class="metric-box"><div class="label">Retainer (recurring)</div><div class="val">$2.8K/mo</div><div class="delta">~$34K/yr per account</div></div>
-</div>
+<h3>3.3 — Daily Activity Tracker (Realistic targets)</h3>
+<p>Operational view — Engine A throughput at the SDR / AE level. Targets derived from current slider settings (22 working days/mo, blended conversion through 6-stage funnel).</p>
+<div class="dash-tile-grid" id="daily-grid"></div>
+<div class="src">Daily figures are slider-derived: total monthly closes ÷ 22 working days; reply rate = cold reply × Lusin lift; meetings = replies × 30% reply-to-meeting standard. Source benchmarks: Bridge Group SDR Metrics 2024; HubSpot Sales 2024.</div>
 
-<h4>Year-1 customer economics</h4>
-<table>
-<thead><tr><th>Item</th><th>Amount</th><th>Timing</th></tr></thead>
-<tbody>
-<tr><td>Paid Pilot</td><td>$10K</td><td>Month 0-2 (60d)</td></tr>
-<tr><td>Implementation fee</td><td>$28K</td><td>Month 2-5 (60-90d delivery)</td></tr>
-<tr><td>Retainer (10 months)</td><td>$28K</td><td>Month 3-12</td></tr>
-<tr><td><strong>Year-1 revenue</strong></td><td><strong>$66K</strong></td><td>—</td></tr>
-<tr><td>3-year LTV (8% annual churn)</td><td>$95K gross / <strong>$52K @ 55% GM</strong></td><td>36-mo cohort retention 78%</td></tr>
-</tbody>
-</table>
-<div class="src">Sources: Karbon NRR disclosure 2024 (~115%, retention 87-92%); Vic.ai disclosed churn 8-12% annual; Optifai SaaS benchmark 2024 (B2B mid-market financial services 8-15% annual churn).</div>
-</div>
+<h3>3.4 — Revenue assembly</h3>
+<div id="revenue-tbl"></div>
 
-<div class="card">
-<h3>4.3 — Unit economics by channel</h3>
-<table>
-<thead><tr><th>Channel</th><th>CAC</th><th>3yr LTV</th><th>LTV/CAC</th><th>Payback (mo)</th></tr></thead>
-<tbody>
-<tr><td>Referrals</td><td>$1.6K</td><td>$52K</td><td><strong>32×</strong></td><td>1.1</td></tr>
-<tr><td>PE platform partnerships</td><td>$4.0K</td><td>$88K (multi-firm avg)</td><td><strong>22×</strong></td><td>1.6</td></tr>
-<tr><td>Conferences</td><td>$7.5K</td><td>$52K</td><td><strong>7×</strong></td><td>3.4</td></tr>
-<tr><td>LinkedIn outbound</td><td>$3.5K</td><td>$52K</td><td><strong>15×</strong></td><td>2.0</td></tr>
-<tr><td>Cold email + signal</td><td>$4.5K</td><td>$52K</td><td><strong>12×</strong></td><td>2.4</td></tr>
-<tr><td>Cold email (no signal)</td><td>$11.5K</td><td>$52K</td><td><strong>4.5×</strong></td><td>5.5</td></tr>
-<tr><td>Paid search</td><td>$21K</td><td>$52K</td><td><strong>2.5×</strong></td><td>9.1</td></tr>
-<tr><td><strong>Blended (channel mix)</strong></td><td><strong>$4.8K</strong></td><td><strong>$55K</strong></td><td><strong>9.4×</strong></td><td><strong>3.4</strong></td></tr>
-</tbody>
-</table>
-<div class="src">Sources: blended channel CAC calculated from Section 2.1 channel-cost table × Section 3.2 conversion matrix; LTV computed at 55% gross margin (B2B services standard) and 8% annual churn.</div>
-</div>
-</section>
+<h3>3.5 — EBITDA</h3>
+<div id="ebitda-tbl"></div>
 
-<!-- ============================ SECTION 5 — CAPACITY ============================ -->
-<section id="capacity">
-<h2>5 · Capacity Gates &amp; Funnel</h2>
+<h3>3.6 — Cash flow &amp; cumulative position</h3>
+<div class="cash-chart-wrap"><canvas id="chartCash"></canvas></div>
+<div id="cash-tbl"></div>
 
-<div class="card">
-<h3>5.1 — SDR weekly capacity (Karina-equivalent, 35 h/wk)</h3>
-<table>
-<thead><tr><th>Activity</th><th>Min/touch</th><th>Touches/wk</th><th>Total minutes</th><th>% of week</th></tr></thead>
-<tbody>
-<tr><td>Cold email (research, personalize, send)</td><td>4.5 min</td><td>200</td><td>900</td><td>43%</td></tr>
-<tr><td>LinkedIn outbound</td><td>5.0 min</td><td>60</td><td>300</td><td>14%</td></tr>
-<tr><td>Warm intro coordination</td><td>15 min</td><td>4</td><td>60</td><td>3%</td></tr>
-<tr><td>Conference follow-up (amortized)</td><td>8 min</td><td>25 (post-event)</td><td>200</td><td>10%</td></tr>
-<tr><td>CRM hygiene + reporting</td><td>—</td><td>—</td><td>300</td><td>14%</td></tr>
-<tr><td>Internal (sync, handoff to founder)</td><td>—</td><td>—</td><td>240</td><td>11%</td></tr>
-<tr><td><strong>Total</strong></td><td>—</td><td><strong>289</strong></td><td><strong>2,000 / 2,100 cap</strong></td><td><strong>95% util</strong></td></tr>
-</tbody>
-</table>
-<div class="callout"><strong>Capacity bottleneck.</strong> At Realistic volume the SDR runs at 95% utilization. Beyond this point either Karina-2 (second SDR) or AI assistance (Lusin-style signal layer to compress 4.5 min/email to 2.5 min) is required. This is the first hiring trigger after engineers.</div>
-<div class="src">Sources: SDR time-tracking benchmark — Bridge Group 2024 SDR Metrics Report (avg 2,100 productive min/wk for 35h workweek); cold email touch time benchmarks Mailshake 2024 (3-5 min per personalized touch including ICP research).</div>
-</div>
-
-<div class="card">
-<h3>5.2 — Engineer delivery throughput</h3>
-<table>
-<thead><tr><th>Item</th><th>Realistic</th><th>Calc</th></tr></thead>
-<tbody>
-<tr><td>Billable hours / month (65% util on 145h)</td><td>95 hrs</td><td>—</td></tr>
-<tr><td>Hours per implementation (60-90d delivery)</td><td>54 hrs</td><td>Diagnostic 8 + scoping 6 + build 32 + QA 8</td></tr>
-<tr><td>Deals per engineer per month</td><td>1.76</td><td>95 / 54</td></tr>
-<tr><td>Engineers in Realistic scenario</td><td>2</td><td>—</td></tr>
-<tr><td>Total deal capacity / month</td><td>3.5</td><td>2 × 1.76</td></tr>
-<tr><td>6-month capacity</td><td>21 deals</td><td>3.5 × 6</td></tr>
-</tbody>
-</table>
-<div class="src">Sources: B2B services billable utilization benchmark — Service Performance Insight 2024 (65-72% productive util for senior delivery engineers); accounting AI integration scoping based on Vic.ai / Stampli typical 45-60h implementation per mid-market customer (disclosed in 2023 customer case studies).</div>
-</div>
-
-<div class="card">
-<h3>5.3 — 6-month cohort funnel (Realistic scenario)</h3>
-<table>
-<thead><tr><th>Month</th><th>New leads</th><th>Qualified</th><th>Discovery</th><th>Pilots paid</th><th>Implementations closed</th><th>Cumulative MRR</th></tr></thead>
-<tbody>
-<tr><td>M1</td><td>180</td><td>81</td><td>40</td><td>4</td><td>1.2</td><td>$3.4K</td></tr>
-<tr><td>M2</td><td>195</td><td>88</td><td>43</td><td>5</td><td>2.4</td><td>$10.1K</td></tr>
-<tr><td>M3</td><td>210</td><td>95</td><td>47</td><td>6</td><td>3.5</td><td>$19.9K</td></tr>
-<tr><td>M4</td><td>225</td><td>101</td><td>50</td><td>7</td><td>4.8</td><td>$33.3K</td></tr>
-<tr><td>M5</td><td>235</td><td>106</td><td>52</td><td>8</td><td>5.5</td><td>$48.7K</td></tr>
-<tr><td>M6</td><td>240</td><td>108</td><td>54</td><td>9</td><td>6.2</td><td>$66.0K</td></tr>
-<tr><td><strong>Total</strong></td><td><strong>1,285</strong></td><td><strong>579</strong></td><td><strong>286</strong></td><td><strong>39</strong></td><td><strong>23.6</strong></td><td>—</td></tr>
-</tbody>
-</table>
-<div class="src">Sources: ramp curve modeled on AICPA PCPS firm acquisition cycle (typical 75-90d sales cycle for AI/automation purchases); Salesforce State of Sales 2024 (B2B mid-market lag from first touch to close 60-120d).</div>
-</div>
-</section>
-
-<!-- ============================ SECTION 6 — DAILY DASHBOARD ============================ -->
-<section id="daily">
-<h2>6 · Daily Activity Tracker</h2>
-
-<div class="card">
-<p>Daily operational view — Engine A throughput at the SDR / AE level. Targets calibrated to Realistic scenario, 22 working days per month, 35 h/wk SDR capacity. Numbers reflect single-SDR (Karina-equivalent) and 2-engineer (delivery) configuration.</p>
-</div>
-
-<div class="dash">
-<h3>Daily Output — Realistic, Steady-state M4-M6</h3>
-<div class="dash-grid">
-  <div class="dash-tile"><div class="lab">Emails sent</div><div class="num">40</div><div class="target">Target 200/wk</div></div>
-  <div class="dash-tile"><div class="lab">LI messages</div><div class="num">12</div><div class="target">Target 60/wk</div></div>
-  <div class="dash-tile"><div class="lab">Replies received</div><div class="num">3.1</div><div class="target">6% blended reply</div></div>
-  <div class="dash-tile"><div class="lab">Discovery calls</div><div class="num">0.9</div><div class="target">~4/wk</div></div>
-  <div class="dash-tile"><div class="lab">Pilots closed</div><div class="num">0.4</div><div class="target">~2/wk</div></div>
-  <div class="dash-tile"><div class="lab">Impl. closed</div><div class="num">0.28</div><div class="target">~1.4/wk</div></div>
-</div>
-
-<h4 style="margin-top:24px;color:var(--soft-steel)">Weekly target ladder</h4>
-<div class="dash-grid">
-  <div class="dash-tile"><div class="lab">Emails / week</div><div class="num">200</div><div class="target">~46 personalized/day floor</div></div>
-  <div class="dash-tile"><div class="lab">LinkedIn / week</div><div class="num">60</div><div class="target">15-min slots, 12/day</div></div>
-  <div class="dash-tile"><div class="lab">Warm intros / week</div><div class="num">1.0</div><div class="target">4/mo target</div></div>
-  <div class="dash-tile"><div class="lab">Demos / week</div><div class="num">6</div><div class="target">Founder runs all in P0</div></div>
-  <div class="dash-tile"><div class="lab">Pilots / week</div><div class="num">2</div><div class="target">P-and-D + scoping handoff</div></div>
-  <div class="dash-tile"><div class="lab">Closes / week</div><div class="num">1.4</div><div class="target">M5-M6 steady-state</div></div>
-</div>
-</div>
-
-<div class="card">
-<h3>6.1 — Daily activity → weekly conversion bridge</h3>
-<div class="bar-row"><div class="lab">40 emails/day</div><div class="bar"><div class="bar-fill" style="width:95%"></div></div><div style="text-align:right;font-weight:600">200/wk</div></div>
-<div class="bar-row"><div class="lab">↓ 6% reply rate</div><div class="bar"><div class="bar-fill" style="width:30%"></div></div><div style="text-align:right;font-weight:600">12 replies</div></div>
-<div class="bar-row"><div class="lab">↓ 38% qual</div><div class="bar"><div class="bar-fill" style="width:18%"></div></div><div style="text-align:right;font-weight:600">4.6 qual</div></div>
-<div class="bar-row"><div class="lab">↓ 54% discovery</div><div class="bar"><div class="bar-fill" style="width:10%"></div></div><div style="text-align:right;font-weight:600">2.5 disc</div></div>
-<div class="bar-row"><div class="lab">↓ 32% pilot</div><div class="bar"><div class="bar-fill" style="width:3.5%"></div></div><div style="text-align:right;font-weight:600">0.8 pilot</div></div>
-<div class="bar-row"><div class="lab">↓ 58% close</div><div class="bar"><div class="bar-fill" style="width:2%"></div></div><div style="text-align:right;font-weight:600">0.5 close</div></div>
-<p style="margin-top:14px;font-size:12px;color:#6b7785">Above shows cold-email-only contribution to weekly close rate. LinkedIn (60/wk), warm intros (1/wk), and conference follow-up add a multiplier — bringing weekly close rate to 1.4 deals in Realistic steady state.</p>
-<div class="src">Sources: Section 3.2 channel × stage conversion matrix; Bridge Group 2024 SDR Metrics; HubSpot Sales 2024 reply benchmarks.</div>
-</div>
-
-<div class="card">
-<h3>6.2 — Daily traffic-light health view</h3>
-<table>
-<thead><tr><th>Metric</th><th>Green (on track)</th><th>Yellow (watch)</th><th>Red (intervene)</th></tr></thead>
-<tbody>
-<tr><td>Emails sent / day</td><td>≥40</td><td>30-39</td><td>&lt;30</td></tr>
-<tr><td>Reply rate (rolling 14d)</td><td>≥5.5%</td><td>4-5.5%</td><td>&lt;4%</td></tr>
-<tr><td>Discovery calls / week</td><td>≥4</td><td>2-3</td><td>&lt;2</td></tr>
-<tr><td>Pilot conversion (Discovery→Pilot)</td><td>≥30%</td><td>20-30%</td><td>&lt;20%</td></tr>
-<tr><td>Pilot→Close % (rolling 60d)</td><td>≥55%</td><td>40-55%</td><td>&lt;40%</td></tr>
-<tr><td>Engineer utilization</td><td>60-80%</td><td>80-90%</td><td>&gt;90% or &lt;50%</td></tr>
-<tr><td>SDR utilization</td><td>60-85%</td><td>85-95%</td><td>&gt;95% or &lt;55%</td></tr>
-</tbody>
-</table>
-<div class="src">Sources: Bridge Group SDR Health Metrics 2024 (utilization band 60-85% green, &gt;95% burnout risk); B2B sales funnel health norms — SiriusDecisions / Forrester 2024.</div>
-</div>
-</section>
-
-<!-- ============================ SECTION 7 — MONTHLY P&L ============================ -->
-<section id="monthly">
-<h2>7 · Monthly P&amp;L &amp; Cash</h2>
-
-<div class="card">
-<h3>7.1 — Revenue assembly (Realistic, M1-M6)</h3>
-<table>
-<thead><tr><th>Month</th><th>Closes</th><th>Booked</th><th>Recognized</th><th>Retainer MRR</th><th>Cash collected</th></tr></thead>
-<tbody>
-<tr><td>M1</td><td>1.2</td><td>$33.6K</td><td>$10.1K</td><td>$3.4K</td><td>$10.1K</td></tr>
-<tr><td>M2</td><td>2.4</td><td>$67.2K</td><td>$33.6K</td><td>$10.1K</td><td>$23.6K</td></tr>
-<tr><td>M3</td><td>3.5</td><td>$98.0K</td><td>$63.0K</td><td>$19.9K</td><td>$48.7K</td></tr>
-<tr><td>M4</td><td>4.8</td><td>$134.4K</td><td>$93.5K</td><td>$33.3K</td><td>$76.4K</td></tr>
-<tr><td>M5</td><td>5.5</td><td>$154.0K</td><td>$120.4K</td><td>$48.7K</td><td>$108.2K</td></tr>
-<tr><td>M6</td><td>6.2</td><td>$173.6K</td><td>$144.2K</td><td>$66.0K</td><td>$138.6K</td></tr>
-<tr><td><strong>6mo</strong></td><td><strong>23.6</strong></td><td><strong>$660.8K</strong></td><td><strong>$464.8K</strong></td><td><strong>—</strong></td><td><strong>$405.6K</strong></td></tr>
-</tbody>
-</table>
-<div class="callout"><strong>Payment terms.</strong> Implementation fees structured 30% advance / 40% milestone at M+1 / 30% net-30 after delivery. Pilots paid 100% upfront. Retainers billed monthly. This creates a 1-2 month gap between Booked (contract) and Cash (collected) — explicit in cash break-even analysis below.</div>
-<div class="src">Sources: B2B services payment terms — RepSpark 2024 (30/40/30 net-30 standard for $25-50K integration projects); AICPA practice management benchmarks for project billing.</div>
-</div>
-
-<div class="card">
-<h3>7.2 — OpEx structure (Realistic)</h3>
-<table>
-<thead><tr><th>Item</th><th>Monthly</th><th>Notes</th></tr></thead>
-<tbody>
-<tr><td>Engineers × 2</td><td>$24.0K</td><td>$12K loaded cost each (salary+benefits+stack)</td></tr>
-<tr><td>SDR (Karina)</td><td>$4.0K</td><td>35 h/wk</td></tr>
-<tr><td>Outreach tools (Apollo + Clay + Lusin + LinkedIn Sales Nav)</td><td>$2.2K</td><td>—</td></tr>
-<tr><td>Conference amortization</td><td>$5.0K</td><td>$30K per event × 3/yr ÷ 6mo amortization, blended</td></tr>
-<tr><td>Fixed overhead (office, insurance, legal, accounting)</td><td>$3.8K</td><td>—</td></tr>
-<tr><td>Founder draw</td><td>$5.0K</td><td>Sustainable post-BE</td></tr>
-<tr><td><strong>Total OpEx</strong></td><td><strong>$44.0K</strong></td><td>—</td></tr>
-</tbody>
-</table>
-<div class="src">Sources: US software engineering salary benchmarks 2024 (Levels.fyi mid-market $90-120K base + 25-30% loaded ≈ $12K/mo); Apollo + Clay + LinkedIn Sales Navigator publicly disclosed pricing 2026.</div>
-</div>
-
-<div class="card">
-<h3>7.3 — COGS &amp; gross margin</h3>
-<table>
-<thead><tr><th>Item</th><th>Per deal</th><th>% of revenue</th></tr></thead>
-<tbody>
-<tr><td>Engineer hours × loaded rate</td><td>54 hrs × $75/hr = $4,050</td><td>14.5%</td></tr>
-<tr><td>Pilot delivery (8h founder + 4h engineer)</td><td>included in pilot $10K (margin ~70%)</td><td>—</td></tr>
-<tr><td>Direct integration costs (API, infra)</td><td>$180</td><td>0.6%</td></tr>
-<tr><td>3rd-party tools passed through</td><td>$300</td><td>1.1%</td></tr>
-<tr><td><strong>COGS / deal</strong></td><td><strong>$4,530</strong></td><td><strong>16.2%</strong></td></tr>
-<tr><td>Implementation fee</td><td>$28,000</td><td>—</td></tr>
-<tr><td><strong>Gross margin</strong></td><td><strong>$23,470</strong></td><td><strong>83.8% at deal level; 55% blended after retainer COGS</strong></td></tr>
-</tbody>
-</table>
-<div class="src">Sources: B2B services COGS benchmarks — Service Performance Insight 2024 (16-22% direct COGS for integration services); engineer loaded cost $75/hr derived from Section 7.2.</div>
-</div>
-
-<div class="card">
-<h3>7.4 — EBITDA &amp; Cash break-even</h3>
-<table>
-<thead><tr><th>Month</th><th>Revenue (recognized)</th><th>COGS</th><th>OpEx</th><th>EBITDA</th><th>Cum. EBITDA</th><th>Cash flow</th><th>Cum. Cash</th></tr></thead>
-<tbody>
-<tr><td>M1</td><td>$13.5K</td><td>$5.4K</td><td>$44.0K</td><td>-$35.9K</td><td>-$35.9K</td><td>-$33.9K</td><td>-$33.9K</td></tr>
-<tr><td>M2</td><td>$43.7K</td><td>$10.9K</td><td>$44.0K</td><td>-$11.2K</td><td>-$47.1K</td><td>-$20.4K</td><td>-$54.3K</td></tr>
-<tr><td>M3</td><td>$82.9K</td><td>$15.9K</td><td>$44.0K</td><td>+$23.0K</td><td>-$24.1K</td><td>+$4.7K</td><td>-$49.6K</td></tr>
-<tr><td>M4</td><td>$126.8K</td><td>$21.7K</td><td>$44.0K</td><td>+$61.1K</td><td>+$37.0K</td><td>+$32.4K</td><td>-$17.2K</td></tr>
-<tr><td>M5</td><td>$169.1K</td><td>$24.9K</td><td>$44.0K</td><td>+$100.2K</td><td>+$137.2K</td><td>+$64.2K</td><td>+$47.0K</td></tr>
-<tr><td>M6</td><td>$210.2K</td><td>$28.1K</td><td>$44.0K</td><td>+$138.1K</td><td>+$275.3K</td><td>+$94.6K</td><td>+$141.6K</td></tr>
-</tbody>
-</table>
-<div class="callout"><strong>Break-even.</strong> EBITDA crosses zero in M3 (cumulative still negative). Cumulative EBITDA crosses zero in M4. Cumulative cash crosses zero in M5. Plan a $55K working-capital buffer for M1-M4. Cash lags EBITDA by ~1 month from 30/40/30 net-30 payment structure.</div>
-<div class="src">Sources: revenue from Section 7.1; COGS from Section 7.3; OpEx from Section 7.2. Payment timing from RepSpark 2024 B2B billing standards.</div>
-</div>
-</section>
-
-<!-- ============================ SECTION 8 — SCENARIOS ============================ -->
-<section id="scenarios">
-<h2>8 · Bear / Realistic / Bull</h2>
-
-<div class="card">
-<p>Three scenarios bracket the operating model. Each holds the SDR-engineer-founder structure and channel mix constant, varying volume, pricing, conversion lift, and team count. Bear assumes Lusin signal does not transfer to accounting; Bull assumes ×5 lift validates on 2 accounting pilots in Q3-Q4.</p>
-</div>
-
-<div class="scenarios">
-
-<div class="scn scn-bear">
-<h4>Bear</h4>
-<ul>
-<li>1 engineer, 28 h/wk SDR</li>
-<li>500 emails/mo, 150 LI/mo, 2 warm/mo</li>
-<li>1 conference (state society)</li>
-<li>Cold reply 4.8%, no Lusin lift</li>
-<li>Pilot→Close 48%</li>
-<li>Pricing: $10K pilot / $22K impl / $2.0K retainer</li>
-<li>2.0 deals/mo steady-state</li>
-<li>OpEx $32K/mo</li>
-<li>EBITDA BE: M7+</li>
-<li>Cash BE: M9+</li>
-<li>Risk: founder-led capacity ceiling</li>
-</ul>
-</div>
-
-<div class="scn scn-real">
-<h4>Realistic</h4>
-<ul>
-<li>2 engineers, 35 h/wk SDR</li>
-<li>800 emails/mo, 240 LI/mo, 4 warm/mo</li>
-<li>3 conferences (ENGAGE + Digital CPA + 1 state)</li>
-<li>Cold reply 6.0%, Lusin lift 1.0×</li>
-<li>Pilot→Close 58%</li>
-<li>Pricing: $10K pilot / $28K impl / $2.8K retainer</li>
-<li>6.2 deals/mo by M6</li>
-<li>OpEx $44K/mo</li>
-<li>EBITDA BE: M3 monthly, M5 cumulative</li>
-<li>Cash BE: M5</li>
-<li>Risk: PE platform sales cycle 90-120d</li>
-</ul>
-</div>
-
-<div class="scn scn-bull">
-<h4>Bull</h4>
-<ul>
-<li>3 engineers, 40 h/wk SDR</li>
-<li>1,200 emails/mo, 320 LI/mo, 6 warm/mo</li>
-<li>4 conferences + 2 PE platform partnerships signed</li>
-<li>Cold reply 6.0%, Lusin lift ×3-5 (validated)</li>
-<li>Pilot→Close 68%</li>
-<li>Pricing: $12K pilot / $38K impl / $3.5K retainer</li>
-<li>11.5 deals/mo by M6 (incl. 1 PE multi-firm cohort/mo)</li>
-<li>OpEx $61K/mo</li>
-<li>EBITDA BE: M2 monthly, M3 cumulative</li>
-<li>Cash BE: M3</li>
-<li>Risk: engineer hiring constraint</li>
-</ul>
-</div>
+<h3>3.7 — Unit economics</h3>
+<div id="unit-econ"></div>
 
 </div>
+</details>
 
-<div class="card" style="margin-top:18px">
-<h3>8.1 — Scenario output summary</h3>
-<table>
-<thead><tr><th>Metric</th><th>Bear</th><th>Realistic</th><th>Bull</th></tr></thead>
-<tbody>
-<tr><td>6-month booked revenue</td><td>$284K</td><td>$661K</td><td>$1.21M</td></tr>
-<tr><td>6-month cash collected</td><td>$172K</td><td>$406K</td><td>$760K</td></tr>
-<tr><td>6-month EBITDA</td><td>-$52K</td><td>+$275K</td><td>+$610K</td></tr>
-<tr><td>Blended CAC</td><td>$5.8K</td><td>$4.8K</td><td>$3.6K</td></tr>
-<tr><td>LTV / CAC</td><td>5.6×</td><td>9.4×</td><td>16×</td></tr>
-<tr><td>EBITDA monthly BE</td><td>M7+</td><td>M3</td><td>M2</td></tr>
-<tr><td>Cash BE</td><td>M9+</td><td>M5</td><td>M3</td></tr>
-<tr><td>Deals closed (6mo)</td><td>10.8</td><td>23.6</td><td>44.2</td></tr>
-</tbody>
-</table>
-<div class="src">Sources: Bear/Realistic/Bull assumptions per scenario card; revenue and EBITDA computed using Sections 4-7 framework.</div>
+<!-- ============== SECTION 4 ============== -->
+<details class="section" open>
+<summary><span class="section-num">SECTION 4</span> Scenarios &amp; Decisions <span class="section-meta">Bear / Realistic / Bull · tornado · triggers</span></summary>
+<div class="section-body">
+
+<h3>4.1 — Scenario toggle</h3>
+<div class="scen-pills">
+  <button class="scen-pill" onclick="applyScen('bear',this)"><div class="scen-pill-name">Bear</div><div class="scen-pill-desc">Karina solo · no Lusin · 1 engineer · slow ramp · $22K implementation</div></button>
+  <button class="scen-pill active" onclick="applyScen('real',this)"><div class="scen-pill-name">Realistic</div><div class="scen-pill-desc">2 engineers · Lusin off · 3 AICPA conferences · benchmark pricing $28K</div></button>
+  <button class="scen-pill" onclick="applyScen('bull',this)"><div class="scen-pill-name">Bull</div><div class="scen-pill-desc">Lusin ×5 · 3 engineers · 5 conferences · PE partnerships · $38K</div></button>
 </div>
 
-<div class="card">
-<h3>8.2 — Top sensitivity drivers (Realistic, $/1K cost)</h3>
-<table>
-<thead><tr><th>#</th><th>Driver</th><th>Revenue impact (6mo)</th><th>Cost</th><th>$/$1K cost</th></tr></thead>
-<tbody>
-<tr><td>1</td><td>1 PE platform partnership signed</td><td>+$280K</td><td>$8K (BD time)</td><td>$35K</td></tr>
-<tr><td>2</td><td>Lusin signal validates ×3 lift</td><td>+$162K</td><td>$6K (pilot + tooling)</td><td>$27K</td></tr>
-<tr><td>3</td><td>Pricing +$5K (impl $28 → $33K)</td><td>+$118K</td><td>~0</td><td>—</td></tr>
-<tr><td>4</td><td>Pilot→Close +10pp</td><td>+$92K</td><td>$4K (sales training)</td><td>$23K</td></tr>
-<tr><td>5</td><td>1 additional engineer (M3)</td><td>+$155K</td><td>$48K (4mo cost)</td><td>$3.2K</td></tr>
-<tr><td>6</td><td>+1 conference (Scaling New Heights)</td><td>+$78K</td><td>$32K</td><td>$2.4K</td></tr>
-<tr><td>7</td><td>Cold email +50/wk volume</td><td>+$56K</td><td>$2K (Karina time)</td><td>$28K</td></tr>
-<tr><td>8</td><td>LinkedIn +20/wk volume</td><td>+$42K</td><td>$1.5K</td><td>$28K</td></tr>
-<tr><td>9</td><td>Warm intros +2/mo</td><td>+$78K</td><td>$3K (founder time)</td><td>$26K</td></tr>
-<tr><td>10</td><td>Retainer pricing $2.8K → $3.5K</td><td>+$34K (6mo); +$140K (24mo)</td><td>~0</td><td>—</td></tr>
-</tbody>
-</table>
-<div class="callout"><strong>Top three levers.</strong> (1) Sign one PE platform partnership in Q3 — single deepest lever. (2) Run two accounting-specific Lusin pilots in Q3 to validate signal lift. (3) Test pricing at $33K implementation against 8 sequential deals in M2-M4 — if win-rate holds within 5%, lock the increase.</div>
-<div class="src">Sources: sensitivity computed by toggling each driver in isolation against Realistic baseline; multipliers verified against Section 3 conversion matrix and Section 5 capacity gates.</div>
-</div>
-</section>
+<h3>4.2 — Sensitivity tornado (top drivers per $1K cost)</h3>
+<div id="tornado"></div>
 
-<!-- ============================ SECTION 9 — DECISIONS ============================ -->
-<section id="decisions">
-<h2>9 · Decision Layer &amp; Triggers</h2>
+<h3>4.3 — Decision layer</h3>
+<div id="decisions"></div>
 
-<div class="card">
-<h3>9.1 — Phase progression triggers</h3>
-<table>
-<thead><tr><th>Phase</th><th>Configuration</th><th>Promote when</th><th>Status</th></tr></thead>
-<tbody>
-<tr><td>P0 — Founder-led</td><td>2 founders, 1 SDR, 1 engineer</td><td>—</td><td>Current</td></tr>
-<tr><td>P1 — Engineer expansion</td><td>2 founders 60% sales, 1 SDR, 2 engineers</td><td>5-8 qualified deals/mo + Discovery→Pilot &gt;30% over ≥10 deals</td><td>Trigger pending — measure M2-M4</td></tr>
-<tr><td>P2 — Hybrid</td><td>1 founder 40% sales, 1 SDR, 1 AE, 2-3 engineers</td><td>Pilot productized (delivers without founder) + ≥3 accounts closed without founder in the room</td><td>Future — Q4 2026 likely</td></tr>
-<tr><td>P3 — Team-led</td><td>1 founder strategic only, 2 SDRs, 2-3 AEs, 3 engineers</td><td>AE ramped to quota (win-rate within 20% of founder benchmark)</td><td>Future — 2027</td></tr>
-</tbody>
-</table>
-<div class="callout"><strong>Trigger discipline.</strong> Advance by trigger, not by calendar. Hand-off of selling motion to an AE before the Paid Pilot is productized collapses win-rate, raises CAC, and breaks unit economics. This is the dominant failure mode for boutique professional services firms scaling sales.</div>
-<div class="src">Sources: Bridge Group SDR / AE Ramp Benchmarks 2024 (AE-to-founder win-rate gap closes only after 6-9 months of structured pilot productization); McKinsey B2B Pulse 2024.</div>
-</div>
+<h3>4.4 — Phase progression triggers</h3>
+<div id="trigger-check"></div>
 
-<div class="card">
-<h3>9.2 — De-risk plan: top 3 actions for Q3</h3>
-<table>
+<h3>4.5 — De-risk plan for Q3 2026</h3>
+<table class="tbl">
 <thead><tr><th>Action</th><th>Owner</th><th>Trigger / measure</th><th>By</th></tr></thead>
 <tbody>
-<tr><td>Sign 1 PE platform partnership (Ascend / Aprio Capital / Carbon Crest / Citrin)</td><td>Founder BD</td><td>Signed pilot SOW ≥ $40K</td><td>End Q3 2026</td></tr>
-<tr><td>Run 2 Lusin signal pilots in accounting (target: vendor migration triggers, M&amp;A close triggers)</td><td>Founder + Karina</td><td>Reply rate measured against 5.1% baseline; lift ≥ 2.0× = green light</td><td>End Q3 2026</td></tr>
+<tr><td>Sign 1 PE platform partnership (Ascend / Aprio / Carbon Crest / Citrin)</td><td>Founder BD</td><td>Signed pilot SOW ≥ $40K</td><td>End Q3 2026</td></tr>
+<tr><td>Run 2 Lusin signal pilots in accounting (vendor migration + M&amp;A close triggers)</td><td>Founder + Karina</td><td>Reply rate ≥ 2.0× baseline 5.1% = green light</td><td>End Q3 2026</td></tr>
 <tr><td>Productize Paid Pilot deliverable (templated 60d scope + asset library)</td><td>Engineer + Founder</td><td>Pilot delivered without founder in 1 case</td><td>End Q4 2026</td></tr>
 </tbody>
 </table>
-<div class="src">Sources: PE platform list — PitchBook Q1 2025 Accounting Roll-up Tracker; Lusin pilot proxy from HR vertical April 2026 (3% → 30% lift, n=1, requires accounting validation).</div>
-</div>
 
-<div class="card">
-<h3>9.3 — Risk register</h3>
-<table>
-<thead><tr><th>Risk</th><th>Probability</th><th>Impact</th><th>Mitigation</th></tr></thead>
+<h3>4.6 — Risk register</h3>
+<table class="tbl">
+<thead><tr><th>Risk</th><th class="r">Prob</th><th class="r">Impact</th><th>Mitigation</th></tr></thead>
 <tbody>
-<tr><td>Karbon Kai (or similar workflow AI) absorbs cross-system recon use case</td><td>Medium</td><td>High</td><td>Position as complement, integrate with Kai API; lock 2 PE platform partnerships before competitor enters mid-market</td></tr>
-<tr><td>Lusin signal lift fails to transfer to accounting</td><td>Medium</td><td>Medium</td><td>Bear scenario already assumes no lift; channel mix still works at 5.6× LTV/CAC</td></tr>
-<tr><td>PE platform partnership cycle exceeds 120d</td><td>High</td><td>Low</td><td>Run independent firm motion in parallel; PE platforms are accelerator, not foundation</td></tr>
-<tr><td>Engineer hiring lags demand</td><td>Medium</td><td>Medium</td><td>Maintain 12% bench until M3; hire engineer #2 at M2 not M3</td></tr>
-<tr><td>Tax-season seasonality (Jan-Apr) reduces new-deal capacity at firms</td><td>High</td><td>Low</td><td>Push pilot scoping into Q4 and Q2-Q3; reserve Jan-Apr for execution + PE platform work (counter-cyclical for them)</td></tr>
-<tr><td>Sage Intacct closes API or builds own AI cross-system module</td><td>Low</td><td>High</td><td>Watchlist; abstract integration layer to minimize Intacct-API lock-in</td></tr>
+<tr><td>Karbon Kai (or similar) absorbs cross-system recon use case</td><td class="r">Medium</td><td class="r">High</td><td>Position as complement, integrate with Kai API; lock 2 PE partnerships first</td></tr>
+<tr><td>Lusin signal lift fails to transfer to accounting</td><td class="r">Medium</td><td class="r">Medium</td><td>Bear scenario assumes no lift; channel mix still works at 5.6× LTV/CAC</td></tr>
+<tr><td>PE partnership cycle exceeds 120d</td><td class="r">High</td><td class="r">Low</td><td>Run independent firm motion in parallel</td></tr>
+<tr><td>Engineer hiring lags demand</td><td class="r">Medium</td><td class="r">Medium</td><td>Maintain 12% bench; hire engineer #2 at M2 not M3</td></tr>
+<tr><td>Tax-season seasonality (Jan-Apr) reduces firm new-deal capacity</td><td class="r">High</td><td class="r">Low</td><td>Push scoping into Q4 / Q2-Q3; reserve Jan-Apr for execution + PE work</td></tr>
+<tr><td>Sage Intacct closes API or builds cross-system AI module</td><td class="r">Low</td><td class="r">High</td><td>Watchlist; abstract integration layer</td></tr>
 </tbody>
 </table>
-<div class="src">Sources: Karbon Kai launch — Accounting Today Jun 3 2026; AICPA Tax Season Burden Survey 2024 (Jan-Apr firm new-business capacity drops 60-70%); Sage Intacct API roadmap 2024-2025 disclosure to partners.</div>
-</div>
-</section>
 
-<!-- ============================ SOURCES ============================ -->
-<section class="sources-block">
-<h3 style="margin-top:0;color:var(--deep-slate)">Sources cited</h3>
-<p><strong>Industry size, structure, and ICP.</strong> US Census Bureau, County Business Patterns 2022 (NAICS 5412 — Accounting, Tax Preparation, Bookkeeping, Payroll Services). IBISWorld, Accounting Services in the US, market report May 2025 ($145.3B revenue, 1.2% CAGR, 127K establishments). US Bureau of Labor Statistics, Occupational Employment and Wages May 2024 (1.5M accountants and auditors). INSIDE Public Accounting, Top 500 Firms Survey 2024. AICPA, Trends in the Supply of Accounting Graduates 2023. AICPA Private Companies Practice Section (PCPS), National Management of an Accounting Practice (MAP) Survey 2024 (referral attribution 60-72% of new client acquisition for firms ≤50 employees; pricing benchmarks; firm-size revenue distribution).</p>
-<p><strong>Competitive landscape.</strong> Distyl AI Series C funding announcement, March 2025. Eudia Series A coverage — Reuters January 2025. Harvey AI Series C — TechCrunch April 2025. Karbon Kai product launch — Accounting Today, June 3 2026. Canopy and TaxDome public pricing pages (accessed June 2026). Sage Intacct Partner Program tiering documentation (Q1 2025). Sage Intacct API coverage analysis — CPA Practice Advisor 2024. Intuit ProAdvisor census 2024 and QuickBooks Online Advanced pricing 2026. Wolters Kluwer CCH user base disclosure, 10-K 2024. Vic.ai Series C funding announcement — TechCrunch, January 2024. Stampli Series D — Crunchbase March 2025. Truewind, Pry, Digits, Klarity public pricing pages and Crunchbase funding histories. Bench Accounting shutdown coverage — TechCrunch, December 27 2024. Botkeeper restructuring coverage — Going Concern, March 2023.</p>
-<p><strong>PE roll-up activity.</strong> PitchBook Accounting Roll-up Tracker, Q1 2025 (Ascend, Aprio Capital, Carbon Crest, Citrin Cooperman, Eisner Advisory Group, Pinion, Whitman Transition Advisors, Springline Advisory, and 18 active platforms with ≥10 completed acquisitions since 2020). Whitman Transition Advisors M&amp;A pipeline report April 2025. Citrin Cooperman acquisition announcements 2023-2024. Aprio Capital NewSpring portfolio page and Ascend Alpine Investors portfolio page, both accessed June 2026.</p>
-<p><strong>Channel benchmarks.</strong> Mailshake Cold Email Benchmarks 2024 (cross-industry 3.4% reply, financial services 5.1%). Lemlist B2B Email Benchmarks Q4 2024. Apollo.io Outbound Best Practices 2024 (accounting/finance segment 10.3% LinkedIn reply, 31% connection accept). HubSpot State of Sales 2024 (named-referral subject lines 4-5× reply lift). LinkedIn Sales Solutions 2024 industry benchmarks (financial services InMail acceptance 10-15%). WordStream Google Ads benchmarks Q4 2024 (Finance category CPC $4.50-$8.10).</p>
-<p><strong>Conferences and trade media.</strong> AICPA ENGAGE 2024 sponsor prospectus (booth pricing $28.5K-$42K, attendance 5,200 in 2024 / 5,800 projected 2025). CPA.com Digital CPA Conference 2024 exhibitor brochure (1,420 attendees). Woodard Scaling New Heights 2024 sponsor packet (1,650 attendees). California Society of CPAs annual meeting prospectus 2024. Accounting Today, CPA Practice Advisor, Going Concern, and Journal of Accountancy circulation data 2024.</p>
-<p><strong>Funnel, capacity, and unit economics.</strong> Salesforce State of Sales 2024 (financial services SMB funnel benchmarks). McKinsey B2B Pulse 2024. Bridge Group 2024 SDR Metrics Report (2,100 productive minutes per 35h SDR week; AE ramp benchmarks; utilization band 60-85%). Service Performance Insight 2024 (B2B services engineer utilization 65-72%, direct COGS 16-22%). RepSpark 2024 B2B billing standards (30/40/30 net-30 payment structure for $25-50K integration projects). Levels.fyi US software engineering salary benchmarks 2024 ($90-120K base mid-market). SiriusDecisions / Forrester 2024 B2B funnel health norms. Optifai SaaS Benchmarks 2024 (B2B mid-market financial services 8-15% annual churn). Karbon NRR ~115% disclosure 2024. Vic.ai annual churn 8-12% disclosed 2024 customer case studies.</p>
-<p><strong>Cyclicality and operational risk.</strong> AICPA Tax Season Burden Survey 2024 (firm new-business capacity reduction Jan-April 60-70%).</p>
-</section>
+<div class="callout callout-danger"><strong>Risk caveat.</strong> All ratios assume founder closes during Phase 0-1. Hand selling to an AE before Paid Pilot is productized → win-rate collapses, CAC rises, economics break. Advance by trigger, never by calendar. Lusin lift in accounting unvalidated as of model build — figure used (1.0× default, ×5 Bull) is a placeholder pending Q3 pilots.</div>
 
-<div class="footer">
-Accounting GTM Operating Model · single-vertical commercial model for AI-integration sales · all numbers benchmark-anchored; line items without published source use industry medians flagged in the relevant section
+<div class="src">Sources: AICPA Tax Season Burden Survey 2024 (firm new-business capacity reduction Jan-Apr 60-70%); Karbon Kai launch coverage Accounting Today Jun 3 2026; Sage Intacct API roadmap 2024-2025 partner disclosure.</div>
+</div>
+</details>
+
+<!-- ============== SECTION 5 ============== -->
+<details class="section" open>
+<summary><span class="section-num">SECTION 5</span> Controls &amp; Assumption Log <span class="section-meta">validation gates · key assumptions</span></summary>
+<div class="section-body">
+<h3>5.1 — Live validation controls</h3>
+<div id="controls"></div>
+
+<h3>5.2 — Assumption log</h3>
+<table class="tbl">
+<thead><tr><th>Assumption</th><th class="r">Value</th><th>Source</th></tr></thead>
+<tbody>
+<tr><td>Karina hours / week</td><td class="r">35h (default)</td><td>Bridge Group 2024 (SDR 20-50h typical)</td></tr>
+<tr><td>Cold email touches / week</td><td class="r">200 (default)</td><td>Mailshake 2024 (150-250 personalized standard)</td></tr>
+<tr><td>Cold reply % (blended)</td><td class="r">6%</td><td>Mailshake 2024 finance/accounting cut 5.1%; lifted by ICP fit</td></tr>
+<tr><td>Lusin signal lift</td><td class="r">1.0× default (1-8× range)</td><td>Pilot HR vertical ×10 (Cyborg HR Apr 2026, n=1) — unvalidated for accounting</td></tr>
+<tr><td>Pilot→Close %</td><td class="r">60%</td><td>McKinsey B2B Pulse 2024 (25-90% range)</td></tr>
+<tr><td>Implementation cycle</td><td class="r">66d cold / 33d warm</td><td>Mid-market $25-150K ACV — Salesforce 2024 + 1.1× accounting lag</td></tr>
+<tr><td>Payment terms</td><td class="r">30/40/30 net-30</td><td>RepSpark 2024 B2B billing standards</td></tr>
+<tr><td>Retainer churn</td><td class="r">3% / mo</td><td>Optifai SaaS 2024 + Karbon NRR ~115%</td></tr>
+<tr><td>Engineer throughput</td><td class="r">1.75 deals / mo</td><td>65% util × 95 billable hrs ÷ 50 hrs/deal</td></tr>
+<tr><td>Gross margin</td><td class="r">55%</td><td>Service Performance Insight 2024</td></tr>
+<tr><td>Dedup factor</td><td class="r">85%</td><td>Email + LinkedIn audience overlap 15%</td></tr>
+<tr><td>Conference cost / event</td><td class="r">$24K (amortized 6mo)</td><td>AICPA ENGAGE 2024 sponsor prospectus (booth $28.5-42K + travel)</td></tr>
+</tbody>
+</table>
+</div>
+</details>
+
+</main>
+
 </div>
 
-</div>
+<footer class="footer">AI-Integration Co · Accounting · Commercial Operating Model · all benchmarks anchored to AICPA / Mailshake / Salesforce / PitchBook / Karbon disclosures · cross-system reconciliation positioning · 2026-06-23</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const MONTHS=['Jul','Aug','Sep','Oct','Nov','Dec'];
+const ACC_LIFTS={emRp:1.0,liReply:1.1,cycleDays:1.1};
+const TIME_PER_TOUCH={email:6,linkedin:12,warm:35,conference:240};
+const ENG_THROUGHPUT=1.75,ENG_HOURS_PER_DEAL=50;
+
+const SCENARIOS={
+  bear:{karinaHrs:25,emTw:100,liTw:30,wmIn:2,cfEv:0,emRp:5,lusin:1,pc:50,accFee:22,rec:2.0,engN:1,engCost:11,sdrCost:4,tools:1.5,overhead:3,draw:3},
+  real:{karinaHrs:35,emTw:200,liTw:60,wmIn:4,cfEv:3,emRp:6,lusin:1,pc:60,accFee:28,rec:2.8,engN:2,engCost:12,sdrCost:4,tools:2,overhead:3.5,draw:5},
+  bull:{karinaHrs:40,emTw:300,liTw:80,wmIn:6,cfEv:5,emRp:6,lusin:5,pc:70,accFee:38,rec:3.5,engN:3,engCost:13,sdrCost:5,tools:3,overhead:4,draw:6}
+};
+
+function getInputs(){
+  return{
+    karinaHrs:+$('sl-karinaHrs').value,emTw:+$('sl-emTw').value,liTw:+$('sl-liTw').value,wmIn:+$('sl-wmIn').value,cfEv:+$('sl-cfEv').value,
+    emRp:+$('sl-emRp').value,lusin:+$('sl-lusin').value,pc:+$('sl-pc').value,
+    accFee:+$('sl-accFee').value*1000,rec:+$('sl-rec').value*1000,
+    engN:+$('sl-engN').value,engCost:+$('sl-engCost').value*1000,sdrCost:+$('sl-sdrCost').value*1000,
+    tools:+$('sl-tools').value*1000,overhead:+$('sl-overhead').value*1000,draw:+$('sl-draw').value*1000,
+    rm:30,mp:35
+  };
+}
+
+function karinaCapacity(d){
+  const weekly=d.karinaHrs*60;
+  const em=d.emTw*TIME_PER_TOUCH.email;
+  const li=d.liTw*TIME_PER_TOUCH.linkedin;
+  const wm=(d.wmIn*TIME_PER_TOUCH.warm)/4.33;
+  const cf=(d.cfEv*TIME_PER_TOUCH.conference)/26;
+  const used=em+li+wm+cf;
+  return{weekly,used,em,li,wm,cf,pct:used/weekly};
+}
+function engineerCapacity(d){return{monthlyCap:d.engN*ENG_THROUGHPUT,periodCap:d.engN*ENG_THROUGHPUT*6}}
+
+function cohortFunnel(d,ok,ov){
+  const f=k=>ok===k?ov:d[k];
+  const dedup=0.85;
+  const lifts=ACC_LIFTS;
+  const emRe=Math.min(50,f('emRp')*f('lusin')*lifts.emRp);
+  const liRe=Math.min(60,30*lifts.liReply);
+  const ramp=[.5,.8,1,1,1,1];
+  const emAct=ramp.map(r=>f('emTw')*4.33*r);
+  const liAct=ramp.map(r=>f('liTw')*4.33*r);
+  const wmAct=ramp.map(r=>f('wmIn')*r);
+  const cf=f('cfEv');
+  const cfAct=[0,cf/3,cf/3,0,cf/3,0].map(e=>e*80);
+  const cCold=(60*lifts.cycleDays)/30;
+  const cWarm=(30*lifts.cycleDays)/30;
+  const emC=(emRe/100)*(d.rm/100)*(d.mp/100)*(f('pc')/100);
+  const liC=0.45*(liRe/100)*(d.rm/100)*(d.mp/100)*(f('pc')/100);
+  const wmC=0.80*0.50*0.75;
+  const cfC=0.54*0.35*0.70;
+  const closes=Array(6).fill(0).map(()=>({em:0,li:0,wm:0,cf:0,total:0}));
+  for(let i=0;i<6;i++){
+    const mE=i+Math.round(cCold),mL=i+Math.round(cCold),mW=i+Math.round(cWarm),mC=i+Math.round(cWarm);
+    if(mE<6)closes[mE].em+=emAct[i]*emC;
+    if(mL<6)closes[mL].li+=liAct[i]*liC;
+    if(mW<6)closes[mW].wm+=wmAct[i]*wmC;
+    if(mC<6)closes[mC].cf+=cfAct[i]*cfC;
+  }
+  closes.forEach(c=>{c.em*=dedup;c.li*=dedup;c.wm*=dedup;c.cf*=dedup;c.total=c.em+c.li+c.wm+c.cf});
+  return{closes};
+}
+
+function calcAll(d,ok,ov){
+  const vd=cohortFunnel(d,ok,ov);
+  const pre=Array(6).fill(0).map((_,i)=>vd.closes[i].total);
+  const engCapMonthly=(ok==='engN'?ov:d.engN)*ENG_THROUGHPUT;
+  const gated=pre.map(c=>Math.min(c,engCapMonthly));
+  const fee=d.accFee;
+  const monthly=Array(6).fill(0).map((_,i)=>{
+    const closes=gated[i];
+    const l1B=gated[i]*fee;
+    let l1R=0,l1Bl=0;
+    for(let j=0;j<=i;j++){
+      const ma=i-j;
+      const cj=gated[j];
+      const rR=ma===0?.3:ma===1?.4:ma===2?.3:0;
+      const bR=ma===0?.3:ma===1?.4:ma===3?.3:0;
+      l1R+=cj*fee*rR;
+      l1Bl+=cj*fee*bR;
+    }
+    let l2A=0;
+    for(let j=0;j<=i-2;j++){
+      const ms=i-2-j;
+      const ra=ms===0?.5:1;
+      const re=Math.pow(.97,Math.max(0,ms));
+      l2A+=gated[j]*ra*re;
+    }
+    const l2R=l2A*d.rec;
+    const cogs=closes*ENG_HOURS_PER_DEAL*(d.engCost/160);
+    const cfAmort=(d.cfEv*24000)/6;
+    const fixed=d.engN*d.engCost+d.sdrCost+d.overhead+d.draw;
+    const rev=l1R+l2R;
+    const gm=rev-cogs;
+    const cont=gm-cfAmort-d.tools;
+    const ebitda=cont-fixed;
+    const cIn=l1Bl+l2R;
+    const cOut=cogs+cfAmort+d.tools+fixed;
+    const cf2=cIn-cOut;
+    return{month:MONTHS[i],closes,l1B,l1R,l1Bl,l2A,l2R,rev,cogs,cf:cfAmort,fixed,gm,cont,ebitda,cIn,cOut,cf2};
+  });
+  let ce=0,cc=0;
+  monthly.forEach(m=>{ce+=m.ebitda;m.cumE=ce;cc+=m.cf2;m.cumC=cc});
+  return{monthly,pre,gated,engCap:engCapMonthly,vd};
+}
+
+function fmtFull(v){return(v<0?'-':'')+'$'+Math.abs(Math.round(v)).toLocaleString('en-US')}
+function fmtK(v){const a=Math.abs(Math.round(v));return(v<0?'-':'')+'$'+(a>=1000?(a/1000).toFixed(0)+'K':a.toString())}
+
+function calcUE(d,r){
+  const tC=r.monthly.reduce((s,m)=>s+m.closes,0);
+  const af=d.accFee;
+  const lr=10000+af+(d.rec*36*0.5);
+  const ltv=lr*0.55;
+  const cac=tC>0?(d.sdrCost*6+d.tools*6+d.cfEv*24000)/tC:0;
+  const ratio=cac>0?ltv/cac:0;
+  const mGM=af*0.55/12;
+  const pb=mGM>0?cac/mGM:99;
+  return{ltv,cac,ratio,pb,af,tC};
+}
+
+function updateHeaderKPIs(){
+  const d=getInputs();const r=calcAll(d);const ue=calcUE(d,r);
+  const bE=r.monthly.findIndex(m=>m.ebitda>=0);
+  const bC=r.monthly.findIndex(m=>m.cumC>=0);
+  $('hkpi-ltv').textContent=fmtK(ue.ltv);
+  $('hkpi-cac').textContent=fmtK(ue.cac);
+  $('hkpi-ratio').textContent=ue.ratio.toFixed(1)+'×';
+  $('hkpi-be').textContent=bE>=0?MONTHS[bE]:'—';
+  $('hkpi-cbe').textContent=bC>=0?MONTHS[bC]:'—';
+}
+
+function renderApex(){
+  const d=getInputs();const r=calcAll(d);const ue=calcUE(d,r);
+  const bE=r.monthly.findIndex(m=>m.ebitda>=0);
+  const bC=r.monthly.findIndex(m=>m.cumC>=0);
+  const k=karinaCapacity(d);const e=engineerCapacity(d);
+  $('apex-ltv').textContent=fmtK(ue.ltv);
+  $('apex-cac').textContent=fmtK(ue.cac);
+  const rEl=$('apex-ratio');rEl.textContent=ue.ratio.toFixed(1)+'×';rEl.className='apex-val '+(ue.ratio>=10?'pos':ue.ratio>=3?'warn':'neg');
+  const pbEl=$('apex-payback');pbEl.textContent=ue.pb<99?ue.pb.toFixed(1)+'mo':'—';pbEl.className='apex-val '+(ue.pb<6?'pos':ue.pb<12?'warn':'neg');
+  $('apex-be').textContent=bE>=0?MONTHS[bE]:'—';
+  $('apex-cbe').textContent=bC>=0?MONTHS[bC]:'—';
+  const fuEl=$('apex-futil');fuEl.textContent=(k.pct*100).toFixed(0)+'%';fuEl.className='apex-val '+(k.pct<=0.85?'pos':k.pct<=1?'warn':'neg');
+  const euEl=$('apex-eutil');const eu=ue.tC/e.periodCap;euEl.textContent=(eu*100).toFixed(0)+'%';euEl.className='apex-val '+(eu<=0.85?'pos':eu<=1?'warn':'neg');
+}
+
+function renderCapGauges(){
+  const d=getInputs();const r=calcAll(d);const ue=calcUE(d,r);
+  const k=karinaCapacity(d);const e=engineerCapacity(d);
+  const eu=ue.tC/e.periodCap;
+  const kcls=k.pct<=0.85?'pos':k.pct<=1?'warn':'neg';
+  const ecls=eu<=0.85?'pos':eu<=1?'warn':'neg';
+  $('capacity-gauges').innerHTML=`
+    <div class="gauge"><h4>Karina SDR · ${(k.pct*100).toFixed(0)}% used</h4>
+    <div class="gauge-bar"><div class="gauge-fill ${kcls}" style="width:${Math.min(150,k.pct*100)}%"></div></div>
+    <div class="gauge-detail">${k.weekly} min/wk budget · ${Math.round(k.used)} used<br>
+    Email ${Math.round(k.em)} · LinkedIn ${Math.round(k.li)} · Warm ${Math.round(k.wm)} · Conference ${Math.round(k.cf)}</div></div>
+    <div class="gauge"><h4>Engineer delivery · ${(eu*100).toFixed(0)}% used</h4>
+    <div class="gauge-bar"><div class="gauge-fill ${ecls}" style="width:${Math.min(150,eu*100)}%"></div></div>
+    <div class="gauge-detail">${d.engN} engineer(s) × 1.75 deals/mo = ${e.monthlyCap.toFixed(1)} monthly cap<br>
+    6mo capacity ${e.periodCap.toFixed(1)} · demand ${ue.tC.toFixed(1)}</div></div>`;
+}
+
+function renderCohort(){
+  const d=getInputs();const r=calcAll(d);
+  const out=[`<table class="tbl"><thead><tr><th>Channel × month</th>${MONTHS.map(m=>`<th class="r">${m}</th>`).join('')}<th class="r">Total</th></tr></thead><tbody>`];
+  const chs=['em','li','wm','cf'];
+  const lbs={em:'Cold email closes',li:'LinkedIn closes',wm:'Warm intro closes',cf:'Conference closes'};
+  chs.forEach(c=>{
+    const v=Array(6).fill(0);
+    for(let i=0;i<6;i++)v[i]=r.vd.closes[i][c];
+    const t=v.reduce((s,x)=>s+x,0);
+    out.push(`<tr><td>${lbs[c]}</td>${v.map(x=>`<td class="r">${x.toFixed(1)}</td>`).join('')}<td class="r"><strong>${t.toFixed(1)}</strong></td></tr>`);
+  });
+  out.push(`<tr class="subtotal-row"><td>Total demand (pre-gate)</td>${r.pre.map(v=>`<td class="r">${v.toFixed(1)}</td>`).join('')}<td class="r">${r.pre.reduce((s,x)=>s+x,0).toFixed(1)}</td></tr>`);
+  out.push(`<tr class="total-row"><td>Closes after capacity gate</td>${r.gated.map(v=>`<td class="r">${v.toFixed(1)}</td>`).join('')}<td class="r">${r.gated.reduce((s,x)=>s+x,0).toFixed(1)}</td></tr></tbody></table>`);
+  $('cohort-tbl').innerHTML=out.join('');
+}
+
+function renderDaily(){
+  const d=getInputs();const r=calcAll(d);
+  const emPerDay=Math.round(d.emTw/5);
+  const liPerDay=Math.round(d.liTw/5);
+  const repliesPerDay=(emPerDay*d.emRp*d.lusin*ACC_LIFTS.emRp/100+liPerDay*0.30*ACC_LIFTS.liReply).toFixed(1);
+  const closesPerMonth=r.gated.reduce((s,x)=>s+x,0)/6;
+  const closesPerDay=(closesPerMonth/22).toFixed(2);
+  const pilotsPerDay=(closesPerDay/(d.pc/100)).toFixed(2);
+  const demosPerDay=(pilotsPerDay/(d.mp/100)).toFixed(2);
+  $('daily-grid').innerHTML=`
+    <div class="dash-tile"><div class="lab">Emails sent</div><div class="num">${emPerDay}</div><div class="target">Target ${d.emTw}/wk</div></div>
+    <div class="dash-tile"><div class="lab">LinkedIn msgs</div><div class="num">${liPerDay}</div><div class="target">Target ${d.liTw}/wk</div></div>
+    <div class="dash-tile"><div class="lab">Replies / day</div><div class="num">${repliesPerDay}</div><div class="target">${(d.emRp*d.lusin*ACC_LIFTS.emRp).toFixed(1)}% reply blended</div></div>
+    <div class="dash-tile"><div class="lab">Demos / day</div><div class="num">${demosPerDay}</div><div class="target">Discovery calls</div></div>
+    <div class="dash-tile"><div class="lab">Pilots / day</div><div class="num">${pilotsPerDay}</div><div class="target">$10K paid</div></div>
+    <div class="dash-tile"><div class="lab">Closes / day</div><div class="num">${closesPerDay}</div><div class="target">Implementation</div></div>`;
+}
+
+function buildPnl(id,rows){
+  const head=`<thead><tr><th>Line</th>${MONTHS.map(m=>`<th class="r">${m}</th>`).join('')}<th class="r">Total</th></tr></thead><tbody>`;
+  const body=rows.map(r=>{
+    if(r.section)return `<tr class="section-row"><td colspan="8">${r.section}</td></tr>`;
+    const t=r.vals.reduce((s,v)=>s+v,0);
+    const cls=r.total?'total-row':r.sub?'subtotal-row':'';
+    return `<tr class="${cls}"><td>${r.label}</td>${r.vals.map(v=>{const c=v<0?'neg':v>0&&r.fmt===fmtFull?'pos':'';return `<td class="r ${c}">${v===0?'—':r.fmt(v)}</td>`}).join('')}<td class="r"><strong>${t===0?'—':r.fmt(t)}</strong></td></tr>`;
+  }).join('');
+  $(id).innerHTML=`<table class="tbl">${head}${body}</tbody></table>`;
+}
+
+function renderRevenue(r){
+  const m=r.monthly;
+  buildPnl('revenue-tbl',[
+    {section:'Implementation (Layer 1)'},
+    {label:'Closes',vals:m.map(x=>x.closes),fmt:v=>v.toFixed(1)},
+    {label:'Booked (contract)',vals:m.map(x=>x.l1B),fmt:fmtFull,sub:1},
+    {label:'Recognized (earned)',vals:m.map(x=>x.l1R),fmt:fmtFull,sub:1},
+    {label:'Billed / cash collected',vals:m.map(x=>x.l1Bl),fmt:fmtFull,sub:1},
+    {section:'Retainer (Layer 2)'},
+    {label:'Active accounts',vals:m.map(x=>x.l2A),fmt:v=>v.toFixed(1)},
+    {label:'Retainer revenue',vals:m.map(x=>x.l2R),fmt:fmtFull,sub:1},
+    {section:'Total'},
+    {label:'Total recognized revenue',vals:m.map(x=>x.rev),fmt:fmtFull,total:1}
+  ]);
+}
+
+function renderEbitda(r){
+  const m=r.monthly;
+  buildPnl('ebitda-tbl',[
+    {label:'Revenue (recognized)',vals:m.map(x=>x.rev),fmt:fmtFull},
+    {label:'COGS (delivery)',vals:m.map(x=>-x.cogs),fmt:fmtFull},
+    {label:'Gross margin',vals:m.map(x=>x.gm),fmt:fmtFull,sub:1},
+    {label:'Conferences (amortized)',vals:m.map(x=>-x.cf),fmt:fmtFull},
+    {label:'Tools',vals:m.map(x=>-x.fixed?-Math.abs(getInputs().tools):-Math.abs(getInputs().tools)),fmt:fmtFull},
+    {label:'Fixed (team + overhead + draw)',vals:m.map(x=>-x.fixed),fmt:fmtFull},
+    {label:'EBITDA',vals:m.map(x=>x.ebitda),fmt:fmtFull,total:1},
+    {label:'Cumulative EBITDA',vals:m.map(x=>x.cumE),fmt:fmtFull,sub:1}
+  ]);
+}
+
+function renderCash(r){
+  const m=r.monthly;
+  buildPnl('cash-tbl',[
+    {label:'Cash in (billed + retainer)',vals:m.map(x=>x.cIn),fmt:fmtFull},
+    {label:'Cash out',vals:m.map(x=>-x.cOut),fmt:fmtFull},
+    {label:'Net cash flow',vals:m.map(x=>x.cf2),fmt:fmtFull,total:1},
+    {label:'Cumulative cash',vals:m.map(x=>x.cumC),fmt:fmtFull,sub:1}
+  ]);
+  const ctx=$('chartCash');if(ctx._chart)ctx._chart.destroy();
+  ctx._chart=new Chart(ctx,{type:'bar',data:{labels:MONTHS,datasets:[
+    {label:'Monthly cash flow',data:m.map(x=>x.cf2),backgroundColor:m.map(x=>x.cf2>=0?'#2E7780':'#A14545'),order:2},
+    {label:'Cumulative cash',data:m.map(x=>x.cumC),type:'line',borderColor:'#31435B',backgroundColor:'rgba(49,67,91,0.10)',fill:true,tension:0.3,order:1,yAxisID:'y'}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{family:'Inter',size:11}}}},scales:{y:{beginAtZero:false,ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K'}}}}});
+}
+
+function renderUE(){
+  const d=getInputs();const r=calcAll(d);const ue=calcUE(d,r);
+  const k=karinaCapacity(d);const e=engineerCapacity(d);
+  $('unit-econ').innerHTML=`
+    <table class="tbl">
+    <tr><td>Average implementation fee</td><td class="r">${fmtK(ue.af)}</td></tr>
+    <tr><td>Lifetime revenue per customer (3yr)</td><td class="r">${fmtK(ue.ltv/0.55)}</td></tr>
+    <tr><td>LTV (55% GM)</td><td class="r"><strong>${fmtK(ue.ltv)}</strong></td></tr>
+    <tr><td>Blended CAC (Karina + tools + conferences ÷ closes)</td><td class="r"><strong>${fmtK(ue.cac)}</strong></td></tr>
+    <tr class="total-row"><td>LTV / CAC</td><td class="r">${ue.ratio.toFixed(1)}×</td></tr>
+    <tr><td>Payback period</td><td class="r">${ue.pb<99?ue.pb.toFixed(1)+' months':'n/a'}</td></tr>
+    <tr><td>Total 6mo closes</td><td class="r">${ue.tC.toFixed(1)}</td></tr>
+    <tr><td>Engineer 6mo capacity</td><td class="r">${e.periodCap.toFixed(1)}</td></tr>
+    <tr><td>Engineer utilization</td><td class="r">${((ue.tC/e.periodCap)*100).toFixed(0)}%</td></tr>
+    <tr><td>Karina utilization</td><td class="r">${(k.pct*100).toFixed(0)}%</td></tr>
+    </table>`;
+}
+
+function renderTornado(){
+  const d=getInputs();const base=calcAll(d).monthly.reduce((s,m)=>s+m.rev,0);
+  const tests=[
+    {n:'Karina +5h/week',k:'karinaHrs',dt:5,c:0},
+    {n:'Cold email +50/wk',k:'emTw',dt:50,c:100},
+    {n:'LinkedIn +20/wk',k:'liTw',dt:20,c:100},
+    {n:'Warm intros +2/mo (PE referrals)',k:'wmIn',dt:2,c:500},
+    {n:'+1 AICPA conference',k:'cfEv',dt:1,c:24000},
+    {n:'Lusin lift ×2 (accounting)',k:'lusin',dt:d.lusin,c:5000},
+    {n:'Implementation fee +$3K',k:'accFee',dt:3000,c:0},
+    {n:'Retainer +$0.5K/mo',k:'rec',dt:500,c:0},
+    {n:'Pilot→Close +10pp',k:'pc',dt:10,c:0},
+    {n:'+1 engineer',k:'engN',dt:1,c:72000}
+  ];
+  const res=tests.map(t=>{
+    const nv=(d[t.k]||0)+t.dt;
+    const sx=Object.assign({},d,{[t.k]:nv});
+    const nr=calcAll(sx).monthly.reduce((s,m)=>s+m.rev,0);
+    const up=nr-base;
+    return Object.assign({},t,{up,perK:t.c>0?up/(t.c/1000):up});
+  }).sort((a,b)=>b.perK-a.perK);
+  const max=Math.max(...res.map(r=>Math.abs(r.perK)),1);
+  $('tornado').innerHTML=res.map(r=>{
+    const w=Math.min(100,Math.abs(r.perK/max)*100);
+    return `<div class="tornado-row"><div class="tornado-name">${r.n}</div><div class="tornado-bar-wrap"><div class="tornado-bar" style="width:${w.toFixed(1)}%"></div></div><div class="tornado-val">+${fmtFull(r.up)}<br><span style="font-size:9px;color:var(--muted)">${r.c>0?'/ '+fmtK(r.c):'no cost'}</span></div></div>`;
+  }).join('');
+}
+
+function renderDecisions(){
+  const d=getInputs();const r=calcAll(d);const ue=calcUE(d,r);
+  const k=karinaCapacity(d);const e=engineerCapacity(d);
+  const bE=r.monthly.findIndex(m=>m.ebitda>=0);
+  const bC=r.monthly.findIndex(m=>m.cumC>=0);
+  const eu=ue.tC/e.periodCap;
+  const cap=k.pct>0.85||eu>0.85;
+  const conv=ue.ratio<10;
+  const rec1=cap?(k.pct>eu?'Karina capacity bound — invest in Lusin signal lift or hire SDR-2':'Engineer capacity bound — hire engineer #2 / #3 before adding pipeline'):'Balanced capacity; focus on Discovery→Pilot conversion + Lusin lift validation';
+  const rec2=bE>=0&&bC>=0?`EBITDA breaks ${MONTHS[bE]}; Cash breaks ${MONTHS[bC]}. Plan 1.5-2mo cash cushion.`:'No break-even in 6mo window — adjust scenario or extend runway';
+  const rec3=cap?'Bound by execution capacity':'Bound by outreach throughput — invest in Lusin or +1 conference';
+  const rec4=`Current LTV ${fmtK(ue.ltv)} / CAC ${fmtK(ue.cac)} = ${ue.ratio.toFixed(1)}× ratio · ${ue.pb<99?ue.pb.toFixed(1)+'mo payback':''}`;
+  $('decisions').innerHTML=`
+    <div class="callout"><strong>1. Top recommendation:</strong> ${rec1}</div>
+    <div class="callout"><strong>2. EBITDA vs Cash gap:</strong> ${rec2}</div>
+    <div class="callout"><strong>3. What drives growth:</strong> ${rec3}</div>
+    <div class="callout ${ue.ratio>=10?'callout-dark':''}"><strong>4. Unit economics:</strong> ${rec4}</div>`;
+}
+
+function renderTriggers(){
+  const d=getInputs();const r=calcAll(d);const ue=calcUE(d,r);
+  const m6=r.monthly[5];
+  const monthlyDeals=m6.closes;
+  const ch=[
+    {n:'Phase 1 ready · 5-8 qual deals/mo + Discovery→Pilot &gt;30%',p:monthlyDeals>=5,v:monthlyDeals.toFixed(1)+'/mo',w:monthlyDeals>=4&&monthlyDeals<5},
+    {n:'Phase 2 ready · Pilot productized + ≥3 accts without founder',p:false,v:'pending',w:false},
+    {n:'Phase 3 ready · AE quota (win-rate within 20% founder)',p:false,v:'pending',w:false},
+    {n:'Steady state · NRR &gt;110%, payback &lt;12mo',p:ue.pb<12,v:ue.pb.toFixed(1)+'mo',w:ue.pb<12&&ue.pb>6}
+  ];
+  $('trigger-check').innerHTML=ch.map(c=>{
+    const cls=c.p?(c.w?'warn':'pass'):'fail';
+    const ic=c.p?(c.w?'!':'✓'):'·';
+    return `<div class="ctrl-row"><div class="ctrl-icon ${cls}">${ic}</div><div>${c.n}</div><div class="ctrl-val">${c.v}</div></div>`;
+  }).join('');
+}
+
+function renderControls(){
+  const d=getInputs();const r=calcAll(d);const ue=calcUE(d,r);
+  const k=karinaCapacity(d);const e=engineerCapacity(d);
+  const ch=[
+    {n:'Karina capacity not exceeded',p:k.pct<=1,v:(k.pct*100).toFixed(0)+'%',w:k.pct>0.85&&k.pct<=1},
+    {n:'Engineer capacity not exceeded',p:ue.tC<=e.periodCap,v:ue.tC.toFixed(1)+'/'+e.periodCap.toFixed(1),w:ue.tC>e.periodCap*0.85&&ue.tC<=e.periodCap},
+    {n:'Cold email reply rate sane (1-30%)',p:d.emRp>=1&&d.emRp<=30,v:d.emRp+'%'},
+    {n:'Lusin lift sane (1-10×)',p:d.lusin>=1&&d.lusin<=10,v:d.lusin.toFixed(1)+'×'},
+    {n:'COGS / fee ratio 5-25%',p:((50*d.engCost/160)/d.accFee)>=0.05&&((50*d.engCost/160)/d.accFee)<=0.25,v:(((50*d.engCost/160)/d.accFee)*100).toFixed(0)+'%'},
+    {n:'LTV/CAC ≥ 3×',p:ue.ratio>=3,v:ue.ratio.toFixed(1)+'×',w:ue.ratio>=3&&ue.ratio<10},
+    {n:'Payback &lt; 12mo',p:ue.pb<12,v:ue.pb.toFixed(1)+' mo'},
+    {n:'No negative pipeline',p:ue.tC>=0,v:ue.tC.toFixed(1)}
+  ];
+  $('controls').innerHTML=ch.map(c=>{
+    const cls=c.p?(c.w?'warn':'pass'):'fail';
+    const ic=c.p?(c.w?'!':'✓'):'✗';
+    return `<div class="ctrl-row"><div class="ctrl-icon ${cls}">${ic}</div><div>${c.n}</div><div class="ctrl-val">${c.v}</div></div>`;
+  }).join('');
+}
+
+function onDriverInput(){
+  $('v-karinaHrs').textContent=$('sl-karinaHrs').value+'h';
+  $('v-emTw').textContent=$('sl-emTw').value;
+  $('v-liTw').textContent=$('sl-liTw').value;
+  $('v-wmIn').textContent=$('sl-wmIn').value;
+  $('v-cfEv').textContent=$('sl-cfEv').value;
+  $('v-emRp').textContent=$('sl-emRp').value+'%';
+  $('v-lusin').textContent=(+$('sl-lusin').value).toFixed(1)+'×';
+  $('v-pc').textContent=$('sl-pc').value+'%';
+  $('v-accFee').textContent=$('sl-accFee').value;
+  $('v-rec').textContent=(+$('sl-rec').value).toFixed(1);
+  $('v-engN').textContent=$('sl-engN').value;
+  $('v-engCost').textContent=(+$('sl-engCost').value).toFixed(1);
+  $('v-sdrCost').textContent=(+$('sl-sdrCost').value).toFixed(1);
+  $('v-tools').textContent=(+$('sl-tools').value).toFixed(1);
+  $('v-overhead').textContent=(+$('sl-overhead').value).toFixed(1);
+  $('v-draw').textContent=$('sl-draw').value;
+  redraw();
+}
+
+function redraw(){
+  renderApex();updateHeaderKPIs();renderCapGauges();renderCohort();renderDaily();
+  const d=getInputs();const r=calcAll(d);
+  renderRevenue(r);renderEbitda(r);renderCash(r);renderUE();
+  renderTornado();renderDecisions();renderTriggers();renderControls();
+}
+
+function applyScen(name,btn){
+  const s=SCENARIOS[name];
+  Object.keys(s).forEach(k=>{const el=$('sl-'+k);if(el)el.value=s[k]});
+  document.querySelectorAll('.scen-pill,.pill').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.pill').forEach(p=>{if(p.textContent.toLowerCase().includes(name)||(name==='real'&&p.textContent.includes('Realistic')))p.classList.add('active')});
+  document.querySelectorAll('.scen-pill').forEach(p=>{if(p.textContent.toLowerCase().includes(name)||(name==='real'&&p.textContent.includes('Realistic')))p.classList.add('active')});
+  if(btn)btn.classList.add('active');
+  onDriverInput();
+}
+function resetAll(){applyScen('real',null);document.querySelectorAll('.pill')[1].classList.add('active');document.querySelectorAll('.scen-pill')[1].classList.add('active');}
+
+document.querySelectorAll('input[type=range]').forEach(el=>el.addEventListener('input',onDriverInput));
+onDriverInput();
+</script>
 
 </body>
 </html>
